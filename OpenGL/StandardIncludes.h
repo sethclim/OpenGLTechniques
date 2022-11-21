@@ -24,13 +24,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 //font
+#define generic GenericFromFreeTypeLibrary
 #include <ft2build.h>
 #include FT_FREETYPE_H
+#undef generic
 
 #include "Resolution.h"
 #include "Singleton.h"
-
-
 
 
 #endif // !STANDARDINCLUDES_H

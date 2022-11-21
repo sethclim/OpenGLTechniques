@@ -40,14 +40,14 @@ void GameController::RunGame()
 	m_shaderFont = Shader();
 	m_shaderFont.LoadShaders("Font.vert", "Font.frag");
 
-	Mesh m = Mesh();
+	Mesh light = Mesh();
 
-	m.Create(&m_shaderColor, "../Assets/Models/teapot.obj");
-	m.SetPosition({ 1.0f, 0.0f, 0.0f });
-	m.SetColor({ 1.0f, 1.0f, 1.0f });
-	m.SetScale({ 0.005f, 0.005f, 0.005f });
+	light.Create(&m_shaderColor, "../Assets/Models/sphere.obj");
+	light.SetPosition({ 1.0f, 0.0f, 0.0f });
+	light.SetColor({ 1.0f, 1.0f, 1.0f });
+	light.SetScale({ 0.005f, 0.005f, 0.005f });
 
-	Mesh::Lights.push_back(m);
+	Mesh::Lights.push_back(light);
 
 	Mesh teapot = Mesh();
 
@@ -64,15 +64,17 @@ void GameController::RunGame()
 	do
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
-		{
-			m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
-		}
 
 		for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
 		{
 			Mesh::Lights[count].Render(m_camera.GetProjection() * m_camera.GetView());
 		}
+
+		for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
+		{
+			m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
+		}
+
 		f.RenderText("Testing Text", 10, 500, 0.5f, { 1.0f, 1.0f, 0.0f });
 
 		glfwSwapBuffers(WindowController::GetInstance().GetWindow());
@@ -89,6 +91,7 @@ void GameController::RunGame()
 	{
 		m_meshBoxes[count].CleanUp();
 	}
+
 	m_shaderDiffuse.CleanUp();
 	m_shaderColor.CleanUp();
 }
