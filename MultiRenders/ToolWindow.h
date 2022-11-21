@@ -36,10 +36,10 @@ namespace MultiRenders {
 		}
 	private: System::Windows::Forms::RadioButton^ radioButton1;
 	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::TrackBar^ trackBar1;
-	private: System::Windows::Forms::TrackBar^ trackBar2;
-	private: System::Windows::Forms::TrackBar^ trackBar3;
-	private: System::Windows::Forms::TrackBar^ trackBar4;
+	private: System::Windows::Forms::TrackBar^ specularStrength_TB;
+	private: System::Windows::Forms::TrackBar^ b_TB;
+	private: System::Windows::Forms::TrackBar^ g_TB;
+	private: System::Windows::Forms::TrackBar^ r_TB;
 
 
 
@@ -51,6 +51,10 @@ namespace MultiRenders {
 	private: System::Windows::Forms::RadioButton^ radioButton2;
 	private: System::Windows::Forms::RadioButton^ radioButton3;
 	private: System::Windows::Forms::Button^ button2;
+	private: System::Windows::Forms::Label^ r_Out_Label;
+	private: System::Windows::Forms::Label^ g_Out_Label;
+	private: System::Windows::Forms::Label^ b_Out_Label;
+	private: System::Windows::Forms::Label^ specularStrength_Out_Label;
 
 
 	protected:
@@ -70,10 +74,10 @@ namespace MultiRenders {
 		{
 			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
 			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar3 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar4 = (gcnew System::Windows::Forms::TrackBar());
+			this->specularStrength_TB = (gcnew System::Windows::Forms::TrackBar());
+			this->b_TB = (gcnew System::Windows::Forms::TrackBar());
+			this->g_TB = (gcnew System::Windows::Forms::TrackBar());
+			this->r_TB = (gcnew System::Windows::Forms::TrackBar());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
@@ -82,10 +86,14 @@ namespace MultiRenders {
 			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
 			this->button2 = (gcnew System::Windows::Forms::Button());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar4))->BeginInit();
+			this->r_Out_Label = (gcnew System::Windows::Forms::Label());
+			this->g_Out_Label = (gcnew System::Windows::Forms::Label());
+			this->b_Out_Label = (gcnew System::Windows::Forms::Label());
+			this->specularStrength_Out_Label = (gcnew System::Windows::Forms::Label());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// radioButton1
@@ -109,33 +117,46 @@ namespace MultiRenders {
 			this->button1->Text = L"Reset Light Position";
 			this->button1->UseVisualStyleBackColor = true;
 			// 
-			// trackBar1
+			// specularStrength_TB
 			// 
-			this->trackBar1->Location = System::Drawing::Point(134, 88);
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(255, 45);
-			this->trackBar1->TabIndex = 2;
+			this->specularStrength_TB->Location = System::Drawing::Point(134, 88);
+			this->specularStrength_TB->Maximum = 128;
+			this->specularStrength_TB->Minimum = 1;
+			this->specularStrength_TB->Name = L"specularStrength_TB";
+			this->specularStrength_TB->Size = System::Drawing::Size(255, 45);
+			this->specularStrength_TB->TabIndex = 2;
+			this->specularStrength_TB->Value = 4;
+			this->specularStrength_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::SpecularStrength_TB_Callback);
 			// 
-			// trackBar2
+			// b_TB
 			// 
-			this->trackBar2->Location = System::Drawing::Point(176, 257);
-			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(255, 45);
-			this->trackBar2->TabIndex = 3;
+			this->b_TB->Location = System::Drawing::Point(176, 257);
+			this->b_TB->Maximum = 300;
+			this->b_TB->Name = L"b_TB";
+			this->b_TB->Size = System::Drawing::Size(255, 45);
+			this->b_TB->TabIndex = 3;
+			this->b_TB->Value = 100;
+			this->b_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::B_TB_Callback);
 			// 
-			// trackBar3
+			// g_TB
 			// 
-			this->trackBar3->Location = System::Drawing::Point(176, 206);
-			this->trackBar3->Name = L"trackBar3";
-			this->trackBar3->Size = System::Drawing::Size(255, 45);
-			this->trackBar3->TabIndex = 4;
+			this->g_TB->Location = System::Drawing::Point(176, 206);
+			this->g_TB->Maximum = 300;
+			this->g_TB->Name = L"g_TB";
+			this->g_TB->Size = System::Drawing::Size(255, 45);
+			this->g_TB->TabIndex = 4;
+			this->g_TB->Value = 100;
+			this->g_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::G_TB_Callback);
 			// 
-			// trackBar4
+			// r_TB
 			// 
-			this->trackBar4->Location = System::Drawing::Point(176, 155);
-			this->trackBar4->Name = L"trackBar4";
-			this->trackBar4->Size = System::Drawing::Size(247, 45);
-			this->trackBar4->TabIndex = 5;
+			this->r_TB->Location = System::Drawing::Point(176, 155);
+			this->r_TB->Maximum = 300;
+			this->r_TB->Name = L"r_TB";
+			this->r_TB->Size = System::Drawing::Size(247, 45);
+			this->r_TB->TabIndex = 5;
+			this->r_TB->Value = 100;
+			this->r_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::R_TB_Callback);
 			// 
 			// label1
 			// 
@@ -214,11 +235,51 @@ namespace MultiRenders {
 			this->button2->Text = L"Reset Teapot Position";
 			this->button2->UseVisualStyleBackColor = true;
 			// 
+			// r_Out_Label
+			// 
+			this->r_Out_Label->AutoSize = true;
+			this->r_Out_Label->Location = System::Drawing::Point(430, 172);
+			this->r_Out_Label->Name = L"r_Out_Label";
+			this->r_Out_Label->Size = System::Drawing::Size(38, 13);
+			this->r_Out_Label->TabIndex = 19;
+			this->r_Out_Label->Text = L"R_Out";
+			// 
+			// g_Out_Label
+			// 
+			this->g_Out_Label->AutoSize = true;
+			this->g_Out_Label->Location = System::Drawing::Point(430, 222);
+			this->g_Out_Label->Name = L"g_Out_Label";
+			this->g_Out_Label->Size = System::Drawing::Size(38, 13);
+			this->g_Out_Label->TabIndex = 20;
+			this->g_Out_Label->Text = L"G_Out";
+			// 
+			// b_Out_Label
+			// 
+			this->b_Out_Label->AutoSize = true;
+			this->b_Out_Label->Location = System::Drawing::Point(430, 270);
+			this->b_Out_Label->Name = L"b_Out_Label";
+			this->b_Out_Label->Size = System::Drawing::Size(37, 13);
+			this->b_Out_Label->TabIndex = 21;
+			this->b_Out_Label->Text = L"B_Out";
+			// 
+			// specularStrength_Out_Label
+			// 
+			this->specularStrength_Out_Label->AutoSize = true;
+			this->specularStrength_Out_Label->Location = System::Drawing::Point(387, 96);
+			this->specularStrength_Out_Label->Name = L"specularStrength_Out_Label";
+			this->specularStrength_Out_Label->Size = System::Drawing::Size(35, 13);
+			this->specularStrength_Out_Label->TabIndex = 22;
+			this->specularStrength_Out_Label->Text = L"label6";
+			// 
 			// ToolWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(532, 422);
+			this->Controls->Add(this->specularStrength_Out_Label);
+			this->Controls->Add(this->b_Out_Label);
+			this->Controls->Add(this->g_Out_Label);
+			this->Controls->Add(this->r_Out_Label);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->radioButton3);
 			this->Controls->Add(this->radioButton2);
@@ -227,30 +288,69 @@ namespace MultiRenders {
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->trackBar4);
-			this->Controls->Add(this->trackBar3);
-			this->Controls->Add(this->trackBar2);
-			this->Controls->Add(this->trackBar1);
+			this->Controls->Add(this->r_TB);
+			this->Controls->Add(this->g_TB);
+			this->Controls->Add(this->b_TB);
+			this->Controls->Add(this->specularStrength_TB);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->radioButton1);
 			this->Name = L"ToolWindow";
 			this->Text = L"MyForm";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar3))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar4))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-	private: System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-	private: System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-	}
-private: System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-};
-}
+
+public:
+	static float specularStrength = 0;
+	static float color_R = 0;
+	static float color_G = 0;
+	static float color_B = 0;
+
+private:
+		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+		}
+		System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		}
+		System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		}
+		System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
+		}
+
+		//Slider Callbacks
+		System::Void SpecularStrength_TB_Callback(System::Object^ sender, System::EventArgs^ e)
+		{
+			specularStrength = specularStrength_TB->Value;
+			specularStrength_Out_Label->Text = specularStrength.ToString();
+		}
+
+		System::Void R_TB_Callback(System::Object^ sender, System::EventArgs^ e)
+		{
+			color_R = RemapSlider(r_TB->Value);
+			r_Out_Label->Text = color_R.ToString();
+		}
+
+		System::Void G_TB_Callback(System::Object^ sender, System::EventArgs^ e)
+		{
+			color_G = RemapSlider(g_TB->Value);
+			g_Out_Label->Text = color_G.ToString();
+		}
+
+		System::Void B_TB_Callback(System::Object^ sender, System::EventArgs^ e) 
+		{
+			color_B = RemapSlider(b_TB->Value);
+			b_Out_Label->Text = color_B.ToString();
+		}
+
+		float RemapSlider(int value)
+		{
+			return (float)value / 100;
+		}
+	};
+}	
+ 

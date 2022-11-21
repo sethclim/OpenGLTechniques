@@ -115,6 +115,7 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 }
 void Mesh::BindAttributes()
 {
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 	glEnableVertexAttribArray(m_shader->GetAttrVertices());
 	glVertexAttribPointer(
 		m_shader->GetAttrVertices() /* The attribute we want to configure*/,
@@ -142,7 +143,6 @@ void Mesh::BindAttributes()
 		8 * sizeof(float)/*stride*/,
 		(void*)(6 * sizeof(float))/*array buffer offset*/);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 
 }
 
