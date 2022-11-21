@@ -1,6 +1,6 @@
 #pragma once
 
-namespace OpenGL {
+namespace MultiRenders {
 
 	using namespace System;
 	using namespace System::ComponentModel;

@@ -1,4 +1,5 @@
 #include "GameController.h"
+#include "ToolWindow.h"
 
 
 GameController::GameController()
@@ -42,7 +43,7 @@ void GameController::RunGame()
 
 	Mesh light = Mesh();
 
-	light.Create(&m_shaderColor, "../Assets/Models/sphere.obj");
+	light.Create(&m_shaderColor, "../Assets/Models/teapot.obj");
 	light.SetPosition({ 1.0f, 0.0f, 0.0f });
 	light.SetColor({ 1.0f, 1.0f, 1.0f });
 	light.SetScale({ 0.005f, 0.005f, 0.005f });
@@ -51,7 +52,7 @@ void GameController::RunGame()
 
 	Mesh teapot = Mesh();
 
-	teapot.Create(&m_shaderDiffuse, "../Assets/Models/teapot.obj");
+	teapot.Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
 	teapot.SetCameraPosition(m_camera.GetPosition());
 	teapot.SetScale({ 0.01f, 0.01f, 0.01f });
 	teapot.SetPosition({ 0.0f, 0.0f, 0.0f });
@@ -61,8 +62,13 @@ void GameController::RunGame()
 	Fonts f = Fonts();
 	f.Create(&m_shaderFont, "arial.ttf", 100);
 
+	MultiRenders::ToolWindow^ window = gcnew MultiRenders::ToolWindow();
+	window->Show();
+
 	do
 	{
+		System::Windows::Forms::Application::DoEvents(); //Handle CLI Form Events
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		for (unsigned int count = 0; count < Mesh::Lights.size(); count++)

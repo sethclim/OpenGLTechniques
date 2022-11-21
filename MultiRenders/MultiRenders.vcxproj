@@ -86,7 +86,7 @@
       <CompileAsManaged>true</CompileAsManaged>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)External\glew-2.1.0\lib;$(SolutionDir)External\glfw-3.3.8\lib-vc2022;$(SolutionDir)External\freetype-2.10.4\release static\win32;$(LibraryPath)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32d.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
