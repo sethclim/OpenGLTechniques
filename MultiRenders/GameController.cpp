@@ -16,22 +16,18 @@ GameController::~GameController()
 
 }
 
-void GameController::Initialize()
+void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 {
-	GLFWwindow* window = WindowController::GetInstance().GetWindow(); // call this first to create window required by GLEW
-	M_ASSERT(glewInit() == GLEW_OK, "Failed to initialize GLEW"); // Initialize GLEW
-	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // Ensure we can capture the escape key
+
 	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	srand((unsigned int)time(0));
 
-	m_camera = Camera(WindowController::GetInstance().GetResolution());
-}
+	m_camera = Camera(_resolution);
 
-void GameController::RunGame()
-{
+	//Load Assets
 	m_shaderColor = Shader();
 	m_shaderColor.LoadShaders("Color.vert", "Color.frag");
 
@@ -45,7 +41,7 @@ void GameController::RunGame()
 
 	light.Create(&m_shaderColor, "../Assets/Models/sphere.obj");
 	light.SetPosition({ 1.0f, 0.0f, 0.0f });
-	light.SetColor({ 1.0f, 1.0f, 1.0f });
+	light.SetColor({ 3.0f, 1.0f,2.0f });
 	light.SetScale({ 0.005f, 0.005f, 0.005f });
 
 	Mesh::Lights.push_back(light);
@@ -56,40 +52,43 @@ void GameController::RunGame()
 	teapot.SetCameraPosition(m_camera.GetPosition());
 	teapot.SetScale({ 0.01f, 0.01f, 0.01f });
 	teapot.SetPosition({ 0.0f, 0.0f, 0.0f });
+	teapot.SetSpecularStrength(8.0f);
 
 	m_meshBoxes.push_back(teapot);
 
-	Fonts f = Fonts();
-	f.Create(&m_shaderFont, "arial.ttf", 100);
-
 	MultiRenders::ToolWindow^ window = gcnew MultiRenders::ToolWindow();
 	window->Show();
+}
 
-	do
+
+void GameController::Update(float dt)
+{
+	m_meshBoxes[0].SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
+
+	Mesh::Lights[0].SetColor({
+		MultiRenders::ToolWindow::color_R,
+		MultiRenders::ToolWindow::color_G,
+		MultiRenders::ToolWindow::color_B
+		});
+}
+
+void GameController::Render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
 	{
-		System::Windows::Forms::Application::DoEvents(); //Handle CLI Form Events
+		Mesh::Lights[count].Render(m_camera.GetProjection() * m_camera.GetView());
+	}
 
-		float r = MultiRenders::ToolWindow::color_R;
+	for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
+	{
+		m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
+	}
+}
 
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
-		{
-			Mesh::Lights[count].Render(m_camera.GetProjection() * m_camera.GetView());
-		}
-
-		for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
-		{
-			m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
-		}
-
-		f.RenderText("Testing Text", 10, 500, 0.5f, { 1.0f, 1.0f, 0.0f });
-
-		glfwSwapBuffers(WindowController::GetInstance().GetWindow());
-		glfwPollEvents();
-	} 
-	while (glfwGetKey(WindowController::GetInstance().GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(WindowController::GetInstance().GetWindow()) == 0);
-
+void GameController::CleanUp()
+{
 	for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
 	{
 		Mesh::Lights[count].CleanUp();

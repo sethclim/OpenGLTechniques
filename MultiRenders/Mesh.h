@@ -13,15 +13,16 @@ public:
 	Mesh();
 	virtual ~Mesh();
 
-	void SetPosition(glm::vec3 _position) { m_position = _position; }
+	void  SetPosition(glm::vec3 _position) { m_position = _position; }
 	glm::vec3 GetPosition() { return m_position; }
-	void SetScale(glm::vec3 _scale) { m_scale = _scale; }
-	void SetColor(glm::vec3 _color) { m_color = _color; }
+	void  SetScale(glm::vec3 _scale) { m_scale = _scale; }
+	void  SetColor(glm::vec3 _color) { m_color = _color; }
 	glm::vec3 GetColor() { return m_color; }
-	void SetLightPosition(glm::vec3 _lightPosition) { m_lightPosition = _lightPosition; }
-	void SetLightColor(glm::vec3 _lightColor) { m_lightColor = _lightColor; }
-	void SetCameraPosition(glm::vec3 _cameraPosition) { m_cameraPosition = _cameraPosition; }
-
+	void  SetSpecularStrength(float _specularStrength) { m_specularStrength = _specularStrength; }
+	float GetSpecularStrength() { return m_specularStrength; }
+	void  SetLightPosition(glm::vec3 _lightPosition) { m_lightPosition = _lightPosition; }
+	void  SetLightColor(glm::vec3 _lightColor) { m_lightColor = _lightColor; }
+	void  SetCameraPosition(glm::vec3 _cameraPosition) { m_cameraPosition = _cameraPosition; }
 
 	void Create(Shader* _shader, std::string _file);
 	void CleanUp();
@@ -53,7 +54,7 @@ private:
 	glm::vec3 m_lightColor;
 	glm::vec3 m_cameraPosition;
 	glm::vec3 m_color;
-
+	float	  m_specularStrength;
 };
 #endif // !MESH_H
 

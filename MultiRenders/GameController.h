@@ -4,7 +4,7 @@
 #include "StandardIncludes.h"
 #include "Shader.h"
 #include "Mesh.h"
-#include "WindowController.h"
+//#include "WindowController.h"
 #include "Camera.h"
 #include "Fonts.h"
 
@@ -14,8 +14,12 @@ public:
 	GameController();
 	virtual ~GameController();
 
-	void Initialize();
+	void Initialize(Resolution _resolution, glm::vec2 _windowSize);
 	void RunGame();
+
+	void Update(float dt);
+	void Render();
+	void CleanUp();
 
 private:
 	Shader m_shaderColor;
@@ -24,7 +28,6 @@ private:
 	Camera m_camera;
 	Mesh   m_meshLight;
 	std::vector<Mesh>   m_meshBoxes;
-
 };
 
 #endif // !GAMECONTROLLER_H

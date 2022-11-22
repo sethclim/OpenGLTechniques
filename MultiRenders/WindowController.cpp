@@ -37,3 +37,10 @@ Resolution WindowController::GetResolution()
 	return Resolution(1024, 768);
 }
 
+glm::vec2 WindowController::GetSize()
+{
+	int width, height;
+	glfwGetWindowSize(m_Window, &width, &height);
+	return glm::vec2(width, height);
+}
+

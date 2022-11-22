@@ -1,9 +1,9 @@
-#include "GameController.h"
+#include "Application.h"
 
 int main()
 {
-	GameController::GetInstance().Initialize();
-	GameController::GetInstance().RunGame();
+	Application::GetInstance().Initialize();
+	Application::GetInstance().Run();
 
 	return 0;
 }

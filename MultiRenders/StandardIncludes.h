@@ -9,6 +9,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 //Windows Specific includes and defines
 #ifdef _WIN32

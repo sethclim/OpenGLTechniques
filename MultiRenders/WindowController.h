@@ -14,6 +14,7 @@ public:
 
 	void NewWindow();
 	Resolution GetResolution();
+	glm::vec2 GetSize();
 
 private:
 	GLFWwindow* m_Window;
