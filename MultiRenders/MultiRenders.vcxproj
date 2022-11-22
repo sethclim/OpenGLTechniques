@@ -166,6 +166,7 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <ClInclude Include="GameController.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Mouse.h" />
     <ClInclude Include="ToolWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>

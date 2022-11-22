@@ -4,6 +4,7 @@
 #include "StandardIncludes.h"
 #include "WindowController.h"
 #include "GameController.h"
+#include "Mouse.h"
 
 class Application :public Singleton<Application>
 {
@@ -11,12 +12,14 @@ public:
 	Application();
 	virtual ~Application();
 
-	void Initialize();
 	void Run();
+	void Cursor_Position_Callback(double xpos, double ypos);
 
 private:
-	float m_LastFrameTime;
+	static void glfw_Cursor_Position_Callback(GLFWwindow* window, double xpos, double ypos);
 
+	float m_LastFrameTime;
+	Mouse mouse;
 	GameController* m_gameController;
 };
 

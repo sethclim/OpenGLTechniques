@@ -1,20 +1,18 @@
 #include "Application.h"
 
-Application::Application(): m_gameController( new GameController() )
+Application::Application(): m_gameController( new GameController() ), mouse(Mouse())
 {
 	GLFWwindow* window = WindowController::GetInstance().GetWindow(); // call this first to create window required by GLEW
 	M_ASSERT(glewInit() == GLEW_OK, "Failed to initialize GLEW"); // Initialize GLEW
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // Ensure we can capture the escape key
+	glfwSetCursorPosCallback(window, &glfw_Cursor_Position_Callback);
 
 	m_gameController->Initialize(WindowController::GetInstance().GetResolution(), WindowController::GetInstance().GetSize());
 }
 
 Application::~Application()
 {
-}
-
-void Application::Initialize()
-{
+	delete m_gameController;
 }
 
 void Application::Run()
@@ -37,6 +35,8 @@ void Application::Run()
 		{
 			float deltaTime = std::min(frameTime, dt);
 
+			m_gameController->ProcessInput(&mouse);
+
 			//Update
 			m_gameController->Update(deltaTime);
 
@@ -45,34 +45,22 @@ void Application::Run()
 		}
 
 		//RENDER
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_gameController->Render();
-
-		//m_meshBoxes[0].SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
-
-		//Mesh::Lights[0].SetColor({
-		//	MultiRenders::ToolWindow::color_R,
-		//	MultiRenders::ToolWindow::color_G,
-		//	MultiRenders::ToolWindow::color_B
-		//	});
-
-		//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		//for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
-		//{
-		//	Mesh::Lights[count].Render(m_camera.GetProjection() * m_camera.GetView());
-		//}
-
-		//for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
-		//{
-		//	m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
-		//}
-
-		//f.RenderText("Testing Text", 10, 500, 0.5f, { 1.0f, 1.0f, 0.0f });
-
 
 		glfwSwapBuffers(WindowController::GetInstance().GetWindow());
 		glfwPollEvents();
 	}
 
 	m_gameController->CleanUp();
+}
+
+void Application::Cursor_Position_Callback(double xpos, double ypos)
+{
+	mouse.SetPosition(xpos, ypos);
+}
+
+void Application::glfw_Cursor_Position_Callback(GLFWwindow* window, double xpos, double ypos)
+{
+	Application::GetInstance().Cursor_Position_Callback(xpos, ypos);
 }

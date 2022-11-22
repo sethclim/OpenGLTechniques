@@ -10,6 +10,8 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
+
 
 //Windows Specific includes and defines
 #ifdef _WIN32

@@ -46,6 +46,8 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 	Mesh::Lights.push_back(light);
 
+	m_meshBoxes.push_back(light);
+
 	Mesh teapot = Mesh();
 
 	teapot.Create(&m_shaderDiffuse, "../Assets/Models/teapot.obj");
@@ -56,10 +58,22 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 	m_meshBoxes.push_back(teapot);
 
+	Fonts f = Fonts();
+	f.Create(&m_shaderFont, "arial.ttf", 100);
+
+	m_fonts.push_back(f);
+
 	MultiRenders::ToolWindow^ window = gcnew MultiRenders::ToolWindow();
 	window->Show();
 }
 
+
+
+void GameController::ProcessInput(Mouse* _mouse)
+{
+	m_mouse = _mouse;
+	_mouse->GetPosition();
+}
 
 void GameController::Update(float dt)
 {
@@ -69,31 +83,28 @@ void GameController::Update(float dt)
 		MultiRenders::ToolWindow::color_R,
 		MultiRenders::ToolWindow::color_G,
 		MultiRenders::ToolWindow::color_B
-		});
+	});
 }
 
 void GameController::Render()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
+	for (unsigned int meshCount = 0; meshCount < m_meshBoxes.size(); meshCount++)
 	{
-		Mesh::Lights[count].Render(m_camera.GetProjection() * m_camera.GetView());
+		m_meshBoxes[meshCount].Render(m_camera.GetProjection() * m_camera.GetView());
 	}
 
-	for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
+	for (unsigned int fontCount = 0; fontCount < m_fonts.size(); fontCount++)
 	{
-		m_meshBoxes[count].Render(m_camera.GetProjection() * m_camera.GetView());
+		std::stringstream   mousePosition_MSG;
+		mousePosition_MSG << m_mouse->GetPosition().x << " " << m_mouse->GetPosition().y;
+
+		m_fonts[fontCount].RenderText(mousePosition_MSG.str(), 10, 500, 0.5f, {1.0f, 1.0f, 0.0f});
 	}
+
 }
 
 void GameController::CleanUp()
 {
-	for (unsigned int count = 0; count < Mesh::Lights.size(); count++)
-	{
-		Mesh::Lights[count].CleanUp();
-	}
-
 	for (unsigned int count = 0; count < m_meshBoxes.size(); count++)
 	{
 		m_meshBoxes[count].CleanUp();

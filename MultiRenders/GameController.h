@@ -7,6 +7,7 @@
 //#include "WindowController.h"
 #include "Camera.h"
 #include "Fonts.h"
+#include "Mouse.h"
 
 class GameController : public Singleton<GameController>
 {
@@ -15,8 +16,8 @@ public:
 	virtual ~GameController();
 
 	void Initialize(Resolution _resolution, glm::vec2 _windowSize);
-	void RunGame();
 
+	void ProcessInput(Mouse* mouse);
 	void Update(float dt);
 	void Render();
 	void CleanUp();
@@ -27,7 +28,10 @@ private:
 	Shader m_shaderFont;
 	Camera m_camera;
 	Mesh   m_meshLight;
-	std::vector<Mesh>   m_meshBoxes;
+	Mouse*  m_mouse;
+
+	std::vector<Mesh>    m_meshBoxes;
+	std::vector<Fonts>   m_fonts;
 };
 
 #endif // !GAMECONTROLLER_H
