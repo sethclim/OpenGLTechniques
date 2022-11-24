@@ -5,6 +5,7 @@
 #include "WindowController.h"
 #include "GameController.h"
 #include "Mouse.h"
+#include "Utilities.h"
 
 class Application :public Singleton<Application>
 {

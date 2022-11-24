@@ -47,9 +47,12 @@ void Application::Run()
 			t += deltaTime;
 		}
 
+		Utilities::FPSCounter::CalculateFrameRate();
+
 		//RENDER
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		m_gameController->Render();
+
 
 		glfwSwapBuffers(WindowController::GetInstance().GetWindow());
 		glfwPollEvents();

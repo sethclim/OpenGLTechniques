@@ -184,12 +184,12 @@ void GameController::Render()
 
 	mouseWorldPosition_MSG << worldMouse.x << " " << worldMouse.y;
 
-	//std::stringstream   fps_MSG;
-	//glm::vec3 worldMouse = viewToWorldCoordTransform(Application::Mouse.GetPosition());
+	std::stringstream   fps_MSG;
+	fps_MSG << Utilities::FPSCounter::FPS;
 
 	m_fonts[0].RenderText(mousePosition_MSG.str(), 10, 20, 0.2f, {1.0f, 1.0f, 1.0f});
 	m_fonts[1].RenderText(mouseWorldPosition_MSG.str(), 10, 50, 0.2f, { 1.0f, 1.0f, 0.0f });
-		//m_fonts[2].RenderText(fps_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
+	m_fonts[2].RenderText(fps_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
 	//}
 
 }

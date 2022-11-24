@@ -12,8 +12,7 @@
 #include <algorithm>
 #include <sstream>
 #include <functional>
-
-
+#include <chrono>
 
 //Windows Specific includes and defines
 #ifdef _WIN32
