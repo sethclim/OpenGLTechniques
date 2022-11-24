@@ -1,11 +1,14 @@
 #include "Application.h"
 
-Application::Application(): m_gameController( new GameController() ), mouse(Mouse())
+Mouse Application::Mouse;
+
+Application::Application(): m_gameController( new GameController() )
 {
 	GLFWwindow* window = WindowController::GetInstance().GetWindow(); // call this first to create window required by GLEW
 	M_ASSERT(glewInit() == GLEW_OK, "Failed to initialize GLEW"); // Initialize GLEW
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // Ensure we can capture the escape key
 	glfwSetCursorPosCallback(window, &glfw_Cursor_Position_Callback);
+	glfwSetMouseButtonCallback(window, &glfw_Mouse_Button_Callback);
 
 	m_gameController->Initialize(WindowController::GetInstance().GetResolution(), WindowController::GetInstance().GetSize());
 }
@@ -35,7 +38,7 @@ void Application::Run()
 		{
 			float deltaTime = std::min(frameTime, dt);
 
-			m_gameController->ProcessInput(&mouse);
+			m_gameController->ProcessInput(deltaTime);
 
 			//Update
 			m_gameController->Update(deltaTime);
@@ -57,10 +60,24 @@ void Application::Run()
 
 void Application::Cursor_Position_Callback(double xpos, double ypos)
 {
-	mouse.SetPosition(xpos, ypos);
+	Mouse.SetPosition(xpos, ypos);
 }
 
 void Application::glfw_Cursor_Position_Callback(GLFWwindow* window, double xpos, double ypos)
 {
 	Application::GetInstance().Cursor_Position_Callback(xpos, ypos);
+}
+
+void Application::glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int action, int mods)
+{
+	if (button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_PRESS)
+	{
+		Mouse.SetMouseDown(true);
+	}
+	else if(button == GLFW_MOUSE_BUTTON_LEFT && action == GLFW_RELEASE)
+	{
+		Mouse.SetMouseDown(false);
+	}
+
+
 }

@@ -1,5 +1,12 @@
 #pragma once
 
+#include <functional>
+#include <iostream>
+#include "GameController.h"
+
+using namespace System;
+using namespace System::Runtime::InteropServices;
+
 namespace MultiRenders {
 
 	using namespace System;
@@ -34,14 +41,13 @@ namespace MultiRenders {
 				delete components;
 			}
 		}
+
 	private: System::Windows::Forms::RadioButton^ radioButton1;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::TrackBar^ specularStrength_TB;
 	private: System::Windows::Forms::TrackBar^ b_TB;
 	private: System::Windows::Forms::TrackBar^ g_TB;
 	private: System::Windows::Forms::TrackBar^ r_TB;
-
-
 
 	private: System::Windows::Forms::Label^ label1;
 	private: System::Windows::Forms::Label^ label2;
@@ -55,7 +61,6 @@ namespace MultiRenders {
 	private: System::Windows::Forms::Label^ g_Out_Label;
 	private: System::Windows::Forms::Label^ b_Out_Label;
 	private: System::Windows::Forms::Label^ specularStrength_Out_Label;
-
 
 	protected:
 
@@ -116,6 +121,7 @@ namespace MultiRenders {
 			this->button1->TabIndex = 1;
 			this->button1->Text = L"Reset Light Position";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &ToolWindow::button1_Click);
 			// 
 			// specularStrength_TB
 			// 
@@ -312,6 +318,7 @@ public:
 	static float color_G = 0;
 	static float color_B = 0;
 
+
 private:
 		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 		}
@@ -351,6 +358,12 @@ private:
 		{
 			return (float)value / 100;
 		}
-	};
+
+		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+
+
+		}
+};
 }	
  

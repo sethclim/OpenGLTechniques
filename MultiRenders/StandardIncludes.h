@@ -11,6 +11,8 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include <functional>
+
 
 
 //Windows Specific includes and defines
@@ -25,6 +27,8 @@
 #include <glm/glm.hpp>
 #include <glm/ext.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
+#include <glm/ext/matrix_projection.hpp>
 
 //font
 #define generic GenericFromFreeTypeLibrary
@@ -35,5 +39,9 @@
 #include "Resolution.h"
 #include "Singleton.h"
 
+static void Log(std::string _msg)
+{
+	std::cout << _msg << std::endl;
+}
 
 #endif // !STANDARDINCLUDES_H

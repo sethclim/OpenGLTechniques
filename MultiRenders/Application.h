@@ -15,11 +15,12 @@ public:
 	void Run();
 	void Cursor_Position_Callback(double xpos, double ypos);
 
+	static Mouse Mouse;
 private:
 	static void glfw_Cursor_Position_Callback(GLFWwindow* window, double xpos, double ypos);
+	static void glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int action, int mods);
 
 	float m_LastFrameTime;
-	Mouse mouse;
 	GameController* m_gameController;
 };
 
