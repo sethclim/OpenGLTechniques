@@ -10,7 +10,10 @@ public:
 	SceneOne(Camera _camera);
 	virtual ~SceneOne();
 
+	void Init();
+
 	void ProcessInput(float dt);
+	void Update(float dt);
 
 };
 

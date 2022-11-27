@@ -1,3 +1,4 @@
+#include "ToolWindow.h"
 #include "SceneOne.h"
 
 SceneOne::SceneOne(Camera _camera)
@@ -8,6 +9,18 @@ SceneOne::SceneOne(Camera _camera)
 SceneOne::~SceneOne()
 {
 
+}
+
+void SceneOne::Init()
+{
+	m_meshes[0]->SetPosition({ 1.0f, 0.0f, 1.0f });
+	m_meshes[0]->SetColor({ 3.0f, 1.0f,2.0f });
+	m_meshes[0]->SetScale({ 0.005f, 0.005f, 0.005f });
+
+	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
+	m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
+	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+	m_meshes[1]->SetSpecularStrength(8.0f);
 }
 
 void SceneOne::ProcessInput(float dt)
@@ -22,4 +35,22 @@ void SceneOne::ProcessInput(float dt)
 		m_meshes[0]->SetPosition(_curLightPos);
 		m_meshes[1]->SetLightPosition(_curLightPos);
 	}
+}
+
+void SceneOne::Update(float dt)
+{
+	m_meshes[1]->SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
+
+	Mesh::Lights[0]->SetColor({
+		MultiRenders::ToolWindow::color_R,
+		MultiRenders::ToolWindow::color_G,
+		MultiRenders::ToolWindow::color_B
+	});
+
+	glm::vec3 curRot = m_meshes[1]->GetRotation();
+
+	curRot.x += 5.0f * dt;
+
+	m_meshes[1]->SetRotation(curRot);
+
 }

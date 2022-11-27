@@ -16,6 +16,8 @@ public:
 	void  SetPosition(glm::vec3 _position) { m_position = _position; }
 	glm::vec3 GetPosition() { return m_position; }
 	void  SetScale(glm::vec3 _scale) { m_scale = _scale; }
+	void SetRotation(glm::vec3 rotation) { m_rotation = rotation; }
+	glm::vec3 GetRotation() { return m_rotation; }
 	void  SetColor(glm::vec3 _color) { m_color = _color; }
 	glm::vec3 GetColor() { return m_color; }
 	void  SetSpecularStrength(float _specularStrength) { m_specularStrength = _specularStrength; }
@@ -29,7 +31,7 @@ public:
 	void CalculateTransform();
 	void Render(glm::mat4 _pv);
 
-	static std::vector<Mesh> Lights;
+	static std::vector<Mesh*> Lights;
 
 private:
 	void SetShaderVariables(glm::mat4 _pv);

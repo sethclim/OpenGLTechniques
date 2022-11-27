@@ -27,10 +27,9 @@ void Scene::AddShader(Shader* _shader)
 	m_shaders.push_back(_shader);
 }
 
-void Scene::ProcessInput(float _dt)
-{
+void Scene::ProcessInput(float _dt) { }
 
-}
+void Scene::Update(float _dt) { }
  
 void Scene::Render()
 {

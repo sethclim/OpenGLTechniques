@@ -157,6 +157,8 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneOne.cpp" />
+    <ClCompile Include="SceneThree.cpp" />
+    <ClCompile Include="SceneTwo.cpp" />
     <ClCompile Include="ToolWindow.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -172,6 +174,8 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <ClInclude Include="Mouse.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneOne.h" />
+    <ClInclude Include="SceneThree.h" />
+    <ClInclude Include="SceneTwo.h" />
     <ClInclude Include="ToolWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>

@@ -13,7 +13,10 @@ public:
 	Scene(Camera _camera);
 	virtual ~Scene();
 
+	void Init();
+
 	virtual void ProcessInput(float _dt);
+	virtual void Update(float _dt);
 	void Render();
 
 	void AddMesh(Mesh* _mesh);

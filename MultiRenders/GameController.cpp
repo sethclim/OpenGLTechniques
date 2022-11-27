@@ -2,6 +2,8 @@
 #include "ToolWindow.h"
 #include "Application.h"
 #include "SceneOne.h"
+#include "SceneTwo.h"
+#include "SceneThree.h"
 
 
 GameController::GameController()
@@ -11,7 +13,7 @@ GameController::GameController()
 	m_camera = { };
 	m_meshLight = { };
 	m_meshBoxes.clear();
-	//m_currentScene = { };
+	m_currentScene = { };
 }
 
 GameController::~GameController()
@@ -21,7 +23,6 @@ GameController::~GameController()
 
 void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 {
-
 	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -31,113 +32,75 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 	m_camera = Camera(_resolution);
 	m_windowSize = _windowSize;
 
-	//Load Assets
-	m_shaderColor = Shader();
-	m_shaderColor.LoadShaders("Color.vert", "Color.frag");
+#pragma region LoadAssets
+	{
+		m_shaderColor = Shader();
+		m_shaderColor.LoadShaders("Color.vert", "Color.frag");
 
-	m_shaderDiffuse = Shader();
-	m_shaderDiffuse.LoadShaders("Diffuse.vert", "DiffuseWorld.frag");
+		m_shaderDiffuse = Shader();
+		m_shaderDiffuse.LoadShaders("Diffuse.vert", "Diffuse.frag");
 
-	m_shaderFont = Shader();
-	m_shaderFont.LoadShaders("Font.vert", "Font.frag");
+		m_shaderWorldDiffuse = Shader();
+		m_shaderWorldDiffuse.LoadShaders("Diffuse.vert", "DiffuseWorld.frag");
 
-	Mesh* light = new Mesh();
+		m_shaderFont = Shader();
+		m_shaderFont.LoadShaders("Font.vert", "Font.frag");
 
-	light->Create(&m_shaderColor, "../Assets/Models/sphere.obj");
-	light->SetPosition({ 1.0f, 0.0f, 1.0f });
-	light->SetColor({ 3.0f, 1.0f,2.0f });
-	light->SetScale({ 0.005f, 0.005f, 0.005f });
+		Mesh* light = new Mesh();
+		light->Create(&m_shaderColor, "../Assets/Models/sphere.obj");
+		Mesh::Lights.push_back(light);
+		m_meshBoxes.push_back(light);
 
-	Mesh::Lights.push_back(*light);
+		Mesh* teapot = new Mesh();
+		teapot->Create(&m_shaderDiffuse, "../Assets/Models/teapot.obj");
+		m_meshBoxes.push_back(teapot);
 
-	m_meshBoxes.push_back(light);
+		Mesh* teapot2 = new Mesh();
+		teapot2->Create(&m_shaderWorldDiffuse, "../Assets/Models/teapot.obj");
+		m_meshBoxes.push_back(teapot2);
 
-	Mesh* teapot = new Mesh();
+		Fonts f = Fonts();
+		f.Create(&m_shaderFont, "arial.ttf", 100);
 
-	teapot->Create(&m_shaderDiffuse, "../Assets/Models/teapot.obj");
-	teapot->SetCameraPosition(m_camera.GetPosition());
-	teapot->SetScale({ 0.05f, 0.05f, 0.05f });
-	teapot->SetPosition({ 0.0f, 0.0f, 0.0f });
-	teapot->SetSpecularStrength(8.0f);
+		m_fonts.push_back(f);
+		m_fonts.push_back(f);
+		m_fonts.push_back(f);
+	}
 
-	m_meshBoxes.push_back(teapot);
+#pragma endregion
 
-	Fonts f = Fonts();
-	f.Create(&m_shaderFont, "arial.ttf", 100);
+#pragma region CreateScenes
+	{
+		SceneOne* sceneOne = new SceneOne(m_camera);
+		sceneOne->AddMesh(m_meshBoxes[0]);
+		sceneOne->AddMesh(m_meshBoxes[1]);
+		sceneOne->Init();
 
-	m_fonts.push_back(f);
-	m_fonts.push_back(f);
-	m_fonts.push_back(f);
+		m_scenes.push_back(sceneOne);
+
+		SceneTwo* sceneTwo = new SceneTwo(m_camera);
+		sceneTwo->AddMesh(m_meshBoxes[2]);
+		sceneTwo->Init();
+
+		m_scenes.push_back(sceneTwo);
+
+		m_currentScene = m_scenes[0];
+	}
+#pragma endregion
 
 	MultiRenders::ToolWindow^ window = gcnew MultiRenders::ToolWindow();
 	window->Show();
-
-	SceneOne* sceneOne = new SceneOne(m_camera);
-	sceneOne->AddMesh(m_meshBoxes[0]);
-	sceneOne->AddMesh(m_meshBoxes[1]);
-
-	m_scenes.push_back(sceneOne);
-
-	m_currentScene = m_scenes[0];
-
-
-	//std::function<void()> x = [this]()->void
-	//{
-	//	m_meshBoxes[0].SetPosition({ 0,0,0 });
-	//};
-
-	//window->AddCallBack((MultiRenders::ToolWindow::ANSWERCB)x);
-
 }
 
 void GameController::ProcessInput(float _dt)
 {
-	//glm::vec2 pos = Application::Mouse.GetPosition();
-
-	//float halfX = m_windowSize.x / 2;
-	//float halfy = m_windowSize.y / 2;
-
-	m_currentScene = m_scenes[(int)MultiRenders::ToolWindow::Mode::SceneOne];
-
-	if (Application::Mouse.GetMouseDown())
-	{
-		//glm::vec3 dir = Utilities::ViewToWorldCoordTransform(Application::Mouse.GetPosition(), m_camera);
-
-
-		//switch (MultiRenders::ToolWindow::game_mode)
-		//{
-		//case MultiRenders::ToolWindow::Mode::SceneOne:
-
-		//	//glm::vec3 _curLightPos = m_meshBoxes[0].GetPosition();
-		//	//_curLightPos += (dir * 0.5f * _dt);
-
-		//	//m_meshBoxes[0].SetPosition(_curLightPos);
-		//	//m_meshBoxes[1].SetLightPosition(_curLightPos);
-		//	break;
-
-		//case MultiRenders::ToolWindow::Mode::SceneTwo:
-		//	//glm::vec3 _curTeaPotPos = m_meshBoxes[1].GetPosition();
-		//	//_curTeaPotPos += (dir * 0.5f * _dt);
-
-		//	//m_meshBoxes[1].SetPosition(_curTeaPotPos);
-		//	break;
-		//}
-
-
-	}
-
+	m_currentScene = m_scenes[(int)MultiRenders::ToolWindow::game_mode];
 	m_currentScene->ProcessInput(_dt);
 }
 
 void GameController::Update(float dt)
 {
-	m_meshBoxes[0]->SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
-
-	Mesh::Lights[0].SetColor({
-		MultiRenders::ToolWindow::color_R,
-		MultiRenders::ToolWindow::color_G,
-		MultiRenders::ToolWindow::color_B
-	});
+	m_currentScene->Update(dt);
 }
 
 void GameController::Render()

@@ -69,6 +69,12 @@
     <ClCompile Include="WindowController.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
+    <ClCompile Include="SceneTwo.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneThree.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ToolWindow.h">
@@ -118,6 +124,12 @@
     </ClInclude>
     <ClInclude Include="WindowController.h">
       <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneThree.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneTwo.h">
+      <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

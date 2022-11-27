@@ -30,6 +30,7 @@ private:
 	Shader     m_shaderColor;
 	Shader     m_shaderDiffuse;
 	Shader     m_shaderFont;
+	Shader	   m_shaderWorldDiffuse;
 	Camera     m_camera;
 	Mesh       m_meshLight;
 	Scene*     m_currentScene;
