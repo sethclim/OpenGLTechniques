@@ -7,6 +7,7 @@
 #include "Mouse.h"
 #include "Utilities.h"
 
+
 class Application :public Singleton<Application>
 {
 public:

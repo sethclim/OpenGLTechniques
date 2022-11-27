@@ -9,6 +9,9 @@
 #include "Fonts.h"
 #include "Mouse.h"
 
+class Scene;
+
+
 class GameController : public Singleton<GameController>
 {
 public:
@@ -23,22 +26,19 @@ public:
 	void CleanUp();
 	
 
-	//void Test();
-
 private:
-	glm::vec3 MoveToQuadCenter(glm::vec3 _center, glm::vec3 _curPos, float _dt);
-	glm::vec3 viewToWorldCoordTransform(glm::vec2 _mouse);
-
-
-	Shader    m_shaderColor;
-	Shader    m_shaderDiffuse;
-	Shader    m_shaderFont;
-	Camera    m_camera;
-	Mesh      m_meshLight;
+	Shader     m_shaderColor;
+	Shader     m_shaderDiffuse;
+	Shader     m_shaderFont;
+	Camera     m_camera;
+	Mesh       m_meshLight;
+	Scene*     m_currentScene;
 
 	glm::vec2 m_windowSize;
-	std::vector<Mesh>    m_meshBoxes;
+	std::vector<Mesh*>    m_meshBoxes;
 	std::vector<Fonts>   m_fonts;
+
+	std::vector<Scene*>   m_scenes;
 };
 
 #endif // !GAMECONTROLLER_H

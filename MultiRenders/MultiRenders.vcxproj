@@ -155,6 +155,8 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Application.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneOne.cpp" />
     <ClCompile Include="ToolWindow.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -168,6 +170,8 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Mouse.h" />
+    <ClInclude Include="Scene.h" />
+    <ClInclude Include="SceneOne.h" />
     <ClInclude Include="ToolWindow.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -184,6 +188,7 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <None Include="Color.vert" />
     <None Include="Diffuse.frag" />
     <None Include="Diffuse.vert" />
+    <None Include="DiffuseWorld.frag" />
     <None Include="Font.frag" />
     <None Include="Font.vert" />
     <None Include="SimpleFragmentShader.frag" />

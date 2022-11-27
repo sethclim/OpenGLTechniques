@@ -41,8 +41,6 @@ namespace MultiRenders {
 				delete components;
 			}
 		}
-
-	private: System::Windows::Forms::RadioButton^ radioButton1;
 	private: System::Windows::Forms::Button^ button1;
 	private: System::Windows::Forms::TrackBar^ specularStrength_TB;
 	private: System::Windows::Forms::TrackBar^ b_TB;
@@ -54,8 +52,11 @@ namespace MultiRenders {
 	private: System::Windows::Forms::Label^ label3;
 	private: System::Windows::Forms::Label^ label4;
 	private: System::Windows::Forms::Label^ label5;
-	private: System::Windows::Forms::RadioButton^ radioButton2;
+
+	private: System::Windows::Forms::RadioButton^ moveLight_RB;
+	private: System::Windows::Forms::RadioButton^ colorByPosition_RB;
 	private: System::Windows::Forms::RadioButton^ radioButton3;
+
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ r_Out_Label;
 	private: System::Windows::Forms::Label^ g_Out_Label;
@@ -77,7 +78,7 @@ namespace MultiRenders {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->moveLight_RB = (gcnew System::Windows::Forms::RadioButton());
 			this->button1 = (gcnew System::Windows::Forms::Button());
 			this->specularStrength_TB = (gcnew System::Windows::Forms::TrackBar());
 			this->b_TB = (gcnew System::Windows::Forms::TrackBar());
@@ -88,7 +89,7 @@ namespace MultiRenders {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->radioButton2 = (gcnew System::Windows::Forms::RadioButton());
+			this->colorByPosition_RB = (gcnew System::Windows::Forms::RadioButton());
 			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->r_Out_Label = (gcnew System::Windows::Forms::Label());
@@ -103,15 +104,15 @@ namespace MultiRenders {
 			// 
 			// radioButton1
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Location = System::Drawing::Point(24, 24);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(80, 17);
-			this->radioButton1->TabIndex = 0;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"MoveLights";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged);
+			this->moveLight_RB->AutoSize = true;
+			this->moveLight_RB->Location = System::Drawing::Point(24, 24);
+			this->moveLight_RB->Name = L"radioButton1";
+			this->moveLight_RB->Size = System::Drawing::Size(80, 17);
+			this->moveLight_RB->TabIndex = 0;
+			this->moveLight_RB->TabStop = true;
+			this->moveLight_RB->Text = L"MoveLights";
+			this->moveLight_RB->UseVisualStyleBackColor = true;
+			this->moveLight_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -210,16 +211,17 @@ namespace MultiRenders {
 			this->label5->TabIndex = 15;
 			this->label5->Text = L"B";
 			// 
-			// radioButton2
+			// colorByPosition_RB
 			// 
-			this->radioButton2->AutoSize = true;
-			this->radioButton2->Location = System::Drawing::Point(24, 313);
-			this->radioButton2->Name = L"radioButton2";
-			this->radioButton2->Size = System::Drawing::Size(103, 17);
-			this->radioButton2->TabIndex = 16;
-			this->radioButton2->TabStop = true;
-			this->radioButton2->Text = L"Color by Position";
-			this->radioButton2->UseVisualStyleBackColor = true;
+			this->colorByPosition_RB->AutoSize = true;
+			this->colorByPosition_RB->Location = System::Drawing::Point(24, 313);
+			this->colorByPosition_RB->Name = L"colorByPosition_RB";
+			this->colorByPosition_RB->Size = System::Drawing::Size(103, 17);
+			this->colorByPosition_RB->TabIndex = 16;
+			this->colorByPosition_RB->TabStop = true;
+			this->colorByPosition_RB->Text = L"Color by Position";
+			this->colorByPosition_RB->UseVisualStyleBackColor = true;
+			this->colorByPosition_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton2_CheckedChanged);
 			// 
 			// radioButton3
 			// 
@@ -288,7 +290,7 @@ namespace MultiRenders {
 			this->Controls->Add(this->r_Out_Label);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->radioButton3);
-			this->Controls->Add(this->radioButton2);
+			this->Controls->Add(this->colorByPosition_RB);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -299,7 +301,7 @@ namespace MultiRenders {
 			this->Controls->Add(this->b_TB);
 			this->Controls->Add(this->specularStrength_TB);
 			this->Controls->Add(this->button1);
-			this->Controls->Add(this->radioButton1);
+			this->Controls->Add(this->moveLight_RB);
 			this->Name = L"ToolWindow";
 			this->Text = L"MyForm";
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->EndInit();
@@ -313,15 +315,19 @@ namespace MultiRenders {
 #pragma endregion
 
 public:
+	enum class  Mode : char {
+		SceneOne,
+		SceneTwo,
+		SceneThree,
+	};
 	static float specularStrength = 0;
 	static float color_R = 0;
 	static float color_G = 0;
 	static float color_B = 0;
+	static Mode  game_mode = Mode::SceneOne;
 
 
 private:
-		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-		}
 		System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
 		}
 		System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
@@ -364,6 +370,21 @@ private:
 
 
 		}
+		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			if (moveLight_RB->Checked)
+			{
+				game_mode = Mode::SceneOne;
+			}
+
+		}
+		System::Void radioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (colorByPosition_RB->Checked)
+			{
+				game_mode = Mode::SceneTwo;
+			}
+		}
+
 };
 }	
  

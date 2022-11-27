@@ -2,6 +2,7 @@
 #define UTILITIES_H
 
 #include "StandardIncludes.h"
+#include "Camera.h"
 
 namespace Utilities
 {
@@ -17,6 +18,8 @@ namespace Utilities
 		static void CalculateFrameRate();
 
 	};
+
+	glm::vec3 ViewToWorldCoordTransform(glm::vec2 _mouse, Camera _camera);
 	
 };
 

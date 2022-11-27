@@ -11,6 +11,8 @@ Application::Application(): m_gameController( new GameController() )
 	glfwSetMouseButtonCallback(window, &glfw_Mouse_Button_Callback);
 
 	m_gameController->Initialize(WindowController::GetInstance().GetResolution(), WindowController::GetInstance().GetSize());
+
+	glfwSwapInterval(0);
 }
 
 Application::~Application()
@@ -21,7 +23,8 @@ Application::~Application()
 void Application::Run()
 {
 	double t = 0.0;
-	double dt = 1 / 60.0;
+
+	const double fpsLimit = 1.0 / 60.0;
 
 	while (glfwGetKey(WindowController::GetInstance().GetWindow(), GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(WindowController::GetInstance().GetWindow()) == 0)
 	{
@@ -34,17 +37,19 @@ void Application::Run()
 		double frameTime = newTime - m_LastFrameTime;
 		m_LastFrameTime = newTime;
 
-		while (frameTime > 0.0)
-		{
-			float deltaTime = std::min(frameTime, dt);
+		float deltaTime = std::min(frameTime, fpsLimit);
 
-			m_gameController->ProcessInput(deltaTime);
+		m_gameController->ProcessInput(deltaTime);
+
+		if (frameTime >= fpsLimit)
+		{
 
 			//Update
 			m_gameController->Update(deltaTime);
 
-			frameTime -= deltaTime;
-			t += deltaTime;
+			//frameTime -= deltaTime;
+			//t += deltaTime;
+
 		}
 
 		Utilities::FPSCounter::CalculateFrameRate();
@@ -55,6 +60,7 @@ void Application::Run()
 
 
 		glfwSwapBuffers(WindowController::GetInstance().GetWindow());
+	
 		glfwPollEvents();
 	}
 

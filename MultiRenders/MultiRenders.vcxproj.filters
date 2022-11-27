@@ -16,84 +16,108 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{fb828bcb-373f-44bc-88c6-f7d55e0cca2d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{78945eec-dbd4-4cdc-a18c-b1fa62a4ded6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{f5689ed7-58d0-4190-8680-0719d242cb7d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Core">
+      <UniqueIdentifier>{56d25dd0-02a1-4109-8f78-662128a14f2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{56bda665-40d2-4854-93d7-e6dbc8d7978b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WindowController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameController.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Fonts.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ToolWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SceneOne.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
     <ClCompile Include="Application.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
     <ClCompile Include="Utilities.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowController.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Singleton.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="StandardIncludes.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameController.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resolution.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Fonts.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ToolWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SceneOne.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Mouse.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Resolution.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="StandardIncludes.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
     <ClInclude Include="Utilities.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowController.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +146,9 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="Font.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="DiffuseWorld.frag">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
