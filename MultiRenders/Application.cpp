@@ -31,8 +31,6 @@ void Application::Run()
 		System::Windows::Forms::Application::DoEvents(); //Handle CLI Form Events
 
 		//PROCESS INPUT
-		//TODO
-
 		double newTime = glfwGetTime();
 		double frameTime = newTime - m_LastFrameTime;
 		m_LastFrameTime = newTime;
@@ -40,17 +38,7 @@ void Application::Run()
 		float deltaTime = std::min(frameTime, fpsLimit);
 
 		m_gameController->ProcessInput(deltaTime);
-
-		if (frameTime >= fpsLimit)
-		{
-
-			//Update
-			m_gameController->Update(deltaTime);
-
-			//frameTime -= deltaTime;
-			//t += deltaTime;
-
-		}
+		m_gameController->Update(deltaTime);
 
 		Utilities::FPSCounter::CalculateFrameRate();
 
@@ -87,6 +75,4 @@ void Application::glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int
 	{
 		Mouse.SetMouseDown(false);
 	}
-
-
 }

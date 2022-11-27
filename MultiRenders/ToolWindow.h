@@ -55,7 +55,7 @@ namespace MultiRenders {
 
 	private: System::Windows::Forms::RadioButton^ moveLight_RB;
 	private: System::Windows::Forms::RadioButton^ colorByPosition_RB;
-	private: System::Windows::Forms::RadioButton^ radioButton3;
+	private: System::Windows::Forms::RadioButton^ cubesToSphere_RB;
 
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ r_Out_Label;
@@ -90,7 +90,7 @@ namespace MultiRenders {
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->colorByPosition_RB = (gcnew System::Windows::Forms::RadioButton());
-			this->radioButton3 = (gcnew System::Windows::Forms::RadioButton());
+			this->cubesToSphere_RB = (gcnew System::Windows::Forms::RadioButton());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->r_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->g_Out_Label = (gcnew System::Windows::Forms::Label());
@@ -102,11 +102,11 @@ namespace MultiRenders {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->BeginInit();
 			this->SuspendLayout();
 			// 
-			// radioButton1
+			// moveLight_RB
 			// 
 			this->moveLight_RB->AutoSize = true;
 			this->moveLight_RB->Location = System::Drawing::Point(24, 24);
-			this->moveLight_RB->Name = L"radioButton1";
+			this->moveLight_RB->Name = L"moveLight_RB";
 			this->moveLight_RB->Size = System::Drawing::Size(80, 17);
 			this->moveLight_RB->TabIndex = 0;
 			this->moveLight_RB->TabStop = true;
@@ -225,14 +225,15 @@ namespace MultiRenders {
 			// 
 			// radioButton3
 			// 
-			this->radioButton3->AutoSize = true;
-			this->radioButton3->Location = System::Drawing::Point(24, 391);
-			this->radioButton3->Name = L"radioButton3";
-			this->radioButton3->Size = System::Drawing::Size(136, 17);
-			this->radioButton3->TabIndex = 17;
-			this->radioButton3->TabStop = true;
-			this->radioButton3->Text = L"Move Cubes by Sphere";
-			this->radioButton3->UseVisualStyleBackColor = true;
+			this->cubesToSphere_RB->AutoSize = true;
+			this->cubesToSphere_RB->Location = System::Drawing::Point(24, 391);
+			this->cubesToSphere_RB->Name = L"radioButton3";
+			this->cubesToSphere_RB->Size = System::Drawing::Size(136, 17);
+			this->cubesToSphere_RB->TabIndex = 17;
+			this->cubesToSphere_RB->TabStop = true;
+			this->cubesToSphere_RB->Text = L"Move Cubes by Sphere";
+			this->cubesToSphere_RB->UseVisualStyleBackColor = true;
+			this->cubesToSphere_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton3_CheckedChanged);
 			// 
 			// button2
 			// 
@@ -289,7 +290,7 @@ namespace MultiRenders {
 			this->Controls->Add(this->g_Out_Label);
 			this->Controls->Add(this->r_Out_Label);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->radioButton3);
+			this->Controls->Add(this->cubesToSphere_RB);
 			this->Controls->Add(this->colorByPosition_RB);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
@@ -385,6 +386,12 @@ private:
 			}
 		}
 
-};
+		System::Void radioButton3_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (cubesToSphere_RB->Checked)
+			{
+				game_mode = Mode::SceneThree;
+			}
+		}
+	};
 }	
  

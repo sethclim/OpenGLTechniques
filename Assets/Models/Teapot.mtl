@@ -12,5 +12,5 @@ newmtl Material__29
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka C:\Users\sethc\Downloads\Assets\Teapot.jpg
-	map_Kd C:\Users\sethc\Downloads\Assets\TeapotSpecular.jpg
+	map_Kd C:\Users\sethc\Downloads\Assets\Teapot.jpg
+	map_Ks C:\Users\sethc\Downloads\Assets\TeapotSpecular.jpg

@@ -34,6 +34,7 @@ private:
 	Camera     m_camera;
 	Mesh       m_meshLight;
 	Scene*     m_currentScene;
+	int		   m_currentSceneNum;
 
 	glm::vec2 m_windowSize;
 	std::vector<Mesh*>    m_meshBoxes;

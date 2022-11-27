@@ -12,7 +12,5 @@ newmtl 02___Default
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Kd C:\Users\Shae\Documents\School\Term 7\Graphics & Gamification\VS\Assignment2\Assets\Textures\Teapot.jpg
-	map_Ks C:\Users\Shae\Documents\School\Term 7\Graphics & Gamification\VS\Assignment2\Assets\Textures\TeapotSpecular.jpg
-	map_bump C:\Users\Shae\Documents\School\Term 7\Graphics & Gamification\VS\Assignment2\Assets\Textures\TeapotNormal.jpg
-	bump C:\Users\Shae\Documents\School\Term 7\Graphics & Gamification\VS\Assignment2\Assets\Textures\TeapotNormal.jpg
+	map_Kd C:\Users\sethc\coding\c++\MultiRenders\Assets\Textures\Teapot.jpg
+	map_Ks C:\Users\sethc\coding\c++\MultiRenders\Assets\Textures\TeapotSpecular.jpg

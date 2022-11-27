@@ -59,6 +59,15 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		teapot2->Create(&m_shaderWorldDiffuse, "../Assets/Models/teapot.obj");
 		m_meshBoxes.push_back(teapot2);
 
+		Mesh* sphereHappy = new Mesh();
+		sphereHappy->Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
+		m_meshBoxes.push_back(sphereHappy);
+
+		//Mesh* box = new Mesh();
+		//box->Create(&m_shaderWorldDiffuse, "../Assets/Models/cube.obj");
+		//m_meshBoxes.push_back(box);
+		
+
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
 
@@ -80,11 +89,20 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 		SceneTwo* sceneTwo = new SceneTwo(m_camera);
 		sceneTwo->AddMesh(m_meshBoxes[2]);
-		sceneTwo->Init();
+		//sceneTwo->Init();
 
 		m_scenes.push_back(sceneTwo);
 
+		SceneThree* sceneThree = new SceneThree(m_camera);
+		sceneThree->AddMesh(m_meshBoxes[0]);
+		sceneThree->AddMesh(m_meshBoxes[3]);
+		sceneThree->AddShader(&m_shaderDiffuse);
+		//sceneThree->Init();
+
+		m_scenes.push_back(sceneThree);
+
 		m_currentScene = m_scenes[0];
+		m_currentSceneNum = 0;
 	}
 #pragma endregion
 
@@ -94,7 +112,14 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 void GameController::ProcessInput(float _dt)
 {
-	m_currentScene = m_scenes[(int)MultiRenders::ToolWindow::game_mode];
+	int nextScene = (int)MultiRenders::ToolWindow::game_mode;
+	if (nextScene != m_currentSceneNum)
+	{
+		m_currentScene = m_scenes[nextScene];
+		m_currentScene->Init();
+		m_currentSceneNum = nextScene;
+	}
+
 	m_currentScene->ProcessInput(_dt);
 }
 

@@ -10,8 +10,13 @@ public:
 	SceneThree(Camera _camera);
 	virtual ~SceneThree();
 
-	void ProcessInput(float dt);
+	void Init();
 
+	void ProcessInput(float dt);
+	void Update(float dt);
+
+private:
+	std::vector<Mesh *> boxes;
 };
 
 #endif // !SCENETHREE_H

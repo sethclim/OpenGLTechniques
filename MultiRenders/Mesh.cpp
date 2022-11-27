@@ -53,11 +53,19 @@ void Mesh::Create(Shader* _shader, std::string _file)
 		diffuseMap.erase(0, last_slash_idx + 1);
 	}
 
+	std::string specularMap = Loader.LoadedMaterials[0].map_Ks;
+	const size_t last_slash_idx2 = specularMap.find_last_of("\\");
+
+	if (std::string::npos != last_slash_idx2)
+	{
+		specularMap.erase(0, last_slash_idx2 + 1);
+	}
+
 	m_texture = Texture();
 	m_texture.LoadTexture("../Assets/Textures/" + diffuseMap);
 
 	m_texture2 = Texture();
-	m_texture2.LoadTexture("../Assets/Textures/" + diffuseMap);
+	m_texture2.LoadTexture("../Assets/Textures/" + specularMap);
 
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -83,7 +91,7 @@ void Mesh::CleanUp()
 void Mesh::CalculateTransform()
 {
 	m_world = glm::translate(glm::mat4(1.0), m_position);
-	m_world = glm::rotate(m_world, m_rotation.x, glm::vec3(0, 1, 0));
+	m_world = glm::rotate(m_world, m_rotation.x, glm::vec3(1, 0, 0));
 	m_world = glm::scale(m_world, m_scale);
 }
 
