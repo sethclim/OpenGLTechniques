@@ -15,6 +15,8 @@ public:
 	void ProcessInput(float dt);
 	void Update(float dt);
 
+	int GetNumberOfBoxes() { return boxes.size(); }
+
 private:
 	std::vector<Mesh *> boxes;
 };

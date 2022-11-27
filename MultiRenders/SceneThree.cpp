@@ -45,13 +45,13 @@ void SceneThree::Update(float dt)
 	for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
 	{
 		glm::vec3 curPos = boxes[boxCount]->GetPosition();
-		if (curPos == glm::vec3(0,0,0))
+		if (glm::distance(glm::vec3(0, 0, 0), curPos) <= 0.1f)
 		{
 			boxes.erase(boxes.begin() + boxCount);
 		}
 		else
 		{
-			curPos += (- curPos * 2.0f * dt);
+			curPos += (glm::normalize(glm::vec3(0,0,0) - curPos) * 2.0f * dt);
 			boxes[boxCount]->SetPosition(curPos);
 		}
 	}

@@ -18,7 +18,7 @@ GameController::GameController()
 
 GameController::~GameController()
 {
-
+	delete m_currentScene;
 }
 
 void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
@@ -62,11 +62,6 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		Mesh* sphereHappy = new Mesh();
 		sphereHappy->Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
 		m_meshBoxes.push_back(sphereHappy);
-
-		//Mesh* box = new Mesh();
-		//box->Create(&m_shaderWorldDiffuse, "../Assets/Models/cube.obj");
-		//m_meshBoxes.push_back(box);
-		
 
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
@@ -130,31 +125,24 @@ void GameController::Update(float dt)
 
 void GameController::Render()
 {
-	//for (unsigned int meshCount = 0; meshCount < m_meshBoxes.size(); meshCount++)
-	//{
-	//	m_meshBoxes[meshCount].Render(m_camera.GetProjection() * m_camera.GetView());
-	//}
 
-	////for (unsigned int fontCount = 0; fontCount < m_fonts.size(); fontCount++)
-	////{
-	//std::stringstream   mousePosition_MSG;
-	//mousePosition_MSG << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
+	std::stringstream   mousePosition_MSG;
+	mousePosition_MSG << "x " << Application::Mouse.GetPosition().x << " Y " << Application::Mouse.GetPosition().y;
+	std::stringstream   fps_MSG;
+	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 
-	//std::stringstream   mouseWorldPosition_MSG;
-	//glm::vec3 worldMouse = viewToWorldCoordTransform(Application::Mouse.GetPosition());
-
-	//mouseWorldPosition_MSG << worldMouse.x << " " << worldMouse.y;
-
-	//std::stringstream   fps_MSG;
-	//fps_MSG << Utilities::FPSCounter::FPS;
-
-	//m_fonts[0].RenderText(mousePosition_MSG.str(), 10, 20, 0.2f, {1.0f, 1.0f, 1.0f});
-	//m_fonts[1].RenderText(mouseWorldPosition_MSG.str(), 10, 50, 0.2f, { 1.0f, 1.0f, 0.0f });
-	//m_fonts[2].RenderText(fps_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
-	////}
+	m_fonts[0].RenderText(mousePosition_MSG.str(), 10, 20, 0.2f, {1.0f, 1.0f, 1.0f});
+	m_fonts[2].RenderText(fps_MSG.str(), 10, 50, 0.2f, { 1.0f, 1.0f, 0.0f });
+	
+	if (m_currentSceneNum == 2)
+	{
+		std::stringstream   numBoxes_MSG;
+		SceneThree* s = dynamic_cast<SceneThree*>(m_scenes[2]);
+		numBoxes_MSG << "Numer of Boxes" << s->GetNumberOfBoxes();
+		m_fonts[1].RenderText(numBoxes_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
+	}
 
 	m_currentScene->Render();
-
 }
 
 void GameController::CleanUp()
