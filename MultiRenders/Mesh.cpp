@@ -18,7 +18,7 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-
+	Lights.clear();
 }
 
 void Mesh::Create(Shader* _shader, std::string _file)

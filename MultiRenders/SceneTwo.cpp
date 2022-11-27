@@ -1,4 +1,5 @@
 #include "SceneTwo.h"
+#include "ToolWindow.h"
 
 SceneTwo::SceneTwo(Camera _camera)
 {
@@ -28,5 +29,12 @@ void SceneTwo::ProcessInput(float dt)
 		_curTeaPotPos += (dir * 0.5f * dt);
 
 	    m_meshes[0]->SetPosition(_curTeaPotPos);
+	}
+
+	if (MultiRenders::ToolWindow::ResetTeapot)
+	{
+		m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+		MultiRenders::ToolWindow::ResetTeapot = false;
 	}
 }

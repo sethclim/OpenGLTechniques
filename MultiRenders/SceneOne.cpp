@@ -35,6 +35,13 @@ void SceneOne::ProcessInput(float dt)
 		m_meshes[0]->SetPosition(_curLightPos);
 		m_meshes[1]->SetLightPosition(_curLightPos);
 	}
+
+	if (MultiRenders::ToolWindow::ResetLight)
+	{
+		m_meshes[0]->SetPosition({ 1.0f, 0.0f, 1.0f });
+
+		MultiRenders::ToolWindow::ResetLight = false;
+	}
 }
 
 void SceneOne::Update(float dt)
@@ -49,7 +56,7 @@ void SceneOne::Update(float dt)
 
 	glm::vec3 curRot = m_meshes[1]->GetRotation();
 
-	curRot.x += 5.0f * dt;
+	curRot.x += 0.2f * dt;
 
 	m_meshes[1]->SetRotation(curRot);
 

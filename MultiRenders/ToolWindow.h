@@ -223,11 +223,11 @@ namespace MultiRenders {
 			this->colorByPosition_RB->UseVisualStyleBackColor = true;
 			this->colorByPosition_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton2_CheckedChanged);
 			// 
-			// radioButton3
+			// cubesToSphere_RB
 			// 
 			this->cubesToSphere_RB->AutoSize = true;
 			this->cubesToSphere_RB->Location = System::Drawing::Point(24, 391);
-			this->cubesToSphere_RB->Name = L"radioButton3";
+			this->cubesToSphere_RB->Name = L"cubesToSphere_RB";
 			this->cubesToSphere_RB->Size = System::Drawing::Size(136, 17);
 			this->cubesToSphere_RB->TabIndex = 17;
 			this->cubesToSphere_RB->TabStop = true;
@@ -243,42 +243,43 @@ namespace MultiRenders {
 			this->button2->TabIndex = 18;
 			this->button2->Text = L"Reset Teapot Position";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &ToolWindow::button2_Click);
 			// 
 			// r_Out_Label
 			// 
 			this->r_Out_Label->AutoSize = true;
 			this->r_Out_Label->Location = System::Drawing::Point(430, 172);
 			this->r_Out_Label->Name = L"r_Out_Label";
-			this->r_Out_Label->Size = System::Drawing::Size(38, 13);
+			this->r_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->r_Out_Label->TabIndex = 19;
-			this->r_Out_Label->Text = L"R_Out";
+			this->r_Out_Label->Text = L"1";
 			// 
 			// g_Out_Label
 			// 
 			this->g_Out_Label->AutoSize = true;
 			this->g_Out_Label->Location = System::Drawing::Point(430, 222);
 			this->g_Out_Label->Name = L"g_Out_Label";
-			this->g_Out_Label->Size = System::Drawing::Size(38, 13);
+			this->g_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->g_Out_Label->TabIndex = 20;
-			this->g_Out_Label->Text = L"G_Out";
+			this->g_Out_Label->Text = L"1";
 			// 
 			// b_Out_Label
 			// 
 			this->b_Out_Label->AutoSize = true;
 			this->b_Out_Label->Location = System::Drawing::Point(430, 270);
 			this->b_Out_Label->Name = L"b_Out_Label";
-			this->b_Out_Label->Size = System::Drawing::Size(37, 13);
+			this->b_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->b_Out_Label->TabIndex = 21;
-			this->b_Out_Label->Text = L"B_Out";
+			this->b_Out_Label->Text = L"1";
 			// 
 			// specularStrength_Out_Label
 			// 
 			this->specularStrength_Out_Label->AutoSize = true;
 			this->specularStrength_Out_Label->Location = System::Drawing::Point(387, 96);
 			this->specularStrength_Out_Label->Name = L"specularStrength_Out_Label";
-			this->specularStrength_Out_Label->Size = System::Drawing::Size(35, 13);
+			this->specularStrength_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->specularStrength_Out_Label->TabIndex = 22;
-			this->specularStrength_Out_Label->Text = L"label6";
+			this->specularStrength_Out_Label->Text = L"4";
 			// 
 			// ToolWindow
 			// 
@@ -321,11 +322,13 @@ public:
 		SceneTwo,
 		SceneThree,
 	};
-	static float specularStrength = 0;
-	static float color_R = 0;
-	static float color_G = 0;
-	static float color_B = 0;
+	static float specularStrength = 4;
+	static float color_R = 1;
+	static float color_G = 1;
+	static float color_B = 1;
 	static Mode  game_mode = Mode::SceneOne;
+	static bool ResetLight = false;
+	static bool ResetTeapot = false;
 
 
 private:
@@ -368,8 +371,12 @@ private:
 
 		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e)
 		{
+			ResetLight = true;
+		}
 
-
+		System::Void button2_Click(System::Object^ sender, System::EventArgs^ e)
+		{
+			ResetTeapot = true;
 		}
 		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
 		{
@@ -392,6 +399,6 @@ private:
 				game_mode = Mode::SceneThree;
 			}
 		}
-	};
+};
 }	
  

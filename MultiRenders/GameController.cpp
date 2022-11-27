@@ -19,6 +19,7 @@ GameController::GameController()
 GameController::~GameController()
 {
 	delete m_currentScene;
+	m_scenes.clear();
 }
 
 void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
@@ -138,7 +139,7 @@ void GameController::Render()
 	{
 		std::stringstream   numBoxes_MSG;
 		SceneThree* s = dynamic_cast<SceneThree*>(m_scenes[2]);
-		numBoxes_MSG << "Numer of Boxes" << s->GetNumberOfBoxes();
+		numBoxes_MSG << "Numer of Boxes " << s->GetNumberOfBoxes();
 		m_fonts[1].RenderText(numBoxes_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
 	}
 
@@ -153,7 +154,9 @@ void GameController::CleanUp()
 	}
 
 	m_shaderDiffuse.CleanUp();
+	m_shaderWorldDiffuse.CleanUp();
 	m_shaderColor.CleanUp();
+	m_shaderFont.CleanUp();
 }
 
 

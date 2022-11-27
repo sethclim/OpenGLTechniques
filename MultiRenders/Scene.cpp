@@ -14,7 +14,8 @@ Scene::Scene(Camera _camera)
 
 Scene::~Scene()
 {
-
+	m_meshes.clear();
+	m_shaders.clear();
 }
 
 void Scene::AddMesh(Mesh* _mesh)

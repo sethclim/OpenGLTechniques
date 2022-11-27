@@ -7,7 +7,7 @@ SceneThree::SceneThree(Camera _camera)
 
 SceneThree::~SceneThree()
 {
-
+	boxes.clear();
 }
 
 void SceneThree::Init()
@@ -37,6 +37,8 @@ void SceneThree::ProcessInput(float dt)
 		box->SetPosition({x,y,z});
 		m_meshes.push_back(box);
 		boxes.push_back(box);
+
+		Application::Mouse.SetMouseDown(false);
 	}
 }
 
