@@ -128,7 +128,7 @@ void GameController::Render()
 {
 
 	std::stringstream   mousePosition_MSG;
-	mousePosition_MSG << "x " << Application::Mouse.GetPosition().x << " Y " << Application::Mouse.GetPosition().y;
+	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
 	std::stringstream   fps_MSG;
 	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 

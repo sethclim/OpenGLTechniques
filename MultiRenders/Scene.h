@@ -17,7 +17,7 @@ public:
 
 	virtual void ProcessInput(float _dt);
 	virtual void Update(float _dt);
-	void Render();
+	virtual void Render();
 
 	void AddMesh(Mesh* _mesh);
 	void AddShader(Shader* _shader);

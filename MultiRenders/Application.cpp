@@ -9,6 +9,7 @@ Application::Application(): m_gameController( new GameController() )
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // Ensure we can capture the escape key
 	glfwSetCursorPosCallback(window, &glfw_Cursor_Position_Callback);
 	glfwSetMouseButtonCallback(window, &glfw_Mouse_Button_Callback);
+	glfwSetScrollCallback(window, &glfw_Scroll_Callback);
 
 	m_gameController->Initialize(WindowController::GetInstance().GetResolution(), WindowController::GetInstance().GetSize());
 
@@ -75,4 +76,9 @@ void Application::glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int
 	{
 		Mouse.SetMouseDown(false);
 	}
+}
+
+void Application::glfw_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	Mouse.SetScroll(yoffset);
 }

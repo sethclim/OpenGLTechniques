@@ -21,9 +21,13 @@ public:
 	 bool GetMouseDown() { return m_mouseDown; }
 	 void SetMouseDown(bool _down) { m_mouseDown = _down; }
 
+	 void SetScroll(float _y) { y_offset = _y; }
+		 float GetScroll() { return y_offset; }
+
 private:
 	 glm::vec2 m_pos;
 	 bool m_mouseDown;
+	 float y_offset;
 };
 
 #endif // !MOUSE_H

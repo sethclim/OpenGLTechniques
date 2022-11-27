@@ -21,6 +21,7 @@ public:
 private:
 	static void glfw_Cursor_Position_Callback(GLFWwindow* window, double xpos, double ypos);
 	static void glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int action, int mods);
+	static void glfw_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset);
 
 	float m_LastFrameTime;
 	GameController* m_gameController;

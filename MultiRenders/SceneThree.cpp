@@ -12,12 +12,12 @@ SceneThree::~SceneThree()
 
 void SceneThree::Init()
 {
-	m_meshes[0]->SetPosition({ 3.0f, -3.0f, 1.0f });
+	m_meshes[0]->SetPosition({ 1.5f, -1.0f, 1.0f });
 	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
-	m_meshes[0]->SetScale({ 0.1f, 0.1f, 0.1f });
+	m_meshes[0]->SetScale({ 0.01f, 0.01f, 0.01f });
 
 	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	m_meshes[1]->SetScale({ 0.05f, 0.05f, 0.05f });
+	m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
 	m_meshes[1]->SetSpecularStrength(4);
 }
@@ -25,17 +25,16 @@ void SceneThree::ProcessInput(float dt)
 {
 	if (Application::Mouse.GetMouseDown())
 	{
-		float x = (float)(rand() % 20) - 10;
-		float y = (float)(rand() % 20) - 10;
-		float z = (float)(rand() % 20) - 10;
+		float x = (float)(rand() % 10) - 5;
+		float y = (float)(rand() % 10) - 5;
+		float z = (float)(rand() % 10) - 5;
 
 		Mesh* box = new Mesh();
 		box->Create(m_shaders[0], "../Assets/Models/cube.obj");
 		box->SetCameraPosition(m_camera.GetPosition());
-		box->SetScale({ 0.1f, 0.1f, 0.1f });
+		box->SetScale({ 0.2f, 0.2f, 0.2f });
 		box->SetSpecularStrength(4);
 		box->SetPosition({x,y,z});
-		m_meshes.push_back(box);
 		boxes.push_back(box);
 
 		Application::Mouse.SetMouseDown(false);
@@ -56,5 +55,18 @@ void SceneThree::Update(float dt)
 			curPos += (glm::normalize(glm::vec3(0,0,0) - curPos) * 2.0f * dt);
 			boxes[boxCount]->SetPosition(curPos);
 		}
+	}
+}
+
+void SceneThree::Render()
+{
+	for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
+	{
+		m_meshes[meshCount]->Render(m_camera.GetProjection() * m_camera.GetView());
+	}
+
+	for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
+	{
+		boxes[boxCount]->Render(m_camera.GetProjection() * m_camera.GetView());
 	}
 }
