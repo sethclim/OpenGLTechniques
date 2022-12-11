@@ -11,6 +11,7 @@ GameController::GameController()
 {
 	m_shaderColor = { };
 	m_shaderDiffuse = { };
+	m_shaderSkybox = { };
 	m_camera = { };
 	m_meshLight = { };
 	m_meshBoxes.clear();
@@ -48,6 +49,9 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_shaderFont = Shader();
 		m_shaderFont.LoadShaders("Font.vert", "Font.frag");
 
+		m_shaderSkybox = Shader();
+		m_shaderFont.LoadShaders("Skybox.vert", "Skybox.frag");
+
 		Mesh* light = new Mesh();
 		light->Create(&m_shaderColor, "../Assets/Models/sphere.obj");
 		Mesh::Lights.push_back(light);
@@ -61,9 +65,19 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		fish->Create(&m_shaderWorldDiffuse, "../Assets/Models/Fish.obj");
 		m_meshBoxes.push_back(fish);
 
-		//Mesh* sphereHappy = new Mesh();
-		//sphereHappy->Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
-		//m_meshBoxes.push_back(sphereHappy);
+
+		//m_skybox = Skybox();
+		//m_skybox.Create(&m_shaderSkybox, "../Assets/Models/Skybox.obj",
+		//	{
+		//		"../Assets/Textures/Skybox/right.jpg",
+		//		"../Assets/Textures/Skybox/left.jpg",
+		//		"../Assets/Textures/Skybox/top.jpg",
+		//		"../Assets/Textures/Skybox/bottom.jpg",
+		//		"../Assets/Textures/Skybox/front.jpg",
+		//		"../Assets/Textures/Skybox/back.jpg",
+		//	}
+		//);
+
 
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
@@ -97,6 +111,14 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		//sceneThree->Init();
 
 		m_scenes.push_back(waterScene);
+
+		SpaceScene* spaceScene = new SpaceScene(m_camera);
+		spaceScene->AddMesh(m_meshBoxes[0]);
+		spaceScene->AddMesh(m_meshBoxes[3]);
+		spaceScene->AddShader(&m_shaderDiffuse);
+		//sceneThree->Init();
+
+		m_scenes.push_back(spaceScene);
 
 		m_currentScene = m_scenes[0];
 		m_currentSceneNum = 0;

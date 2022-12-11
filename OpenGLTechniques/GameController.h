@@ -8,6 +8,7 @@
 #include "Camera.h"
 #include "Fonts.h"
 #include "Mouse.h"
+#include "Skybox.h"
 
 class Scene;
 
@@ -31,6 +32,7 @@ private:
 	Shader     m_shaderDiffuse;
 	Shader     m_shaderFont;
 	Shader	   m_shaderWorldDiffuse;
+	Shader     m_shaderSkybox;
 	Camera     m_camera;
 	Mesh       m_meshLight;
 	Scene*     m_currentScene;
@@ -39,6 +41,7 @@ private:
 	glm::vec2 m_windowSize;
 	std::vector<Mesh*>    m_meshBoxes;
 	std::vector<Fonts>   m_fonts;
+	Skybox m_skybox;
 
 	std::vector<Scene*>   m_scenes;
 };
