@@ -7,7 +7,7 @@
 using namespace System;
 using namespace System::Runtime::InteropServices;
 
-namespace MultiRenders {
+namespace OpenGLTechniques {
 
 	using namespace System;
 	using namespace System::ComponentModel;

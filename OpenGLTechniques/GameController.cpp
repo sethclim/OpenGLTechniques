@@ -102,13 +102,13 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 	}
 #pragma endregion
 
-	MultiRenders::ToolWindow^ window = gcnew MultiRenders::ToolWindow();
+	OpenGLTechniques::ToolWindow^ window = gcnew OpenGLTechniques::ToolWindow();
 	window->Show();
 }
 
 void GameController::ProcessInput(float _dt)
 {
-	int nextScene = (int)MultiRenders::ToolWindow::game_mode;
+	int nextScene = (int)OpenGLTechniques::ToolWindow::game_mode;
 	if (nextScene != m_currentSceneNum)
 	{
 		m_currentScene = m_scenes[nextScene];

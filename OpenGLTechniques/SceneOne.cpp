@@ -20,7 +20,7 @@ void SceneOne::Init()
 	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
 	m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
-	m_meshes[1]->SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
+	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
 }
 
 void SceneOne::ProcessInput(float dt)
@@ -36,22 +36,22 @@ void SceneOne::ProcessInput(float dt)
 		m_meshes[1]->SetLightPosition(_curLightPos);
 	}
 
-	if (MultiRenders::ToolWindow::ResetLight)
+	if (OpenGLTechniques::ToolWindow::ResetLight)
 	{
 		m_meshes[0]->SetPosition({ 1.0f, 0.0f, 2.0f });
 
-		MultiRenders::ToolWindow::ResetLight = false;
+		OpenGLTechniques::ToolWindow::ResetLight = false;
 	}
 }
 
 void SceneOne::Update(float dt)
 {
-	m_meshes[1]->SetSpecularStrength(MultiRenders::ToolWindow::specularStrength);
+	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
 
 	Mesh::Lights[0]->SetColor({
-		MultiRenders::ToolWindow::color_R,
-		MultiRenders::ToolWindow::color_G,
-		MultiRenders::ToolWindow::color_B
+		OpenGLTechniques::ToolWindow::color_R,
+		OpenGLTechniques::ToolWindow::color_G,
+		OpenGLTechniques::ToolWindow::color_B
 	});
 
 	glm::vec3 curRot = m_meshes[1]->GetRotation();

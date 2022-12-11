@@ -31,11 +31,11 @@ void SceneTwo::ProcessInput(float dt)
 	    m_meshes[0]->SetPosition(_curTeaPotPos);
 	}
 
-	if (MultiRenders::ToolWindow::ResetTeapot)
+	if (OpenGLTechniques::ToolWindow::ResetTeapot)
 	{
 		m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
 
-		MultiRenders::ToolWindow::ResetTeapot = false;
+		OpenGLTechniques::ToolWindow::ResetTeapot = false;
 	}
 
 	
