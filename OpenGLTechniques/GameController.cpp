@@ -53,17 +53,17 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		Mesh::Lights.push_back(light);
 		m_meshBoxes.push_back(light);
 
-		Mesh* teapot = new Mesh();
-		teapot->Create(&m_shaderDiffuse, "../Assets/Models/Fighter.obj");
-		m_meshBoxes.push_back(teapot);
+		Mesh* fighter = new Mesh();
+		fighter->Create(&m_shaderDiffuse, "../Assets/Models/Fighter.obj");
+		m_meshBoxes.push_back(fighter);
 
-		Mesh* teapot2 = new Mesh();
-		teapot2->Create(&m_shaderWorldDiffuse, "../Assets/Models/Fighter.obj");
-		m_meshBoxes.push_back(teapot2);
+		Mesh* fish = new Mesh();
+		fish->Create(&m_shaderWorldDiffuse, "../Assets/Models/Fish.obj");
+		m_meshBoxes.push_back(fish);
 
-		Mesh* sphereHappy = new Mesh();
-		sphereHappy->Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
-		m_meshBoxes.push_back(sphereHappy);
+		//Mesh* sphereHappy = new Mesh();
+		//sphereHappy->Create(&m_shaderDiffuse, "../Assets/Models/sphere.obj");
+		//m_meshBoxes.push_back(sphereHappy);
 
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
