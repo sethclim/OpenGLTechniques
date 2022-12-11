@@ -1,9 +1,10 @@
 #include "GameController.h"
 #include "ToolWindow.h"
 #include "Application.h"
-#include "SceneOne.h"
-#include "SceneTwo.h"
-#include "SceneThree.h"
+#include "MoveLightScene.h"
+#include "TransformScene.h"
+#include "WaterScene.h"
+#include "SpaceScene.h"
 
 
 GameController::GameController()
@@ -17,7 +18,7 @@ GameController::GameController()
 }
 
 GameController::~GameController()
-{
+{ 
 	delete m_currentScene;
 	m_scenes.clear();
 }
@@ -53,11 +54,11 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_meshBoxes.push_back(light);
 
 		Mesh* teapot = new Mesh();
-		teapot->Create(&m_shaderDiffuse, "../Assets/Models/teapot.obj");
+		teapot->Create(&m_shaderDiffuse, "../Assets/Models/Fighter.obj");
 		m_meshBoxes.push_back(teapot);
 
 		Mesh* teapot2 = new Mesh();
-		teapot2->Create(&m_shaderWorldDiffuse, "../Assets/Models/teapot.obj");
+		teapot2->Create(&m_shaderWorldDiffuse, "../Assets/Models/Fighter.obj");
 		m_meshBoxes.push_back(teapot2);
 
 		Mesh* sphereHappy = new Mesh();
@@ -76,26 +77,26 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 #pragma region CreateScenes
 	{
-		SceneOne* sceneOne = new SceneOne(m_camera);
-		sceneOne->AddMesh(m_meshBoxes[0]);
-		sceneOne->AddMesh(m_meshBoxes[1]);
-		sceneOne->Init();
+		MoveLightScene* moveLightScene = new MoveLightScene(m_camera);
+		moveLightScene->AddMesh(m_meshBoxes[0]);
+		moveLightScene->AddMesh(m_meshBoxes[1]);
+		moveLightScene->Init();
 
-		m_scenes.push_back(sceneOne);
+		m_scenes.push_back(moveLightScene);
 
-		SceneTwo* sceneTwo = new SceneTwo(m_camera);
-		sceneTwo->AddMesh(m_meshBoxes[2]);
+		TransformScene* transformScene = new TransformScene(m_camera);
+		transformScene->AddMesh(m_meshBoxes[2]);
 		//sceneTwo->Init();
 
-		m_scenes.push_back(sceneTwo);
+		m_scenes.push_back(transformScene);
 
-		SceneThree* sceneThree = new SceneThree(m_camera);
-		sceneThree->AddMesh(m_meshBoxes[0]);
-		sceneThree->AddMesh(m_meshBoxes[3]);
-		sceneThree->AddShader(&m_shaderDiffuse);
+		WaterScene* waterScene = new WaterScene(m_camera);
+		waterScene->AddMesh(m_meshBoxes[0]);
+		waterScene->AddMesh(m_meshBoxes[3]);
+		waterScene->AddShader(&m_shaderDiffuse);
 		//sceneThree->Init();
 
-		m_scenes.push_back(sceneThree);
+		m_scenes.push_back(waterScene);
 
 		m_currentScene = m_scenes[0];
 		m_currentSceneNum = 0;
@@ -138,7 +139,7 @@ void GameController::Render()
 	if (m_currentSceneNum == 2)
 	{
 		std::stringstream   numBoxes_MSG;
-		SceneThree* s = dynamic_cast<SceneThree*>(m_scenes[2]);
+		WaterScene* s = dynamic_cast<WaterScene*>(m_scenes[2]);
 		numBoxes_MSG << "Numer of Boxes " << s->GetNumberOfBoxes();
 		m_fonts[1].RenderText(numBoxes_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
 	}

@@ -1,16 +1,16 @@
-#include "SceneThree.h"
+#include "WaterScene.h"
 
-SceneThree::SceneThree(Camera _camera)
+WaterScene::WaterScene(Camera _camera)
 {
 	m_camera = _camera;
 }
 
-SceneThree::~SceneThree()
+WaterScene::~WaterScene()
 {
 	boxes.clear();
 }
 
-void SceneThree::Init()
+void WaterScene::Init()
 {
 	m_meshes[0]->SetPosition({ 1.5f, -1.0f, 1.0f });
 	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
@@ -21,7 +21,7 @@ void SceneThree::Init()
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
 	m_meshes[1]->SetSpecularStrength(4);
 }
-void SceneThree::ProcessInput(float dt)
+void WaterScene::ProcessInput(float dt)
 {
 	if (Application::Mouse.GetMouseDown())
 	{
@@ -41,7 +41,7 @@ void SceneThree::ProcessInput(float dt)
 	}
 }
 
-void SceneThree::Update(float dt)
+void WaterScene::Update(float dt)
 {
 	for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
 	{
@@ -58,7 +58,7 @@ void SceneThree::Update(float dt)
 	}
 }
 
-void SceneThree::Render()
+void WaterScene::Render()
 {
 	for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
 	{

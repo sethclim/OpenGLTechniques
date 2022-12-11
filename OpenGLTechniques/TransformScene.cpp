@@ -1,17 +1,17 @@
-#include "SceneTwo.h"
+#include "TransformScene.h"
 #include "ToolWindow.h"
 
-SceneTwo::SceneTwo(Camera _camera)
+TransformScene::TransformScene(Camera _camera)
 {
 	m_camera = _camera;
 }
 
-SceneTwo::~SceneTwo()
+TransformScene::~TransformScene()
 {
 
 }
 
-void SceneTwo::Init()
+void TransformScene::Init()
 {
 	m_meshes[0]->SetCameraPosition(m_camera.GetPosition());
 	m_meshes[0]->SetScale({ 0.02f, 0.02f, 0.02f });
@@ -19,7 +19,7 @@ void SceneTwo::Init()
 	m_meshes[0]->SetSpecularStrength(8.0f);
 }
 
-void SceneTwo::ProcessInput(float dt)
+void TransformScene::ProcessInput(float dt)
 {
 	glm::vec2 pos = Application::Mouse.GetPosition();
 	if (Application::Mouse.GetMouseDown())

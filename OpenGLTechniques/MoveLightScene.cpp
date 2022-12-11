@@ -1,29 +1,29 @@
 #include "ToolWindow.h"
-#include "SceneOne.h"
+#include "MoveLightScene.h"
 
-SceneOne::SceneOne(Camera _camera)
+MoveLightScene::MoveLightScene(Camera _camera)
 {
 	m_camera = _camera;
 }
 
-SceneOne::~SceneOne()
+MoveLightScene::~MoveLightScene()
 {
 
 }
 
-void SceneOne::Init()
+void MoveLightScene::Init()
 {
 	m_meshes[0]->SetPosition({ 1.0f, 0.0f, 2.0f });
 	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
 	m_meshes[0]->SetScale({ 0.005f, 0.005f, 0.005f });
 
 	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
+	m_meshes[1]->SetScale({ 0.002f, 0.002f, 0.002f });
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
 	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
 }
 
-void SceneOne::ProcessInput(float dt)
+void MoveLightScene::ProcessInput(float dt)
 {
 	if (Application::Mouse.GetMouseDown())
 	{
@@ -44,7 +44,7 @@ void SceneOne::ProcessInput(float dt)
 	}
 }
 
-void SceneOne::Update(float dt)
+void MoveLightScene::Update(float dt)
 {
 	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
 

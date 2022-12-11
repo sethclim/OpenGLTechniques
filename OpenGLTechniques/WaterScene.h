@@ -1,14 +1,14 @@
-#ifndef SceneThree_H
-#define SceneThree_H
+#ifndef WaterScene_H
+#define WaterScene_H
 
 #include "Scene.h"
 
-class SceneThree : public Scene
+class WaterScene : public Scene
 {
 public:
-	SceneThree();
-	SceneThree(Camera _camera);
-	virtual ~SceneThree();
+	WaterScene();
+	WaterScene(Camera _camera);
+	virtual ~WaterScene();
 
 	void Init();
 
@@ -22,4 +22,4 @@ private:
 	std::vector<Mesh *> boxes;
 };
 
-#endif // !SCENETHREE_H
+#endif // !WaterScene_H

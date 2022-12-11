@@ -36,7 +36,7 @@
     <ClCompile Include="ToolWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SceneOne.cpp">
+    <ClCompile Include="MoveLightScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Application.cpp">
@@ -69,10 +69,13 @@
     <ClCompile Include="WindowController.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="SceneTwo.cpp">
+    <ClCompile Include="TransformScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="SceneThree.cpp">
+    <ClCompile Include="WaterScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SpaceScene.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,7 +83,7 @@
     <ClInclude Include="ToolWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SceneOne.h">
+    <ClInclude Include="MoveLightScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
@@ -125,10 +128,13 @@
     <ClInclude Include="WindowController.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="SceneThree.h">
+    <ClInclude Include="WaterScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="SceneTwo.h">
+    <ClInclude Include="TransformScene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="SpaceScene.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
