@@ -62,6 +62,16 @@ namespace MultiRenders {
 	private: System::Windows::Forms::Label^ g_Out_Label;
 	private: System::Windows::Forms::Label^ b_Out_Label;
 	private: System::Windows::Forms::Label^ specularStrength_Out_Label;
+	private: System::Windows::Forms::RadioButton^ radioButton1;
+	private: System::Windows::Forms::CheckBox^ checkBox1;
+	private: System::Windows::Forms::CheckBox^ checkBox2;
+	private: System::Windows::Forms::CheckBox^ checkBox3;
+	private: System::Windows::Forms::TrackBar^ trackBar1;
+	private: System::Windows::Forms::TrackBar^ trackBar2;
+	private: System::Windows::Forms::Label^ label6;
+	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::CheckBox^ checkBox4;
+	private: System::Windows::Forms::CheckBox^ checkBox5;
 
 	protected:
 
@@ -96,21 +106,35 @@ namespace MultiRenders {
 			this->g_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->b_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->specularStrength_Out_Label = (gcnew System::Windows::Forms::Label());
+			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
+			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
+			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
+			this->label6 = (gcnew System::Windows::Forms::Label());
+			this->label7 = (gcnew System::Windows::Forms::Label());
+			this->checkBox4 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBox5 = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// moveLight_RB
 			// 
 			this->moveLight_RB->AutoSize = true;
+			this->moveLight_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
 			this->moveLight_RB->Location = System::Drawing::Point(24, 24);
 			this->moveLight_RB->Name = L"moveLight_RB";
-			this->moveLight_RB->Size = System::Drawing::Size(80, 17);
+			this->moveLight_RB->Size = System::Drawing::Size(84, 17);
 			this->moveLight_RB->TabIndex = 0;
 			this->moveLight_RB->TabStop = true;
-			this->moveLight_RB->Text = L"MoveLights";
+			this->moveLight_RB->Text = L"MoveLight";
 			this->moveLight_RB->UseVisualStyleBackColor = true;
 			this->moveLight_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged);
 			// 
@@ -126,7 +150,7 @@ namespace MultiRenders {
 			// 
 			// specularStrength_TB
 			// 
-			this->specularStrength_TB->Location = System::Drawing::Point(134, 88);
+			this->specularStrength_TB->Location = System::Drawing::Point(179, 86);
 			this->specularStrength_TB->Maximum = 128;
 			this->specularStrength_TB->Minimum = 1;
 			this->specularStrength_TB->Name = L"specularStrength_TB";
@@ -137,7 +161,7 @@ namespace MultiRenders {
 			// 
 			// b_TB
 			// 
-			this->b_TB->Location = System::Drawing::Point(176, 257);
+			this->b_TB->Location = System::Drawing::Point(167, 239);
 			this->b_TB->Maximum = 300;
 			this->b_TB->Name = L"b_TB";
 			this->b_TB->Size = System::Drawing::Size(255, 45);
@@ -147,7 +171,7 @@ namespace MultiRenders {
 			// 
 			// g_TB
 			// 
-			this->g_TB->Location = System::Drawing::Point(176, 206);
+			this->g_TB->Location = System::Drawing::Point(167, 188);
 			this->g_TB->Maximum = 300;
 			this->g_TB->Name = L"g_TB";
 			this->g_TB->Size = System::Drawing::Size(255, 45);
@@ -157,7 +181,7 @@ namespace MultiRenders {
 			// 
 			// r_TB
 			// 
-			this->r_TB->Location = System::Drawing::Point(176, 155);
+			this->r_TB->Location = System::Drawing::Point(167, 137);
 			this->r_TB->Maximum = 300;
 			this->r_TB->Name = L"r_TB";
 			this->r_TB->Size = System::Drawing::Size(247, 45);
@@ -168,7 +192,7 @@ namespace MultiRenders {
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(21, 97);
+			this->label1->Location = System::Drawing::Point(12, 96);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(92, 13);
 			this->label1->TabIndex = 11;
@@ -177,7 +201,7 @@ namespace MultiRenders {
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(21, 163);
+			this->label2->Location = System::Drawing::Point(12, 145);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(76, 13);
 			this->label2->TabIndex = 12;
@@ -187,7 +211,7 @@ namespace MultiRenders {
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(134, 162);
+			this->label3->Location = System::Drawing::Point(125, 144);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(15, 13);
 			this->label3->TabIndex = 13;
@@ -196,7 +220,7 @@ namespace MultiRenders {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(134, 206);
+			this->label4->Location = System::Drawing::Point(125, 188);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(15, 13);
 			this->label4->TabIndex = 14;
@@ -205,7 +229,7 @@ namespace MultiRenders {
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(134, 257);
+			this->label5->Location = System::Drawing::Point(125, 239);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(14, 13);
 			this->label5->TabIndex = 15;
@@ -214,41 +238,45 @@ namespace MultiRenders {
 			// colorByPosition_RB
 			// 
 			this->colorByPosition_RB->AutoSize = true;
-			this->colorByPosition_RB->Location = System::Drawing::Point(24, 313);
+			this->colorByPosition_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->colorByPosition_RB->Location = System::Drawing::Point(15, 280);
 			this->colorByPosition_RB->Name = L"colorByPosition_RB";
-			this->colorByPosition_RB->Size = System::Drawing::Size(103, 17);
+			this->colorByPosition_RB->Size = System::Drawing::Size(81, 17);
 			this->colorByPosition_RB->TabIndex = 16;
 			this->colorByPosition_RB->TabStop = true;
-			this->colorByPosition_RB->Text = L"Color by Position";
+			this->colorByPosition_RB->Text = L"Transform";
 			this->colorByPosition_RB->UseVisualStyleBackColor = true;
 			this->colorByPosition_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton2_CheckedChanged);
 			// 
 			// cubesToSphere_RB
 			// 
 			this->cubesToSphere_RB->AutoSize = true;
-			this->cubesToSphere_RB->Location = System::Drawing::Point(24, 391);
+			this->cubesToSphere_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->cubesToSphere_RB->Location = System::Drawing::Point(16, 432);
 			this->cubesToSphere_RB->Name = L"cubesToSphere_RB";
-			this->cubesToSphere_RB->Size = System::Drawing::Size(136, 17);
+			this->cubesToSphere_RB->Size = System::Drawing::Size(99, 17);
 			this->cubesToSphere_RB->TabIndex = 17;
 			this->cubesToSphere_RB->TabStop = true;
-			this->cubesToSphere_RB->Text = L"Move Cubes by Sphere";
+			this->cubesToSphere_RB->Text = L"Water Scene";
 			this->cubesToSphere_RB->UseVisualStyleBackColor = true;
 			this->cubesToSphere_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton3_CheckedChanged);
 			// 
 			// button2
 			// 
-			this->button2->Location = System::Drawing::Point(42, 347);
+			this->button2->Location = System::Drawing::Point(33, 303);
 			this->button2->Name = L"button2";
 			this->button2->Size = System::Drawing::Size(131, 23);
 			this->button2->TabIndex = 18;
-			this->button2->Text = L"Reset Teapot Position";
+			this->button2->Text = L"Reset Transform";
 			this->button2->UseVisualStyleBackColor = true;
 			this->button2->Click += gcnew System::EventHandler(this, &ToolWindow::button2_Click);
 			// 
 			// r_Out_Label
 			// 
 			this->r_Out_Label->AutoSize = true;
-			this->r_Out_Label->Location = System::Drawing::Point(430, 172);
+			this->r_Out_Label->Location = System::Drawing::Point(421, 154);
 			this->r_Out_Label->Name = L"r_Out_Label";
 			this->r_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->r_Out_Label->TabIndex = 19;
@@ -257,7 +285,7 @@ namespace MultiRenders {
 			// g_Out_Label
 			// 
 			this->g_Out_Label->AutoSize = true;
-			this->g_Out_Label->Location = System::Drawing::Point(430, 222);
+			this->g_Out_Label->Location = System::Drawing::Point(421, 204);
 			this->g_Out_Label->Name = L"g_Out_Label";
 			this->g_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->g_Out_Label->TabIndex = 20;
@@ -266,7 +294,7 @@ namespace MultiRenders {
 			// b_Out_Label
 			// 
 			this->b_Out_Label->AutoSize = true;
-			this->b_Out_Label->Location = System::Drawing::Point(430, 270);
+			this->b_Out_Label->Location = System::Drawing::Point(421, 252);
 			this->b_Out_Label->Name = L"b_Out_Label";
 			this->b_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->b_Out_Label->TabIndex = 21;
@@ -281,11 +309,119 @@ namespace MultiRenders {
 			this->specularStrength_Out_Label->TabIndex = 22;
 			this->specularStrength_Out_Label->Text = L"4";
 			// 
+			// radioButton1
+			// 
+			this->radioButton1->AutoSize = true;
+			this->radioButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->radioButton1->Location = System::Drawing::Point(16, 586);
+			this->radioButton1->Name = L"radioButton1";
+			this->radioButton1->Size = System::Drawing::Size(101, 17);
+			this->radioButton1->TabIndex = 23;
+			this->radioButton1->TabStop = true;
+			this->radioButton1->Text = L"Space Scene";
+			this->radioButton1->UseVisualStyleBackColor = true;
+			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged_1);
+			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(32, 332);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(70, 17);
+			this->checkBox1->TabIndex = 24;
+			this->checkBox1->Text = L"Translate";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
+			// checkBox2
+			// 
+			this->checkBox2->AutoSize = true;
+			this->checkBox2->Location = System::Drawing::Point(32, 366);
+			this->checkBox2->Name = L"checkBox2";
+			this->checkBox2->Size = System::Drawing::Size(58, 17);
+			this->checkBox2->TabIndex = 25;
+			this->checkBox2->Text = L"Rotate";
+			this->checkBox2->UseVisualStyleBackColor = true;
+			// 
+			// checkBox3
+			// 
+			this->checkBox3->AutoSize = true;
+			this->checkBox3->Location = System::Drawing::Point(32, 398);
+			this->checkBox3->Name = L"checkBox3";
+			this->checkBox3->Size = System::Drawing::Size(53, 17);
+			this->checkBox3->TabIndex = 26;
+			this->checkBox3->Text = L"Scale";
+			this->checkBox3->UseVisualStyleBackColor = true;
+			// 
+			// trackBar1
+			// 
+			this->trackBar1->Location = System::Drawing::Point(148, 452);
+			this->trackBar1->Name = L"trackBar1";
+			this->trackBar1->Size = System::Drawing::Size(274, 45);
+			this->trackBar1->TabIndex = 27;
+			// 
+			// trackBar2
+			// 
+			this->trackBar2->Location = System::Drawing::Point(148, 503);
+			this->trackBar2->Name = L"trackBar2";
+			this->trackBar2->Size = System::Drawing::Size(274, 45);
+			this->trackBar2->TabIndex = 28;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Location = System::Drawing::Point(85, 462);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(57, 13);
+			this->label6->TabIndex = 29;
+			this->label6->Text = L"Frequency";
+			// 
+			// label7
+			// 
+			this->label7->AutoSize = true;
+			this->label7->Location = System::Drawing::Point(85, 503);
+			this->label7->Name = L"label7";
+			this->label7->Size = System::Drawing::Size(53, 13);
+			this->label7->TabIndex = 30;
+			this->label7->Text = L"Amplitude";
+			this->label7->Click += gcnew System::EventHandler(this, &ToolWindow::label7_Click);
+			// 
+			// checkBox4
+			// 
+			this->checkBox4->AutoSize = true;
+			this->checkBox4->Location = System::Drawing::Point(33, 530);
+			this->checkBox4->Name = L"checkBox4";
+			this->checkBox4->Size = System::Drawing::Size(107, 17);
+			this->checkBox4->TabIndex = 31;
+			this->checkBox4->Text = L"Wireframe render";
+			this->checkBox4->UseVisualStyleBackColor = true;
+			this->checkBox4->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::checkBox4_CheckedChanged);
+			// 
+			// checkBox5
+			// 
+			this->checkBox5->AutoSize = true;
+			this->checkBox5->Location = System::Drawing::Point(33, 548);
+			this->checkBox5->Name = L"checkBox5";
+			this->checkBox5->Size = System::Drawing::Size(68, 17);
+			this->checkBox5->TabIndex = 32;
+			this->checkBox5->Text = L"Tint Blue";
+			this->checkBox5->UseVisualStyleBackColor = true;
+			// 
 			// ToolWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(532, 422);
+			this->ClientSize = System::Drawing::Size(532, 615);
+			this->Controls->Add(this->checkBox5);
+			this->Controls->Add(this->checkBox4);
+			this->Controls->Add(this->label7);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->trackBar2);
+			this->Controls->Add(this->trackBar1);
+			this->Controls->Add(this->checkBox3);
+			this->Controls->Add(this->checkBox2);
+			this->Controls->Add(this->checkBox1);
+			this->Controls->Add(this->radioButton1);
 			this->Controls->Add(this->specularStrength_Out_Label);
 			this->Controls->Add(this->b_Out_Label);
 			this->Controls->Add(this->g_Out_Label);
@@ -310,6 +446,8 @@ namespace MultiRenders {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -399,6 +537,12 @@ private:
 				game_mode = Mode::SceneThree;
 			}
 		}
+private: System::Void radioButton1_CheckedChanged_1(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void checkBox4_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+}
 };
 }	
  

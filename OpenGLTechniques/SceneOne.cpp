@@ -38,7 +38,7 @@ void SceneOne::ProcessInput(float dt)
 
 	if (MultiRenders::ToolWindow::ResetLight)
 	{
-		m_meshes[0]->SetPosition({ 1.0f, 0.0f, 1.0f });
+		m_meshes[0]->SetPosition({ 1.0f, 0.0f, 2.0f });
 
 		MultiRenders::ToolWindow::ResetLight = false;
 	}

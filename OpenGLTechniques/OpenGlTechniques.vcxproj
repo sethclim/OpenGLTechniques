@@ -24,7 +24,7 @@
     <ProjectGuid>{afe7110c-2cf3-4c96-96b9-4b380def5b5d}</ProjectGuid>
     <RootNamespace>OpenGL</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>MuliRenders</ProjectName>
+    <ProjectName>OpenGLTechniques</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
