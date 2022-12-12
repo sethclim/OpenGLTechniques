@@ -27,6 +27,8 @@ public:
 private:
 	std::vector<Mesh *> boxes;
 	PostProcessor m_postProcessor;
+
+	float time;
 };
 
 #endif // !WaterScene_H

@@ -3,6 +3,8 @@
 WaterScene::WaterScene(Camera _camera)
 {
 	m_camera = _camera;
+
+	time = 0.0f;
 }
 
 WaterScene::~WaterScene()
@@ -42,21 +44,21 @@ void WaterScene::ProcessInput(float dt)
 	//}
 }
 
+
+
 void WaterScene::Update(float dt)
 {
-	//for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
-	//{
-	//	glm::vec3 curPos = boxes[boxCount]->GetPosition();
-	//	if (glm::distance(glm::vec3(0, 0, 0), curPos) <= 0.1f)
-	//	{
-	//		boxes.erase(boxes.begin() + boxCount);
-	//	}
-	//	else
-	//	{
-	//		curPos += (glm::normalize(glm::vec3(0,0,0) - curPos) * 2.0f * dt);
-	//		boxes[boxCount]->SetPosition(curPos);
-	//	}
-	//}
+	Shader* postShader = m_postProcessor.GetShader();
+
+	Resolution r = WindowController::GetInstance().GetResolution();
+
+	time += 0.01f;
+
+	postShader->SetVec2("resolution", glm::vec2(r.m_width, r.m_height));
+	postShader->SetFloat("freq", 0.1);
+	postShader->SetFloat("time", time);
+	postShader->SetFloat("amplitude", 5.0);
+
 }
 
 void WaterScene::Render()

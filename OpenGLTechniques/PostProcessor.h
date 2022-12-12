@@ -17,6 +17,8 @@ public:
 	void Start();
 	void End();
 
+	Shader* GetShader();
+
 private:
 	GLuint  m_framebuffer;
 	GLuint  m_textureColorbuffer;

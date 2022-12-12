@@ -39,6 +39,15 @@ void Shader::SetVec3(const char* _name, glm::vec3 _value)
 	}
 }
 
+void Shader::SetVec2(const char* _name, glm::vec2 _value)
+{
+	GLint loc = glGetUniformLocation(m_programID, _name);
+	if (loc != -1)
+	{
+		glUniform2fv(loc, 1, &_value[0]);
+	}
+}
+
 void Shader::SetMat4(const char* _name, glm::mat4 _value)
 {
 	GLint loc = glGetUniformLocation(m_programID, _name);

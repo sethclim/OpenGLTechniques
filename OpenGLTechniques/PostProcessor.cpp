@@ -17,6 +17,10 @@ PostProcessor::~PostProcessor()
 
 }
 
+Shader* PostProcessor::GetShader()
+{
+	return m_postShader;
+}
 
 void PostProcessor::CleanUp()
 {
