@@ -58,7 +58,6 @@ void WaterScene::Update(float dt)
 	postShader->SetFloat("freq", 0.1);
 	postShader->SetFloat("time", time);
 	postShader->SetFloat("amplitude", 5.0);
-
 }
 
 void WaterScene::Render()

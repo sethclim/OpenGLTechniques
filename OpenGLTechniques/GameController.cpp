@@ -105,13 +105,10 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		moveLightScene->AddMesh(m_meshBoxes[0]);
 		moveLightScene->AddMesh(m_meshBoxes[1]);
 		moveLightScene->Init();
-
 		m_scenes.push_back(moveLightScene);
 
 		TransformScene* transformScene = new TransformScene(m_camera);
 		transformScene->AddMesh(m_meshBoxes[1]);
-		//sceneTwo->Init();
-
 		m_scenes.push_back(transformScene);
 
 		WaterScene* waterScene = new WaterScene(m_camera);
@@ -119,16 +116,12 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		waterScene->AddMesh(m_meshBoxes[2]);
 		waterScene->AddShader(&m_shaderDiffuse);
 		waterScene->SetPostProcessor(m_postProcessor);
-		//sceneThree->Init();
-
 		m_scenes.push_back(waterScene);
 
 		SpaceScene* spaceScene = new SpaceScene(m_camera);
 		spaceScene->AddMesh(m_meshBoxes[0]);
 		spaceScene->AddMesh(m_meshBoxes[2]);
 		spaceScene->AddShader(&m_shaderDiffuse);
-		//sceneThree->Init();
-
 		m_scenes.push_back(spaceScene);
 
 		m_currentScene = m_scenes[0];
@@ -191,6 +184,3 @@ void GameController::CleanUp()
 	m_shaderColor.CleanUp();
 	m_shaderFont.CleanUp();
 }
-
-
-

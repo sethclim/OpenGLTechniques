@@ -54,15 +54,15 @@ namespace OpenGLTechniques {
 	private: System::Windows::Forms::Label^ label5;
 
 	private: System::Windows::Forms::RadioButton^ moveLight_RB;
-	private: System::Windows::Forms::RadioButton^ colorByPosition_RB;
-	private: System::Windows::Forms::RadioButton^ cubesToSphere_RB;
+	private: System::Windows::Forms::RadioButton^ transform_RB;
+	private: System::Windows::Forms::RadioButton^ water_RB;
+	private: System::Windows::Forms::RadioButton^ space_RB;
 
 	private: System::Windows::Forms::Button^ button2;
 	private: System::Windows::Forms::Label^ r_Out_Label;
 	private: System::Windows::Forms::Label^ g_Out_Label;
 	private: System::Windows::Forms::Label^ b_Out_Label;
 	private: System::Windows::Forms::Label^ specularStrength_Out_Label;
-	private: System::Windows::Forms::RadioButton^ radioButton1;
 	private: System::Windows::Forms::CheckBox^ checkBox1;
 	private: System::Windows::Forms::CheckBox^ checkBox2;
 	private: System::Windows::Forms::CheckBox^ checkBox3;
@@ -99,14 +99,14 @@ namespace OpenGLTechniques {
 			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
-			this->colorByPosition_RB = (gcnew System::Windows::Forms::RadioButton());
-			this->cubesToSphere_RB = (gcnew System::Windows::Forms::RadioButton());
+			this->transform_RB = (gcnew System::Windows::Forms::RadioButton());
+			this->water_RB = (gcnew System::Windows::Forms::RadioButton());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->r_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->g_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->b_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->specularStrength_Out_Label = (gcnew System::Windows::Forms::Label());
-			this->radioButton1 = (gcnew System::Windows::Forms::RadioButton());
+			this->space_RB = (gcnew System::Windows::Forms::RadioButton());
 			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
@@ -136,7 +136,7 @@ namespace OpenGLTechniques {
 			this->moveLight_RB->TabStop = true;
 			this->moveLight_RB->Text = L"MoveLight";
 			this->moveLight_RB->UseVisualStyleBackColor = true;
-			this->moveLight_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged);
+			this->moveLight_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::moveLight_RB_CheckedChanged);
 			// 
 			// button1
 			// 
@@ -237,31 +237,31 @@ namespace OpenGLTechniques {
 			// 
 			// colorByPosition_RB
 			// 
-			this->colorByPosition_RB->AutoSize = true;
-			this->colorByPosition_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->transform_RB->AutoSize = true;
+			this->transform_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->colorByPosition_RB->Location = System::Drawing::Point(15, 280);
-			this->colorByPosition_RB->Name = L"colorByPosition_RB";
-			this->colorByPosition_RB->Size = System::Drawing::Size(81, 17);
-			this->colorByPosition_RB->TabIndex = 16;
-			this->colorByPosition_RB->TabStop = true;
-			this->colorByPosition_RB->Text = L"Transform";
-			this->colorByPosition_RB->UseVisualStyleBackColor = true;
-			this->colorByPosition_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton2_CheckedChanged);
+			this->transform_RB->Location = System::Drawing::Point(15, 280);
+			this->transform_RB->Name = L"colorByPosition_RB";
+			this->transform_RB->Size = System::Drawing::Size(81, 17);
+			this->transform_RB->TabIndex = 16;
+			this->transform_RB->TabStop = true;
+			this->transform_RB->Text = L"Transform";
+			this->transform_RB->UseVisualStyleBackColor = true;
+			this->transform_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::transform_RB_CheckedChanged);
 			// 
 			// cubesToSphere_RB
 			// 
-			this->cubesToSphere_RB->AutoSize = true;
-			this->cubesToSphere_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->water_RB->AutoSize = true;
+			this->water_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->cubesToSphere_RB->Location = System::Drawing::Point(16, 432);
-			this->cubesToSphere_RB->Name = L"cubesToSphere_RB";
-			this->cubesToSphere_RB->Size = System::Drawing::Size(99, 17);
-			this->cubesToSphere_RB->TabIndex = 17;
-			this->cubesToSphere_RB->TabStop = true;
-			this->cubesToSphere_RB->Text = L"Water Scene";
-			this->cubesToSphere_RB->UseVisualStyleBackColor = true;
-			this->cubesToSphere_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton3_CheckedChanged);
+			this->water_RB->Location = System::Drawing::Point(16, 432);
+			this->water_RB->Name = L"cubesToSphere_RB";
+			this->water_RB->Size = System::Drawing::Size(99, 17);
+			this->water_RB->TabIndex = 17;
+			this->water_RB->TabStop = true;
+			this->water_RB->Text = L"Water Scene";
+			this->water_RB->UseVisualStyleBackColor = true;
+			this->water_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::water_RB_CheckedChanged);
 			// 
 			// button2
 			// 
@@ -311,17 +311,17 @@ namespace OpenGLTechniques {
 			// 
 			// radioButton1
 			// 
-			this->radioButton1->AutoSize = true;
-			this->radioButton1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->space_RB->AutoSize = true;
+			this->space_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->radioButton1->Location = System::Drawing::Point(16, 586);
-			this->radioButton1->Name = L"radioButton1";
-			this->radioButton1->Size = System::Drawing::Size(101, 17);
-			this->radioButton1->TabIndex = 23;
-			this->radioButton1->TabStop = true;
-			this->radioButton1->Text = L"Space Scene";
-			this->radioButton1->UseVisualStyleBackColor = true;
-			this->radioButton1->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::radioButton1_CheckedChanged_1);
+			this->space_RB->Location = System::Drawing::Point(16, 586);
+			this->space_RB->Name = L"radioButton1";
+			this->space_RB->Size = System::Drawing::Size(101, 17);
+			this->space_RB->TabIndex = 23;
+			this->space_RB->TabStop = true;
+			this->space_RB->Text = L"Space Scene";
+			this->space_RB->UseVisualStyleBackColor = true;
+			this->space_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::space_RB_CheckedChanged_1);
 			// 
 			// checkBox1
 			// 
@@ -421,14 +421,14 @@ namespace OpenGLTechniques {
 			this->Controls->Add(this->checkBox3);
 			this->Controls->Add(this->checkBox2);
 			this->Controls->Add(this->checkBox1);
-			this->Controls->Add(this->radioButton1);
+			this->Controls->Add(this->space_RB);
 			this->Controls->Add(this->specularStrength_Out_Label);
 			this->Controls->Add(this->b_Out_Label);
 			this->Controls->Add(this->g_Out_Label);
 			this->Controls->Add(this->r_Out_Label);
 			this->Controls->Add(this->button2);
-			this->Controls->Add(this->cubesToSphere_RB);
-			this->Controls->Add(this->colorByPosition_RB);
+			this->Controls->Add(this->water_RB);
+			this->Controls->Add(this->transform_RB);
 			this->Controls->Add(this->label5);
 			this->Controls->Add(this->label4);
 			this->Controls->Add(this->label3);
@@ -459,6 +459,7 @@ public:
 		SceneOne,
 		SceneTwo,
 		SceneThree,
+		SceneFour
 	};
 	static float specularStrength = 4;
 	static float color_R = 1;
@@ -516,7 +517,8 @@ private:
 		{
 			ResetTeapot = true;
 		}
-		System::Void radioButton1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+
+		System::Void moveLight_RB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
 		{
 			if (moveLight_RB->Checked)
 			{
@@ -524,21 +526,27 @@ private:
 			}
 
 		}
-		System::Void radioButton2_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-			if (colorByPosition_RB->Checked)
+		System::Void transform_RB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (transform_RB->Checked)
 			{
 				game_mode = Mode::SceneTwo;
 			}
 		}
 
-		System::Void radioButton3_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-			if (cubesToSphere_RB->Checked)
+		System::Void water_RB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
+			if (water_RB->Checked)
 			{
 				game_mode = Mode::SceneThree;
 			}
 		}
-private: System::Void radioButton1_CheckedChanged_1(System::Object^ sender, System::EventArgs^ e) {
-}
+
+		System::Void space_RB_CheckedChanged_1(System::Object^ sender, System::EventArgs^ e) {
+			if (space_RB->Checked)
+			{
+				game_mode = Mode::SceneFour;
+			}
+		}
+
 private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
 }
 private: System::Void checkBox4_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
