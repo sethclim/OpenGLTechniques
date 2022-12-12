@@ -175,5 +175,11 @@
     <None Include="DiffuseWorld.frag">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="Skybox.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Skybox.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

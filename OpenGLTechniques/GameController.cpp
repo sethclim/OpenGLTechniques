@@ -99,14 +99,14 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_scenes.push_back(moveLightScene);
 
 		TransformScene* transformScene = new TransformScene(m_camera);
-		transformScene->AddMesh(m_meshBoxes[2]);
+		transformScene->AddMesh(m_meshBoxes[1]);
 		//sceneTwo->Init();
 
 		m_scenes.push_back(transformScene);
 
 		WaterScene* waterScene = new WaterScene(m_camera);
 		waterScene->AddMesh(m_meshBoxes[0]);
-		waterScene->AddMesh(m_meshBoxes[3]);
+		waterScene->AddMesh(m_meshBoxes[2]);
 		waterScene->AddShader(&m_shaderDiffuse);
 		//sceneThree->Init();
 
@@ -114,7 +114,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 		SpaceScene* spaceScene = new SpaceScene(m_camera);
 		spaceScene->AddMesh(m_meshBoxes[0]);
-		spaceScene->AddMesh(m_meshBoxes[3]);
+		spaceScene->AddMesh(m_meshBoxes[2]);
 		spaceScene->AddShader(&m_shaderDiffuse);
 		//sceneThree->Init();
 

@@ -47,8 +47,7 @@ void MoveLightScene::ProcessInput(float dt)
 void MoveLightScene::Update(float dt)
 {
 	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
-
-	Mesh::Lights[0]->SetColor({
+	Mesh::Lights[0]->SetLightSpecularColor({
 		OpenGLTechniques::ToolWindow::color_R,
 		OpenGLTechniques::ToolWindow::color_G,
 		OpenGLTechniques::ToolWindow::color_B

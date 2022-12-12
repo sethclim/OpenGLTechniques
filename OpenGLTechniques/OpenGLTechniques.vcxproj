@@ -201,6 +201,8 @@ copy /Y "$(SolutionDir)\External\glfw-3.3.4\lib-vc2019\glfw3.dll" "$(TargetDir)"
     <None Include="Font.vert" />
     <None Include="SimpleFragmentShader.frag" />
     <None Include="SimpleVertexShader.vert" />
+    <None Include="Skybox.frag" />
+    <None Include="Skybox.vert" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
