@@ -52,6 +52,9 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_shaderSkybox = Shader();
 		m_shaderFont.LoadShaders("Skybox.vert", "Skybox.frag");
 
+		m_shaderPost = Shader();
+		m_shaderPost.LoadShaders("PostProcessing.vert", "PostProcessing.frag");
+
 		Mesh* light = new Mesh();
 		light->Create(&m_shaderColor, "../Assets/Models/sphere.obj");
 		Mesh::Lights.push_back(light);
@@ -64,6 +67,9 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		Mesh* fish = new Mesh();
 		fish->Create(&m_shaderDiffuse, "../Assets/Models/Fish.obj");
 		m_meshBoxes.push_back(fish);
+
+		m_postProcessor = PostProcessor();
+		m_postProcessor.Create(&m_shaderPost);
 
 
 		//m_skybox = Skybox();
@@ -108,6 +114,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		waterScene->AddMesh(m_meshBoxes[0]);
 		waterScene->AddMesh(m_meshBoxes[2]);
 		waterScene->AddShader(&m_shaderDiffuse);
+		waterScene->SetPostProcessor(m_postProcessor);
 		//sceneThree->Init();
 
 		m_scenes.push_back(waterScene);

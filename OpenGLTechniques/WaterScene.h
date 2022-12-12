@@ -2,6 +2,7 @@
 #define WaterScene_H
 
 #include "Scene.h"
+#include "PostProcessor.h"
 
 class WaterScene : public Scene
 {
@@ -14,12 +15,18 @@ public:
 
 	void ProcessInput(float dt);
 	void Update(float dt);
-	//void Render();
+	void Render();
 
 	int GetNumberOfBoxes() { return boxes.size(); }
 
+	void SetPostProcessor(PostProcessor& postProcessor)
+	{
+		m_postProcessor = postProcessor;
+	}
+
 private:
 	std::vector<Mesh *> boxes;
+	PostProcessor m_postProcessor;
 };
 
 #endif // !WaterScene_H

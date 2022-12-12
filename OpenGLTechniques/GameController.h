@@ -9,6 +9,7 @@
 #include "Fonts.h"
 #include "Mouse.h"
 #include "Skybox.h"
+#include "PostProcessor.h"
 
 class Scene;
 
@@ -33,6 +34,8 @@ private:
 	Shader     m_shaderFont;
 	Shader	   m_shaderWorldDiffuse;
 	Shader     m_shaderSkybox;
+	Shader     m_shaderPost;
+
 	Camera     m_camera;
 	Mesh       m_meshLight;
 	Scene*     m_currentScene;
@@ -41,7 +44,9 @@ private:
 	glm::vec2 m_windowSize;
 	std::vector<Mesh*>    m_meshBoxes;
 	std::vector<Fonts>   m_fonts;
+	PostProcessor m_postProcessor;
 	Skybox m_skybox;
+
 
 	std::vector<Scene*>   m_scenes;
 };
