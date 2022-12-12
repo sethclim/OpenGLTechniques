@@ -12,14 +12,14 @@ WaterScene::~WaterScene()
 
 void WaterScene::Init()
 {
-	//m_meshes[0]->SetPosition({ 1.5f, -1.0f, 1.0f });
-	//m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
-	//m_meshes[0]->SetScale({ 0.01f, 0.01f, 0.01f });
+	m_meshes[0]->SetPosition({ 1.0f, 0.0f, 4.0f });
+	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
+	m_meshes[0]->SetScale({ 0.01f, 0.01f, 0.01f });
 
-	//m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	//m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
-	//m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
-	//m_meshes[1]->SetSpecularStrength(4);
+	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
+	m_meshes[1]->SetScale({ 0.05f, 0.05f, 0.05f });
+	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+	m_meshes[1]->SetSpecularStrength(4);
 }
 void WaterScene::ProcessInput(float dt)
 {
@@ -58,15 +58,15 @@ void WaterScene::Update(float dt)
 	//}
 }
 
-void WaterScene::Render()
-{
-	//for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
-	//{
-	//	m_meshes[meshCount]->Render(m_camera.GetProjection() * m_camera.GetView());
-	//}
-
-	//for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
-	//{
-	//	boxes[boxCount]->Render(m_camera.GetProjection() * m_camera.GetView());
-	//}
-}
+//void WaterScene::Render()
+//{
+//	//for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
+//	//{
+//	//	m_meshes[meshCount]->Render(m_camera.GetProjection() * m_camera.GetView());
+//	//}
+//
+//	//for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
+//	//{
+//	//	boxes[boxCount]->Render(m_camera.GetProjection() * m_camera.GetView());
+//	//}
+//}

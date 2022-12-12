@@ -62,7 +62,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_meshBoxes.push_back(fighter);
 
 		Mesh* fish = new Mesh();
-		fish->Create(&m_shaderWorldDiffuse, "../Assets/Models/Fish.obj");
+		fish->Create(&m_shaderDiffuse, "../Assets/Models/Fish.obj");
 		m_meshBoxes.push_back(fish);
 
 

@@ -14,7 +14,7 @@ public:
 
 	void ProcessInput(float dt);
 	void Update(float dt);
-	void Render();
+	//void Render();
 
 	int GetNumberOfBoxes() { return boxes.size(); }
 
