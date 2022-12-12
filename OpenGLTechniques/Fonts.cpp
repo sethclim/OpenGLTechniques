@@ -83,6 +83,7 @@ void Fonts::RenderText(std::string _text, float _x, float _y, float _scale, glm:
 	glUseProgram(m_shader->GetProgramID());
 	m_shader->SetVec3("TextColor", _color);
 	glUniformMatrix4fv(glGetUniformLocation(m_shader->GetProgramID(), "Projection"), 1, GL_FALSE, glm::value_ptr(m_orthoProj));
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
 
 	std::string::const_iterator c;
 	for (c = _text.begin(); c != _text.end(); c++)

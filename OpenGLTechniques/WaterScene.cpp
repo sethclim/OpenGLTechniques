@@ -61,9 +61,9 @@ void WaterScene::Update(float dt)
 
 void WaterScene::Render()
 {
-	//m_postProcessor.Start();
+	m_postProcessor.Start();
 
 	Scene::Render();
 
-	//m_postProcessor.End();
+	m_postProcessor.End();
 }
