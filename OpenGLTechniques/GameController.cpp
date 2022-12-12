@@ -30,10 +30,14 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	glEnable(GL_CULL_FACE);
 	srand((unsigned int)time(0));
+	glGenVertexArrays(1, &vao);
+	glBindVertexArray(vao);
 
-	m_camera = Camera(_resolution);
-	m_windowSize = _windowSize;
+	Resolution r = WindowController::GetInstance().GetResolution();
+	glViewport(0, 0, r.m_width, r.m_height);
+	m_camera = Camera(r);
 
 #pragma region LoadAssets
 	{
@@ -156,7 +160,6 @@ void GameController::Update(float dt)
 
 void GameController::Render()
 {
-
 	std::stringstream   mousePosition_MSG;
 	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
 	std::stringstream   fps_MSG;

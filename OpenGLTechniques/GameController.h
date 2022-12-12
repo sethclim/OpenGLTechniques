@@ -46,7 +46,7 @@ private:
 	std::vector<Fonts>   m_fonts;
 	PostProcessor m_postProcessor;
 	Skybox m_skybox;
-
+	GLuint vao;
 
 	std::vector<Scene*>   m_scenes;
 };
