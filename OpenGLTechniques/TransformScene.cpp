@@ -13,44 +13,50 @@ TransformScene::~TransformScene()
 
 void TransformScene::Init()
 {
-	//m_meshes[0]->SetCameraPosition(m_camera.GetPosition());
-	//m_meshes[0]->SetScale({ 0.02f, 0.02f, 0.02f });
-	//m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
-	//m_meshes[0]->SetSpecularStrength(8.0f);
+	m_meshes[0]->SetCameraPosition(m_camera.GetPosition());
+	m_meshes[0]->SetScale({ 0.002f, 0.002f, 0.002f });
+	m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
 }
 
 void TransformScene::ProcessInput(float dt)
 {
-	//glm::vec2 pos = Application::Mouse.GetPosition();
-	//if (Application::Mouse.GetMouseDown())
-	//{
-	//	glm::vec3 dir = Utilities::ViewToWorldCoordTransform(pos, m_camera);
-	//	glm::vec3 _curTeaPotPos = m_meshes[0]->GetPosition();
-	//	_curTeaPotPos += (dir * 0.5f * dt);
+	if (Application::Mouse.GetMouseDown())
+	{
+		glm::vec3 dir = Utilities::ViewToWorldCoordTransform(Application::Mouse.GetPosition(), m_camera);
+		glm::vec2 pos = Application::Mouse.GetPosition();
 
-	//    m_meshes[0]->SetPosition(_curTeaPotPos);
-	//}
+		//Translate
+		if (OpenGLTechniques::ToolWindow::SceneTwoOptions::Translate)
+		{
+			glm::vec3 _fighterPosition = m_meshes[0]->GetPosition();
+			_fighterPosition += (dir * 0.5f * dt);
+			m_meshes[0]->SetPosition(_fighterPosition);
+		}
+		
+		//Rotate
+ 		if (OpenGLTechniques::ToolWindow::SceneTwoOptions::Rotate)
+		{
+			glm::vec3 _fighterRotation = m_meshes[0]->GetRotation();
+			_fighterRotation += (dir * 3.0f * dt);
+			m_meshes[0]->SetRotation(_fighterRotation);
+		}
 
-	//if (OpenGLTechniques::ToolWindow::ResetTeapot)
+		//Scale
+		if (OpenGLTechniques::ToolWindow::SceneTwoOptions::Scale)
+		{
+			glm::vec3 _fighterScale = m_meshes[0]->GetScale();
+			_fighterScale += (dir * 0.02f * dt);
+			m_meshes[0]->SetScale(_fighterScale);
+		}
+
+		//m_meshes[0]->SetPosition(_curLightPos);
+		//m_meshes[0]->SetRotation(_curLightPos);
+		//m_meshes[1]->SetLightPosition(_curLightPos);
+	}
+
+	//if (OpenGLTechniques::ToolWindow::)
 	//{
 	//	m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
-
-	//	OpenGLTechniques::ToolWindow::ResetTeapot = false;
-	//}
-
-	//
-	//glm::vec3 teaPotPos = m_meshes[0]->GetPosition();
-
-	//if (Application::Mouse.GetScroll() > 0)
-	//{
-	//	teaPotPos.z += 0.1;
-	//	m_meshes[0]->SetPosition(teaPotPos);
-	//	Application::Mouse.SetScroll(0);
-	//}
-	//else if(Application::Mouse.GetScroll() < 0)
-	//{
-	//	teaPotPos.z -= 0.1;
-	//	Application::Mouse.SetScroll(0);
-	//	m_meshes[0]->SetPosition(teaPotPos);
+	//	OpenGLTechniques::ToolWindow::ResetLight = false;
 	//}
 }

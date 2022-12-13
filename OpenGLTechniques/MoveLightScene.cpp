@@ -54,7 +54,6 @@ void MoveLightScene::Update(float dt)
 	});
 
 	glm::vec3 curRot = m_meshes[1]->GetRotation();
-
 	curRot.x += 0.2f * dt;
 
 	m_meshes[1]->SetRotation(curRot);

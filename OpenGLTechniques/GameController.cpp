@@ -6,7 +6,6 @@
 #include "WaterScene.h"
 #include "SpaceScene.h"
 
-
 GameController::GameController()
 {
 	m_shaderColor = { };
@@ -75,19 +74,17 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_postProcessor = PostProcessor();
 		m_postProcessor.Create(&m_shaderPost);
 
-
-		//m_skybox = Skybox();
-		//m_skybox.Create(&m_shaderSkybox, "../Assets/Models/Skybox.obj",
-		//	{
-		//		"../Assets/Textures/Skybox/right.jpg",
-		//		"../Assets/Textures/Skybox/left.jpg",
-		//		"../Assets/Textures/Skybox/top.jpg",
-		//		"../Assets/Textures/Skybox/bottom.jpg",
-		//		"../Assets/Textures/Skybox/front.jpg",
-		//		"../Assets/Textures/Skybox/back.jpg",
-		//	}
-		//);
-
+		m_skybox = Skybox();
+		m_skybox.Create(&m_shaderSkybox, "../Assets/Models/Skybox.obj",
+			{
+				"../Assets/Textures/Skybox/right.jpg",
+				"../Assets/Textures/Skybox/left.jpg",
+				"../Assets/Textures/Skybox/top.jpg",
+				"../Assets/Textures/Skybox/bottom.jpg",
+				"../Assets/Textures/Skybox/front.jpg",
+				"../Assets/Textures/Skybox/back.jpg",
+			}
+		);
 
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
@@ -120,8 +117,9 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 		SpaceScene* spaceScene = new SpaceScene(m_camera);
 		spaceScene->AddMesh(m_meshBoxes[0]);
-		spaceScene->AddMesh(m_meshBoxes[2]);
+		spaceScene->AddMesh(m_meshBoxes[1]);
 		spaceScene->AddShader(&m_shaderDiffuse);
+		spaceScene->SetSkybox(m_skybox);
 		m_scenes.push_back(spaceScene);
 
 		m_currentScene = m_scenes[0];

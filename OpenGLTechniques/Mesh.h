@@ -20,6 +20,7 @@ public:
 	glm::vec3 GetRotation() { return m_rotation; }
 
 	void SetScale(glm::vec3 _scale) { m_scale = _scale; }
+	glm::vec3 GetScale() { return m_scale; }
 
 	void SetColor(glm::vec3 _color) { m_color = _color; }
 	glm::vec3 GetColor() { return m_color; }

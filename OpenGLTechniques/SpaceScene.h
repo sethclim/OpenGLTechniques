@@ -18,8 +18,11 @@ public:
 
 	int GetNumberOfBoxes() { return boxes.size(); }
 
+	void SetSkybox(Skybox& _skybox) { m_skybox = _skybox;  }
+
 private:
 	std::vector<Mesh*> boxes;
+	Skybox m_skybox;
 };
 
 #endif // !SPACESCENE_H

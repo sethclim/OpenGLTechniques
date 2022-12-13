@@ -176,6 +176,8 @@ void Mesh::CalculateTransform()
 {
 	m_world = glm::translate(glm::mat4(1.0), m_position);
 	m_world = glm::rotate(m_world, glm::radians(m_rotation.x), glm::vec3(1, 0, 0));
+	m_world = glm::rotate(m_world, glm::radians(m_rotation.y), glm::vec3(0, 1, 0));
+	m_world = glm::rotate(m_world, glm::radians(m_rotation.z), glm::vec3(0, 0, 1));
 	m_world = glm::scale(m_world, m_scale);
 }
 
@@ -189,19 +191,18 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 
 	for (unsigned int i = 0; i < Lights.size(); i++)
 	{
-
 		glm::vec3 a = Lights[i]->GetLightSpecularColor();
 
 		m_shader->SetFloat(Concat("light[", i, "].constant").c_str(), 1.0f);
 		m_shader->SetFloat(Concat("light[", i, "].linear").c_str(), 0.09f);
 		m_shader->SetFloat(Concat("light[", i, "].quadratic").c_str(), 0.032f);
 
-		m_shader->SetVec3(Concat("light[", i, "].ambientColor").c_str(), { 0.5f, 0.5f, 0.5f });
-		m_shader->SetVec3(Concat("light[", i, "].diffuseColor").c_str(), Lights[i]->GetColor());
-		m_shader->SetVec3(Concat("light[", i, "].specularColor").c_str(), Lights[i]->GetLightSpecularColor());
+		m_shader->SetVec3(Concat("light[",  i, "].ambientColor").c_str(), { 0.5f, 0.5f, 0.5f });
+		m_shader->SetVec3(Concat("light[",  i, "].diffuseColor").c_str(), Lights[i]->GetColor());
+		m_shader->SetVec3(Concat("light[",  i, "].specularColor").c_str(), Lights[i]->GetLightSpecularColor());
 
-		m_shader->SetVec3(Concat("light[", i, "].position").c_str(), Lights[i]->GetPosition());
-		m_shader->SetVec3(Concat("light[", i, "].direction").c_str(), glm::normalize(glm::vec3({ 0.0f + i * 0.1f, 0, 0.0f + i * 0.1f }) - Lights[i]->GetPosition()));
+		m_shader->SetVec3(Concat("light[",  i, "].position").c_str(), Lights[i]->GetPosition());
+		m_shader->SetVec3(Concat("light[",  i, "].direction").c_str(), glm::normalize(glm::vec3({ 0.0f + i * 0.1f, 0, 0.0f + i * 0.1f }) - Lights[i]->GetPosition()));
 		m_shader->SetFloat(Concat("light[", i, "].coneAngle").c_str(), glm::radians(5.0f));
 		m_shader->SetFloat(Concat("light[", i, "].falloff").c_str(), 200);
 	}
@@ -210,7 +211,6 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 	m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
 	m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
 	m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 1, m_textureNormal.GetTexture());
-
 }
 
 void Mesh::BindAttributes()

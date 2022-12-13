@@ -1,6 +1,7 @@
 #include "PostProcessor.h"
 #include "WindowController.h"
 #include "Shader.h"
+#include "ToolWindow.h"
 
 
 PostProcessor::PostProcessor()
@@ -51,7 +52,15 @@ void PostProcessor::End()
 	glUseProgram(m_postShader->GetProgramID());
 	m_postShader->SetTextureSampler("ScreenTexture", GL_TEXTURE0, 0, m_textureColorbuffer);
 	BindVertices();
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::WireFrame)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 	glDisableVertexAttribArray(m_postShader->GetAttrVertices());
 	glDisableVertexAttribArray(m_postShader->GetAttrTexCoords());

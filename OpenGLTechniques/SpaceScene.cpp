@@ -12,14 +12,14 @@ SpaceScene::~SpaceScene()
 
 void SpaceScene::Init()
 {
-	//m_meshes[0]->SetPosition({ 1.5f, -1.0f, 1.0f });
-	//m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
-	//m_meshes[0]->SetScale({ 0.01f, 0.01f, 0.01f });
+	m_meshes[0]->SetPosition({ 1.0f, 0.0f, 2.0f });
+	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
+	m_meshes[0]->SetScale({ 0.005f, 0.005f, 0.005f });
 
-	//m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	//m_meshes[1]->SetScale({ 0.02f, 0.02f, 0.02f });
-	//m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
-	//m_meshes[1]->SetSpecularStrength(4);
+	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
+	m_meshes[1]->SetScale({ 0.002f, 0.002f, 0.002f });
+	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+
 }
 void SpaceScene::ProcessInput(float dt)
 {
@@ -60,10 +60,13 @@ void SpaceScene::Update(float dt)
 
 void SpaceScene::Render()
 {
-	//for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
-	//{
-	//	m_meshes[meshCount]->Render(m_camera.GetProjection() * m_camera.GetView());
-	//}
+	glm::mat4 view = glm::mat4(glm::mat3(m_camera.GetView()));
+	m_skybox.Render(m_camera.GetProjection() * view);
+
+	for (unsigned int meshCount = 0; meshCount < m_meshes.size(); meshCount++)
+	{
+		m_meshes[meshCount]->Render(m_camera.GetProjection() * m_camera.GetView());
+	}
 
 	//for (unsigned int boxCount = 0; boxCount < boxes.size(); boxCount++)
 	//{

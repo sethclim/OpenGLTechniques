@@ -63,15 +63,19 @@ namespace OpenGLTechniques {
 	private: System::Windows::Forms::Label^ g_Out_Label;
 	private: System::Windows::Forms::Label^ b_Out_Label;
 	private: System::Windows::Forms::Label^ specularStrength_Out_Label;
-	private: System::Windows::Forms::CheckBox^ checkBox1;
-	private: System::Windows::Forms::CheckBox^ checkBox2;
-	private: System::Windows::Forms::CheckBox^ checkBox3;
+
+	private: System::Windows::Forms::CheckBox^ translate_CB;
+	private: System::Windows::Forms::CheckBox^ rotate_CB;
+	private: System::Windows::Forms::CheckBox^ scale_CB;
+
 	private: System::Windows::Forms::TrackBar^ trackBar1;
 	private: System::Windows::Forms::TrackBar^ trackBar2;
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Label^ label7;
-	private: System::Windows::Forms::CheckBox^ checkBox4;
-	private: System::Windows::Forms::CheckBox^ checkBox5;
+	private: System::Windows::Forms::CheckBox^ wireframe_CB;
+	private: System::Windows::Forms::CheckBox^ tintBlue_CB;
+
+
 
 	protected:
 
@@ -107,15 +111,15 @@ namespace OpenGLTechniques {
 			this->b_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->specularStrength_Out_Label = (gcnew System::Windows::Forms::Label());
 			this->space_RB = (gcnew System::Windows::Forms::RadioButton());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
+			this->translate_CB = (gcnew System::Windows::Forms::CheckBox());
+			this->rotate_CB = (gcnew System::Windows::Forms::CheckBox());
+			this->scale_CB = (gcnew System::Windows::Forms::CheckBox());
 			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
 			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->checkBox4 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox5 = (gcnew System::Windows::Forms::CheckBox());
+			this->wireframe_CB = (gcnew System::Windows::Forms::CheckBox());
+			this->tintBlue_CB = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->BeginInit();
@@ -206,7 +210,6 @@ namespace OpenGLTechniques {
 			this->label2->Size = System::Drawing::Size(76, 13);
 			this->label2->TabIndex = 12;
 			this->label2->Text = L"Specular Color";
-			this->label2->Click += gcnew System::EventHandler(this, &ToolWindow::label2_Click);
 			// 
 			// label3
 			// 
@@ -235,13 +238,13 @@ namespace OpenGLTechniques {
 			this->label5->TabIndex = 15;
 			this->label5->Text = L"B";
 			// 
-			// colorByPosition_RB
+			// transform_RB
 			// 
 			this->transform_RB->AutoSize = true;
 			this->transform_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->transform_RB->Location = System::Drawing::Point(15, 280);
-			this->transform_RB->Name = L"colorByPosition_RB";
+			this->transform_RB->Name = L"transform_RB";
 			this->transform_RB->Size = System::Drawing::Size(81, 17);
 			this->transform_RB->TabIndex = 16;
 			this->transform_RB->TabStop = true;
@@ -249,13 +252,13 @@ namespace OpenGLTechniques {
 			this->transform_RB->UseVisualStyleBackColor = true;
 			this->transform_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::transform_RB_CheckedChanged);
 			// 
-			// cubesToSphere_RB
+			// water_RB
 			// 
 			this->water_RB->AutoSize = true;
 			this->water_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->water_RB->Location = System::Drawing::Point(16, 432);
-			this->water_RB->Name = L"cubesToSphere_RB";
+			this->water_RB->Name = L"water_RB";
 			this->water_RB->Size = System::Drawing::Size(99, 17);
 			this->water_RB->TabIndex = 17;
 			this->water_RB->TabStop = true;
@@ -309,13 +312,13 @@ namespace OpenGLTechniques {
 			this->specularStrength_Out_Label->TabIndex = 22;
 			this->specularStrength_Out_Label->Text = L"4";
 			// 
-			// radioButton1
+			// space_RB
 			// 
 			this->space_RB->AutoSize = true;
 			this->space_RB->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 8.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
 			this->space_RB->Location = System::Drawing::Point(16, 586);
-			this->space_RB->Name = L"radioButton1";
+			this->space_RB->Name = L"space_RB";
 			this->space_RB->Size = System::Drawing::Size(101, 17);
 			this->space_RB->TabIndex = 23;
 			this->space_RB->TabStop = true;
@@ -323,35 +326,38 @@ namespace OpenGLTechniques {
 			this->space_RB->UseVisualStyleBackColor = true;
 			this->space_RB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::space_RB_CheckedChanged_1);
 			// 
-			// checkBox1
+			// translate_CB
 			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(32, 332);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(70, 17);
-			this->checkBox1->TabIndex = 24;
-			this->checkBox1->Text = L"Translate";
-			this->checkBox1->UseVisualStyleBackColor = true;
+			this->translate_CB->AutoSize = true;
+			this->translate_CB->Location = System::Drawing::Point(32, 332);
+			this->translate_CB->Name = L"translate_CB";
+			this->translate_CB->Size = System::Drawing::Size(70, 17);
+			this->translate_CB->TabIndex = 24;
+			this->translate_CB->Text = L"Translate";
+			this->translate_CB->UseVisualStyleBackColor = true;
+			this->translate_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::translate_CB_CheckedChanged);
 			// 
-			// checkBox2
+			// rotate_CB
 			// 
-			this->checkBox2->AutoSize = true;
-			this->checkBox2->Location = System::Drawing::Point(32, 366);
-			this->checkBox2->Name = L"checkBox2";
-			this->checkBox2->Size = System::Drawing::Size(58, 17);
-			this->checkBox2->TabIndex = 25;
-			this->checkBox2->Text = L"Rotate";
-			this->checkBox2->UseVisualStyleBackColor = true;
+			this->rotate_CB->AutoSize = true;
+			this->rotate_CB->Location = System::Drawing::Point(32, 366);
+			this->rotate_CB->Name = L"rotate_CB";
+			this->rotate_CB->Size = System::Drawing::Size(58, 17);
+			this->rotate_CB->TabIndex = 25;
+			this->rotate_CB->Text = L"Rotate";
+			this->rotate_CB->UseVisualStyleBackColor = true;
+			this->rotate_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::rotate_CB_CheckedChanged);
 			// 
-			// checkBox3
+			// scale_CB
 			// 
-			this->checkBox3->AutoSize = true;
-			this->checkBox3->Location = System::Drawing::Point(32, 398);
-			this->checkBox3->Name = L"checkBox3";
-			this->checkBox3->Size = System::Drawing::Size(53, 17);
-			this->checkBox3->TabIndex = 26;
-			this->checkBox3->Text = L"Scale";
-			this->checkBox3->UseVisualStyleBackColor = true;
+			this->scale_CB->AutoSize = true;
+			this->scale_CB->Location = System::Drawing::Point(32, 398);
+			this->scale_CB->Name = L"scale_CB";
+			this->scale_CB->Size = System::Drawing::Size(53, 17);
+			this->scale_CB->TabIndex = 26;
+			this->scale_CB->Text = L"Scale";
+			this->scale_CB->UseVisualStyleBackColor = true;
+			this->scale_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::scale_CB_CheckedChanged);
 			// 
 			// trackBar1
 			// 
@@ -384,43 +390,43 @@ namespace OpenGLTechniques {
 			this->label7->Size = System::Drawing::Size(53, 13);
 			this->label7->TabIndex = 30;
 			this->label7->Text = L"Amplitude";
-			this->label7->Click += gcnew System::EventHandler(this, &ToolWindow::label7_Click);
 			// 
-			// checkBox4
+			// wireframe_CB
 			// 
-			this->checkBox4->AutoSize = true;
-			this->checkBox4->Location = System::Drawing::Point(33, 530);
-			this->checkBox4->Name = L"checkBox4";
-			this->checkBox4->Size = System::Drawing::Size(107, 17);
-			this->checkBox4->TabIndex = 31;
-			this->checkBox4->Text = L"Wireframe render";
-			this->checkBox4->UseVisualStyleBackColor = true;
-			this->checkBox4->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::checkBox4_CheckedChanged);
+			this->wireframe_CB->AutoSize = true;
+			this->wireframe_CB->Location = System::Drawing::Point(33, 530);
+			this->wireframe_CB->Name = L"wireframe_CB";
+			this->wireframe_CB->Size = System::Drawing::Size(107, 17);
+			this->wireframe_CB->TabIndex = 31;
+			this->wireframe_CB->Text = L"Wireframe render";
+			this->wireframe_CB->UseVisualStyleBackColor = true;
+			this->wireframe_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::wireframe_CB_CheckedChanged);
 			// 
-			// checkBox5
+			// tintBlue_CB
 			// 
-			this->checkBox5->AutoSize = true;
-			this->checkBox5->Location = System::Drawing::Point(33, 548);
-			this->checkBox5->Name = L"checkBox5";
-			this->checkBox5->Size = System::Drawing::Size(68, 17);
-			this->checkBox5->TabIndex = 32;
-			this->checkBox5->Text = L"Tint Blue";
-			this->checkBox5->UseVisualStyleBackColor = true;
+			this->tintBlue_CB->AutoSize = true;
+			this->tintBlue_CB->Location = System::Drawing::Point(33, 548);
+			this->tintBlue_CB->Name = L"tintBlue_CB";
+			this->tintBlue_CB->Size = System::Drawing::Size(68, 17);
+			this->tintBlue_CB->TabIndex = 32;
+			this->tintBlue_CB->Text = L"Tint Blue";
+			this->tintBlue_CB->UseVisualStyleBackColor = true;
+			this->tintBlue_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::bluetint_CB_CheckedChanged);
 			// 
 			// ToolWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(532, 615);
-			this->Controls->Add(this->checkBox5);
-			this->Controls->Add(this->checkBox4);
+			this->Controls->Add(this->tintBlue_CB);
+			this->Controls->Add(this->wireframe_CB);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
 			this->Controls->Add(this->trackBar2);
 			this->Controls->Add(this->trackBar1);
-			this->Controls->Add(this->checkBox3);
-			this->Controls->Add(this->checkBox2);
-			this->Controls->Add(this->checkBox1);
+			this->Controls->Add(this->scale_CB);
+			this->Controls->Add(this->rotate_CB);
+			this->Controls->Add(this->translate_CB);
 			this->Controls->Add(this->space_RB);
 			this->Controls->Add(this->specularStrength_Out_Label);
 			this->Controls->Add(this->b_Out_Label);
@@ -455,29 +461,37 @@ namespace OpenGLTechniques {
 #pragma endregion
 
 public:
+
 	enum class  Mode : char {
 		SceneOne,
 		SceneTwo,
 		SceneThree,
 		SceneFour
 	};
+
 	static float specularStrength = 4;
 	static float color_R = 1;
 	static float color_G = 1;
 	static float color_B = 1;
-	static Mode  game_mode = Mode::SceneOne;
 	static bool ResetLight = false;
 	static bool ResetTeapot = false;
 
+	static ref struct SceneTwoOptions {
+		static bool Translate = false;
+		static bool Rotate = false;
+		static bool Scale = false;
+	};
+
+	enum class SceneThreeOptions : char {
+		Off,
+		BlueTint,
+		WireFrame,
+	};
+
+	static Mode  game_mode = Mode::SceneOne;
+	static SceneThreeOptions Scene_Three_Options = SceneThreeOptions::Off;
 
 private:
-		System::Void textBox1_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		}
-		System::Void textBox2_TextChanged(System::Object^ sender, System::EventArgs^ e) {
-		}
-		System::Void label2_Click(System::Object^ sender, System::EventArgs^ e) {
-		}
-
 		//Slider Callbacks
 		System::Void SpecularStrength_TB_Callback(System::Object^ sender, System::EventArgs^ e)
 		{
@@ -524,8 +538,8 @@ private:
 			{
 				game_mode = Mode::SceneOne;
 			}
-
 		}
+
 		System::Void transform_RB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 			if (transform_RB->Checked)
 			{
@@ -547,10 +561,45 @@ private:
 			}
 		}
 
-private: System::Void label7_Click(System::Object^ sender, System::EventArgs^ e) {
-}
-private: System::Void checkBox4_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
-}
-};
+		System::Void translate_CB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			SceneTwoOptions::Translate = translate_CB->Checked;
+		}
+
+		System::Void rotate_CB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			SceneTwoOptions::Rotate = rotate_CB->Checked;
+		}
+
+		System::Void scale_CB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			SceneTwoOptions::Scale = scale_CB->Checked;
+		}
+
+		System::Void wireframe_CB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			if (wireframe_CB->Checked)
+			{
+				Scene_Three_Options = SceneThreeOptions::WireFrame;
+			}
+			else
+			{
+				Scene_Three_Options = SceneThreeOptions::Off;
+			}
+		}
+
+		System::Void bluetint_CB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 
+		{
+			if (tintBlue_CB->Checked)
+			{
+				Scene_Three_Options = SceneThreeOptions::BlueTint;
+			}
+			else
+			{
+				Scene_Three_Options = SceneThreeOptions::Off;
+			}
+		}
+
+	};
 }	
  

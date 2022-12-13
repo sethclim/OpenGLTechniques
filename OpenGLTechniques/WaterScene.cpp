@@ -1,4 +1,5 @@
 #include "WaterScene.h"
+#include "ToolWindow.h"
 
 WaterScene::WaterScene(Camera _camera)
 {
@@ -42,9 +43,23 @@ void WaterScene::ProcessInput(float dt)
 
 	//	Application::Mouse.SetMouseDown(false);
 	//}
+
+	Shader* postShader = m_postProcessor.GetShader();
+
+	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::BlueTint)
+	{
+		postShader->SetInt("blue", 1);
+	}
+	else
+	{
+		postShader->SetInt("blue",  0);
+	}
+
+	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::WireFrame)
+	{
+
+	}
 }
-
-
 
 void WaterScene::Update(float dt)
 {
@@ -55,7 +70,7 @@ void WaterScene::Update(float dt)
 	time += 0.01f;
 
 	postShader->SetVec2("resolution", glm::vec2(r.m_width, r.m_height));
-	postShader->SetFloat("freq", 0.1);
+	postShader->SetFloat("freq", 0.5);
 	postShader->SetFloat("time", time);
 	postShader->SetFloat("amplitude", 5.0);
 }
