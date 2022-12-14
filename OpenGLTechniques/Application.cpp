@@ -7,6 +7,8 @@ Application::Application(): m_gameController( new GameController() )
 	GLFWwindow* window = WindowController::GetInstance().GetWindow(); // call this first to create window required by GLEW
 	M_ASSERT(glewInit() == GLEW_OK, "Failed to initialize GLEW"); // Initialize GLEW
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE); // Ensure we can capture the escape key
+
+
 	glfwSetCursorPosCallback(window, &glfw_Cursor_Position_Callback);
 	glfwSetMouseButtonCallback(window, &glfw_Mouse_Button_Callback);
 	glfwSetScrollCallback(window, &glfw_Scroll_Callback);

@@ -56,6 +56,7 @@ void SpaceScene::Update(float dt)
 	//		boxes[boxCount]->SetPosition(curPos);
 	//	}
 	//}
+
 }
 
 void SpaceScene::Render()

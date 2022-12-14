@@ -38,7 +38,6 @@ void Skybox::Create(Shader* _shader, std::string _file, std::vector<std::string>
 			m_vertexData.push_back(curMesh.Vertices[j].Position.Y);
 			m_vertexData.push_back(curMesh.Vertices[j].Position.Z);
 		}
-
 	}
 
 	m_textureDiffuse = Texture();
