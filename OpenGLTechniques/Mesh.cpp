@@ -64,51 +64,51 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 	objl::Loader Loader;
 	M_ASSERT(Loader.LoadFile(_file) == true, "Failed To Load Mesh")
 
-		for (unsigned int i = 0; i < Loader.LoadedMeshes.size(); i++)
+	for (unsigned int i = 0; i < Loader.LoadedMeshes.size(); i++)
+	{
+		objl::Mesh curMesh = Loader.LoadedMeshes[i];
+		std::vector<objl::Vector3> tangents;
+		std::vector<objl::Vector3> bitangents;
+		std::vector<objl::Vertex>  triangle;
+
+		objl::Vector3 tangent;
+		objl::Vector3 bitangent;
+
+		for (unsigned int j = 0; j < curMesh.Vertices.size(); j += 3)
 		{
-			objl::Mesh curMesh = Loader.LoadedMeshes[i];
-			std::vector<objl::Vector3> tangents;
-			std::vector<objl::Vector3> bitangents;
-			std::vector<objl::Vertex>  triangle;
+			triangle.clear();
+			triangle.push_back(curMesh.Vertices[j]);
+			triangle.push_back(curMesh.Vertices[j + 1]);
+			triangle.push_back(curMesh.Vertices[j + 2]);
+			CalculateTangents(triangle, tangent, bitangent);
+			tangents.push_back(tangent);
+			bitangents.push_back(bitangent);
+		}
 
-			objl::Vector3 tangent;
-			objl::Vector3 bitangent;
+		for (unsigned int j = 0; j < curMesh.Vertices.size(); j++)
+		{
+			m_vertexData.push_back(curMesh.Vertices[j].Position.X);
+			m_vertexData.push_back(curMesh.Vertices[j].Position.Y);
+			m_vertexData.push_back(curMesh.Vertices[j].Position.Z);
+			m_vertexData.push_back(curMesh.Vertices[j].Normal.X);
+			m_vertexData.push_back(curMesh.Vertices[j].Normal.Y);
+			m_vertexData.push_back(curMesh.Vertices[j].Normal.Z);
+			m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.X);
+			m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.Y);
 
-			for (unsigned int j = 0; j < curMesh.Vertices.size(); j += 3)
+			if (Loader.LoadedMaterials[0].map_bump != "")
 			{
-				triangle.clear();
-				triangle.push_back(curMesh.Vertices[j]);
-				triangle.push_back(curMesh.Vertices[j + 1]);
-				triangle.push_back(curMesh.Vertices[j + 2]);
-				CalculateTangents(triangle, tangent, bitangent);
-				tangents.push_back(tangent);
-				bitangents.push_back(bitangent);
-			}
+				int index = j / 3;
+				m_vertexData.push_back(tangents[index].X);
+				m_vertexData.push_back(tangents[index].Y);
+				m_vertexData.push_back(tangents[index].Z);
 
-			for (unsigned int j = 0; j < curMesh.Vertices.size(); j++)
-			{
-				m_vertexData.push_back(curMesh.Vertices[j].Position.X);
-				m_vertexData.push_back(curMesh.Vertices[j].Position.Y);
-				m_vertexData.push_back(curMesh.Vertices[j].Position.Z);
-				m_vertexData.push_back(curMesh.Vertices[j].Normal.X);
-				m_vertexData.push_back(curMesh.Vertices[j].Normal.Y);
-				m_vertexData.push_back(curMesh.Vertices[j].Normal.Z);
-				m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.X);
-				m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.Y);
-
-				if (Loader.LoadedMaterials[0].map_bump != "")
-				{
-					int index = j / 3;
-					m_vertexData.push_back(tangents[index].X);
-					m_vertexData.push_back(tangents[index].Y);
-					m_vertexData.push_back(tangents[index].Z);
-
-					m_vertexData.push_back(bitangents[index].X);
-					m_vertexData.push_back(bitangents[index].Y);
-					m_vertexData.push_back(bitangents[index].Z);
-				}
+				m_vertexData.push_back(bitangents[index].X);
+				m_vertexData.push_back(bitangents[index].Y);
+				m_vertexData.push_back(bitangents[index].Z);
 			}
 		}
+	}
 
 	m_textureDiffuse = Texture();
 	m_textureDiffuse.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
@@ -122,7 +122,7 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 	m_textureNormal = Texture();
 	if (Loader.LoadedMaterials[0].map_bump != "")
 	{
-		m_textureSpecular.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
+		m_textureNormal.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
 		m_enableNormalMap = true;
 	}
 
@@ -210,7 +210,7 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 	m_shader->SetFloat("material.specularStrength", GetSpecularStrength());
 	m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
 	m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
-	m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 1, m_textureNormal.GetTexture());
+	m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 2, m_textureNormal.GetTexture());
 }
 
 void Mesh::BindAttributes()
