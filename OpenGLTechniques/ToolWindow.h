@@ -67,13 +67,17 @@ namespace OpenGLTechniques {
 	private: System::Windows::Forms::CheckBox^ translate_CB;
 	private: System::Windows::Forms::CheckBox^ rotate_CB;
 	private: System::Windows::Forms::CheckBox^ scale_CB;
+	private: System::Windows::Forms::TrackBar^ frequency_TB;
+	private: System::Windows::Forms::TrackBar^ amplitude_TB;
 
-	private: System::Windows::Forms::TrackBar^ trackBar1;
-	private: System::Windows::Forms::TrackBar^ trackBar2;
+
+
 	private: System::Windows::Forms::Label^ label6;
 	private: System::Windows::Forms::Label^ label7;
 	private: System::Windows::Forms::CheckBox^ wireframe_CB;
 	private: System::Windows::Forms::CheckBox^ tintBlue_CB;
+	private: System::Windows::Forms::Label^ amp_label;
+	private: System::Windows::Forms::Label^ freq_label;
 
 
 
@@ -114,18 +118,20 @@ namespace OpenGLTechniques {
 			this->translate_CB = (gcnew System::Windows::Forms::CheckBox());
 			this->rotate_CB = (gcnew System::Windows::Forms::CheckBox());
 			this->scale_CB = (gcnew System::Windows::Forms::CheckBox());
-			this->trackBar1 = (gcnew System::Windows::Forms::TrackBar());
-			this->trackBar2 = (gcnew System::Windows::Forms::TrackBar());
+			this->frequency_TB = (gcnew System::Windows::Forms::TrackBar());
+			this->amplitude_TB = (gcnew System::Windows::Forms::TrackBar());
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label7 = (gcnew System::Windows::Forms::Label());
 			this->wireframe_CB = (gcnew System::Windows::Forms::CheckBox());
 			this->tintBlue_CB = (gcnew System::Windows::Forms::CheckBox());
+			this->amp_label = (gcnew System::Windows::Forms::Label());
+			this->freq_label = (gcnew System::Windows::Forms::Label());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->specularStrength_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->BeginInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->frequency_TB))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->amplitude_TB))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// moveLight_RB
@@ -306,7 +312,7 @@ namespace OpenGLTechniques {
 			// specularStrength_Out_Label
 			// 
 			this->specularStrength_Out_Label->AutoSize = true;
-			this->specularStrength_Out_Label->Location = System::Drawing::Point(387, 96);
+			this->specularStrength_Out_Label->Location = System::Drawing::Point(421, 96);
 			this->specularStrength_Out_Label->Name = L"specularStrength_Out_Label";
 			this->specularStrength_Out_Label->Size = System::Drawing::Size(13, 13);
 			this->specularStrength_Out_Label->TabIndex = 22;
@@ -359,19 +365,24 @@ namespace OpenGLTechniques {
 			this->scale_CB->UseVisualStyleBackColor = true;
 			this->scale_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::scale_CB_CheckedChanged);
 			// 
-			// trackBar1
+			// frequency_TB
 			// 
-			this->trackBar1->Location = System::Drawing::Point(148, 452);
-			this->trackBar1->Name = L"trackBar1";
-			this->trackBar1->Size = System::Drawing::Size(274, 45);
-			this->trackBar1->TabIndex = 27;
+			this->frequency_TB->Location = System::Drawing::Point(148, 452);
+			this->frequency_TB->Maximum = 400;
+			this->frequency_TB->Name = L"frequency_TB";
+			this->frequency_TB->Size = System::Drawing::Size(274, 45);
+			this->frequency_TB->TabIndex = 27;
+			this->frequency_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::frequency_TB_Scroll);
 			// 
-			// trackBar2
+			// amplitude_TB
 			// 
-			this->trackBar2->Location = System::Drawing::Point(148, 503);
-			this->trackBar2->Name = L"trackBar2";
-			this->trackBar2->Size = System::Drawing::Size(274, 45);
-			this->trackBar2->TabIndex = 28;
+			this->amplitude_TB->Location = System::Drawing::Point(148, 503);
+			this->amplitude_TB->Maximum = 100;
+			this->amplitude_TB->Name = L"amplitude_TB";
+			this->amplitude_TB->Size = System::Drawing::Size(274, 45);
+			this->amplitude_TB->TabIndex = 28;
+			this->amplitude_TB->Value = 1;
+			this->amplitude_TB->Scroll += gcnew System::EventHandler(this, &ToolWindow::amplitude_TB_Scroll);
 			// 
 			// label6
 			// 
@@ -413,17 +424,37 @@ namespace OpenGLTechniques {
 			this->tintBlue_CB->UseVisualStyleBackColor = true;
 			this->tintBlue_CB->CheckedChanged += gcnew System::EventHandler(this, &ToolWindow::bluetint_CB_CheckedChanged);
 			// 
+			// amp_label
+			// 
+			this->amp_label->AutoSize = true;
+			this->amp_label->Location = System::Drawing::Point(428, 503);
+			this->amp_label->Name = L"amp_label";
+			this->amp_label->Size = System::Drawing::Size(13, 13);
+			this->amp_label->TabIndex = 33;
+			this->amp_label->Text = L"0";
+			// 
+			// freq_label
+			// 
+			this->freq_label->AutoSize = true;
+			this->freq_label->Location = System::Drawing::Point(428, 462);
+			this->freq_label->Name = L"freq_label";
+			this->freq_label->Size = System::Drawing::Size(13, 13);
+			this->freq_label->TabIndex = 34;
+			this->freq_label->Text = L"0";
+			// 
 			// ToolWindow
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(532, 615);
+			this->Controls->Add(this->freq_label);
+			this->Controls->Add(this->amp_label);
 			this->Controls->Add(this->tintBlue_CB);
 			this->Controls->Add(this->wireframe_CB);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->label6);
-			this->Controls->Add(this->trackBar2);
-			this->Controls->Add(this->trackBar1);
+			this->Controls->Add(this->amplitude_TB);
+			this->Controls->Add(this->frequency_TB);
 			this->Controls->Add(this->scale_CB);
 			this->Controls->Add(this->rotate_CB);
 			this->Controls->Add(this->translate_CB);
@@ -452,8 +483,8 @@ namespace OpenGLTechniques {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->b_TB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->g_TB))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->r_TB))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar1))->EndInit();
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->trackBar2))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->frequency_TB))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->amplitude_TB))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -490,6 +521,12 @@ public:
 
 	static Mode  game_mode = Mode::SceneOne;
 	static SceneThreeOptions Scene_Three_Options = SceneThreeOptions::Off;
+
+	static ref struct SceneThreeValues {
+		static float Amplitude = 0.0f;
+		static float Frequency = 0.1f;
+	};
+
 
 private:
 		//Slider Callbacks
@@ -600,6 +637,17 @@ private:
 			}
 		}
 
-	};
+		System::Void frequency_TB_Scroll(System::Object^ sender, System::EventArgs^ e) 
+		{
+			SceneThreeValues::Frequency = RemapSlider(frequency_TB->Value);
+			freq_label->Text = SceneThreeValues::Frequency.ToString();
+		}
+		
+		System::Void amplitude_TB_Scroll(System::Object^ sender, System::EventArgs^ e) 
+		{
+			SceneThreeValues::Amplitude = RemapSlider(amplitude_TB->Value);
+			amp_label->Text = SceneThreeValues::Amplitude.ToString();
+		}
+};
 }	
  

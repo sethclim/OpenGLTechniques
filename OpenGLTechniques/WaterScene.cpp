@@ -55,10 +55,9 @@ void WaterScene::ProcessInput(float dt)
 		postShader->SetInt("blue",  0);
 	}
 
-	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::WireFrame)
-	{
-
-	}
+	postShader->SetFloat("freq", OpenGLTechniques::ToolWindow::SceneThreeValues::Frequency);
+	postShader->SetFloat("amplitude", OpenGLTechniques::ToolWindow::SceneThreeValues::Amplitude);
+	
 }
 
 void WaterScene::Update(float dt)
@@ -70,9 +69,7 @@ void WaterScene::Update(float dt)
 	time += 0.01f;
 
 	postShader->SetVec2("resolution", glm::vec2(r.m_width, r.m_height));
-	postShader->SetFloat("freq", 0.5);
 	postShader->SetFloat("time", time);
-	postShader->SetFloat("amplitude", 5.0);
 }
 
 void WaterScene::Render()
@@ -82,4 +79,4 @@ void WaterScene::Render()
 	Scene::Render();
 
 	m_postProcessor.End();
-}
+}	
