@@ -90,9 +90,10 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		Fonts f = Fonts();
 		f.Create(&m_shaderFont, "arial.ttf", 100);
 
-		m_fonts.push_back(f);
-		m_fonts.push_back(f);
-		m_fonts.push_back(f);
+		for (int i = 0; i < 7; i++)
+		{
+			m_fonts.push_back(f);
+		}
 	}
 
 #pragma endregion
@@ -106,6 +107,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_scenes.push_back(moveLightScene);
 
 		TransformScene* transformScene = new TransformScene(m_camera);
+		transformScene->AddMesh(m_meshBoxes[0]);
 		transformScene->AddMesh(m_meshBoxes[1]);
 		m_scenes.push_back(transformScene);
 
@@ -152,23 +154,32 @@ void GameController::Update(float dt)
 
 void GameController::Render()
 {
+
+	m_currentScene->Render();
+
 	std::stringstream   mousePosition_MSG;
 	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
 	std::stringstream   fps_MSG;
 	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 
-	m_fonts[0].RenderText(mousePosition_MSG.str(), 10, 20, 0.2f, {1.0f, 1.0f, 1.0f});
-	m_fonts[2].RenderText(fps_MSG.str(), 10, 50, 0.2f, { 1.0f, 1.0f, 0.0f });
-	
-	if (m_currentSceneNum == 2)
-	{
-		std::stringstream   numBoxes_MSG;
-		WaterScene* s = dynamic_cast<WaterScene*>(m_scenes[2]);
-		numBoxes_MSG << "Numer of Boxes " << s->GetNumberOfBoxes();
-		m_fonts[1].RenderText(numBoxes_MSG.str(), 10, 80, 0.2f, { 1.0f, 1.0f, 0.0f });
-	}
+	std::stringstream   position_MSG;
+	std::stringstream   rotation_MSG;
+	std::stringstream   scale_MSG;
 
-	m_currentScene->Render();
+	//WaterScene* s = dynamic_cast<WaterScene*>(m_scenes[2]);
+	position_MSG << "Position " << glm::to_string(m_meshBoxes[2]->GetPosition());
+	rotation_MSG << "Rotation " << glm::to_string(m_meshBoxes[2]->GetRotation());
+	scale_MSG << "Scale "    << glm::to_string(m_meshBoxes[2]->GetScale());
+
+	glm::vec3 textCol = glm::vec3(1.0f, 1.0f, 0.0f);
+
+	m_fonts[0].RenderText(fps_MSG.str(), 10, 20, 0.2f, textCol);
+	m_fonts[1].RenderText(mousePosition_MSG.str(), 10, 50, 0.2f, textCol);
+
+	m_fonts[4].RenderText(position_MSG.str(), 10, 80,  0.2f, textCol);
+	m_fonts[5].RenderText(rotation_MSG.str(), 10, 100, 0.2f, textCol);
+	m_fonts[6].RenderText(scale_MSG.str(),    10, 120, 0.2f, textCol);
+
 }
 
 void GameController::CleanUp()

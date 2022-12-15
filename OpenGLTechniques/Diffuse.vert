@@ -16,6 +16,7 @@ out vec3 retNormal;
 out vec2 retTexCoord;
 out vec3 retFragPos;
 out vec3 retViewDirection;
+// mat4 retWorld;
 out mat3 retTBN;
 
 void main()
@@ -33,11 +34,12 @@ void main()
 	retNormal = normalize(mat3(transpose(inverse(world))) * normals);
 	retTexCoord = texCoords;
 	retFragPos = vec3(world * vec4(vertices, 1.0f));
-	retViewDirection = normalize(CameraPosition * retFragPos);
+	retViewDirection = normalize(CameraPosition - retFragPos);
+	//retWorld
 
-	vec3 T = normalize(vec3(world * vec4(tangents, 0.0f)));
-	vec3 B = normalize(vec3(world * vec4(bitangents, 0.0f)));
-	vec3 N = normalize(vec3(world * vec4(normals, 0.0f)));
+	vec3 T = normalize(vec3(world * vec4(tangents, 0.0)));
+	vec3 B = normalize(vec3(world * vec4(bitangents, 0.0)));
+	vec3 N = normalize(vec3(world * vec4(normals, 0.0)));
 	
 	retTBN = mat3(T, B, N);
 }

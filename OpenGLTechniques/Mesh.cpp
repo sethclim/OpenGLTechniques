@@ -42,7 +42,7 @@ void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3&
 	objl::Vector2 deltaUV1 = _vertices[1].TextureCoordinate - _vertices[0].TextureCoordinate;
 	objl::Vector2 deltaUV2 = _vertices[2].TextureCoordinate - _vertices[0].TextureCoordinate;
 
-	float f = 1.0f / (deltaUV1.X * deltaUV2.Y - deltaUV2.Y * deltaUV1.Y);
+	float f = 1.0f / (deltaUV1.X * deltaUV2.Y - deltaUV2.X * deltaUV1.Y);
 
 	_tangent.X = f * (deltaUV2.Y * edge1.X - deltaUV1.Y * edge2.X);
 	_tangent.Y = f * (deltaUV2.Y * edge1.Y - deltaUV1.Y * edge2.Y);
@@ -155,18 +155,18 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	m_indexData = {
-		2,0,3,2,1,0
-	};
+	//m_indexData = {
+	//	2,0,3,2,1,0
+	//};
 
-	glGenBuffers(1, &m_indexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_indexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, m_indexData.size() * sizeof(float), m_indexData.data(), GL_STATIC_DRAW);
+	//glGenBuffers(1, &m_indexBuffer);
+	//glBindBuffer(GL_ARRAY_BUFFER, m_indexBuffer);
+	//glBufferData(GL_ARRAY_BUFFER, m_indexData.size() * sizeof(float), m_indexData.data(), GL_STATIC_DRAW);
 }
 
 void Mesh::CleanUp()
 {
-	glDeleteBuffers(1, &m_indexBuffer);
+	//glDeleteBuffers(1, &m_indexBuffer);
 	glDeleteBuffers(1, &m_vertexBuffer);
 	m_textureDiffuse.Cleanup();
 	m_textureSpecular.Cleanup();
@@ -191,8 +191,6 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 
 	for (unsigned int i = 0; i < Lights.size(); i++)
 	{
-		glm::vec3 a = Lights[i]->GetLightSpecularColor();
-
 		m_shader->SetFloat(Concat("light[", i, "].constant").c_str(), 1.0f);
 		m_shader->SetFloat(Concat("light[", i, "].linear").c_str(), 0.09f);
 		m_shader->SetFloat(Concat("light[", i, "].quadratic").c_str(), 0.032f);

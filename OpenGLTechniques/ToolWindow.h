@@ -556,7 +556,7 @@ private:
 
 		float RemapSlider(int value)
 		{
-			return (float)value / 100;
+			return (float) value / 100.0f;
 		}
 
 		System::Void button1_Click(System::Object^ sender, System::EventArgs^ e)

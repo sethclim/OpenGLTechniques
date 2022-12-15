@@ -37,53 +37,6 @@ void PostProcessor::Create(Shader* _postShader)
 	CreateVertics();
 }
 
-void PostProcessor::Start()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glEnable(GL_DEPTH_TEST);
-}
-
-void PostProcessor::End()
-{
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glDisable(GL_DEPTH_TEST);
-
-	glUseProgram(m_postShader->GetProgramID());
-	m_postShader->SetTextureSampler("ScreenTexture", GL_TEXTURE0, 0, m_textureColorbuffer);
-	BindVertices();
-	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::WireFrame)
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	}
-	else
-	{
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	}
-
-	glDrawArrays(GL_TRIANGLES, 0, 6);
-	glDisableVertexAttribArray(m_postShader->GetAttrVertices());
-	glDisableVertexAttribArray(m_postShader->GetAttrTexCoords());
-}
-
-void PostProcessor::CreateVertics()
-{
-	float vertexData[] = {
-		-1.0f, 1.0f, 0.0f, 1.0f,
-		-1.0f, -1.0f, 0.0f, 0.0f,
-		1.0f, -1.0f, 1.0f, 0.0f,
-
-		-1.0f, 1.0f, 0.0f, 1.0f,
-		1.0f, -1.0f, 1.0f, 0.0f,
-		1.0f, 1.0f, 1.0f, 1.0f,
-	};
-
-	glGenBuffers(1, &m_vertexBuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-}
-
 void PostProcessor::CreateBuffers()
 {
 	glGenFramebuffers(1, &m_framebuffer);
@@ -107,6 +60,25 @@ void PostProcessor::CreateBuffers()
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void PostProcessor::CreateVertics()
+{
+	float vertexData[] = {
+		//positions   //texCoords
+		-1.0f, 1.0f,  0.0f, 1.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f,
+		1.0f, -1.0f,  1.0f, 0.0f,
+
+		-1.0f, 1.0f,  0.0f, 1.0f,
+		1.0f, -1.0f,  1.0f, 0.0f,
+		1.0f, 1.0f,   1.0f, 1.0f,
+	};
+
+	glGenBuffers(1, &m_vertexBuffer);
+	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), &vertexData, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void PostProcessor::BindVertices()
 {
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -128,4 +100,41 @@ void PostProcessor::BindVertices()
 		(void*)(2 * sizeof(float)));
 
 }
+
+void PostProcessor::Start()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, m_framebuffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glEnable(GL_DEPTH_TEST);
+}
+
+void PostProcessor::End()
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glDisable(GL_DEPTH_TEST);
+
+	glUseProgram(m_postShader->GetProgramID());
+	m_postShader->SetTextureSampler("ScreenTexture", GL_TEXTURE0, 0, m_textureColorbuffer);
+	BindVertices();
+
+	if (OpenGLTechniques::ToolWindow::Scene_Three_Options == OpenGLTechniques::ToolWindow::SceneThreeOptions::WireFrame)
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	}
+	else
+	{
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	}
+
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	glDisableVertexAttribArray(m_postShader->GetAttrVertices());
+	glDisableVertexAttribArray(m_postShader->GetAttrTexCoords());
+	glUseProgram(0);
+
+	glEnable(GL_DEPTH_TEST);
+}
+
+
+
 

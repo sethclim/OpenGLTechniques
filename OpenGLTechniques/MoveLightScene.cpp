@@ -13,7 +13,7 @@ MoveLightScene::~MoveLightScene()
 
 void MoveLightScene::Init()
 {
-	m_meshes[0]->SetPosition({ 1.0f, 0.0f, 2.0f });
+	m_meshes[0]->SetPosition({ 0.0f, 0.0f, 2.0f });
 	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
 	m_meshes[0]->SetScale({ 0.005f, 0.005f, 0.005f });
 

@@ -23,7 +23,7 @@ struct Light
 	vec3 ambientColor;
 	vec3 diffuseColor;
 	vec3 specularColor;
-};
+};	
 
 uniform Material material;
 #define NR_LIGHTS 1
@@ -42,17 +42,16 @@ void main()
 	for(int i = 0; i < NR_LIGHTS; i++)
 	{
 		vec3 lightDir = normalize(light[i].position - retFragPos);
-
 		vec3 normal = retNormal;
 		if(EnableNormalMap == true)
 		{
 			normal = texture(material.normalTexture, retTexCoord).rgb;
-			normal = normal * 2.0f - 1.0f;
+			normal = normal * 2.0 - 1.0;
 			normal = normalize(retTBN * normal);
 		}
 
-		float lambertianStrength = dot(lightDir, retNormal);
-		vec3  ref1 = reflect(-lightDir, retNormal);
+		float lambertianStrength = dot(lightDir, normal);
+		vec3  ref1 = reflect(-lightDir, normal);
 		float specularStrength = pow(max(dot(retViewDirection, ref1),0.0f),material.specularStrength);
 
 		vec3 ambient = diffColor.rgb * light[i].ambientColor / NR_LIGHTS;
