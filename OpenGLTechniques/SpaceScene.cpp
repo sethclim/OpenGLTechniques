@@ -21,6 +21,7 @@ void SpaceScene::Init()
 	m_meshes[1]->SetScale({ 0.0008f, 0.0008f, 0.0008f });
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
 	m_meshes[1]->SetRotation({ 0.0f, 0.0f, 0.0f });
+	m_meshes[1]->SetSpecularStrength(2);
 
 	m_meshes[2]->SetCameraPosition(m_camera.GetPosition());
 	m_meshes[2]->SetScale({ 0.003f, 0.003f, 0.003f });
@@ -34,7 +35,7 @@ void SpaceScene::ProcessInput(float dt)
 
 void SpaceScene::Update(float dt)
 {
-	m_camera.Rotate(50 * dt);
+	m_camera.Rotate(40 * dt);
 }
 
 void SpaceScene::Render()

@@ -589,6 +589,13 @@ private:
 			{
 				game_mode = Mode::SceneThree;
 			}
+			else
+			{
+				std::cout << "Ive Changed" << std::endl;
+				Scene_Three_Options = SceneThreeOptions::Off;
+				tintBlue_CB->Checked = false;
+				wireframe_CB->Checked = false;
+			}
 		}
 
 		System::Void space_RB_CheckedChanged_1(System::Object^ sender, System::EventArgs^ e) {

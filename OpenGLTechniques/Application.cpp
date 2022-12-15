@@ -78,6 +78,16 @@ void Application::glfw_Mouse_Button_Callback(GLFWwindow* window, int button, int
 	{
 		Mouse.SetMouseDown(false);
 	}
+
+	if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_PRESS)
+	{
+		Mouse.SetMouseMiddleDown(true);
+	}
+	else if (button == GLFW_MOUSE_BUTTON_MIDDLE && action == GLFW_RELEASE)
+	{
+		Mouse.SetMouseMiddleDown(false);
+	}
+
 }
 
 void Application::glfw_Scroll_Callback(GLFWwindow* window, double xoffset, double yoffset)

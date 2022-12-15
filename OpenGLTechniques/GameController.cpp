@@ -162,14 +162,34 @@ void GameController::Render()
 
 	m_currentScene->Render();
 
+	std::stringstream   fps_MSG;
 	std::stringstream   mousePosition_MSG;
+	std::stringstream   mouseLeftDown_MSG;
+	std::stringstream   mouseMiddleDown_MSG;
 	std::stringstream   position_MSG;
 	std::stringstream   rotation_MSG;
 	std::stringstream   scale_MSG;
-	std::stringstream   fps_MSG;
 
 	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
+
+	if (Application::Mouse.GetMouseDown())
+	{
+		mouseLeftDown_MSG << "Left Buttom: Down";
+	}
+	else
+	{
+		mouseLeftDown_MSG << "Left Buttom: Up";
+	}
+
+	if (Application::Mouse.GetMouseMiddleDown())
+	{
+		mouseMiddleDown_MSG << "Middle Buttom: Down";
+	}
+	else
+	{
+		mouseMiddleDown_MSG << "Middle Buttom: Up";
+	}
 
 	if (m_currentSceneNum == 2)
 	{
@@ -186,10 +206,12 @@ void GameController::Render()
 
 	glm::vec3 textCol = glm::vec3(1.0f, 1.0f, 0.0f);
 	m_fonts[0].RenderText(fps_MSG.str(), 10, 20, 0.2f, textCol);
-	m_fonts[1].RenderText(mousePosition_MSG.str(), 10, 50, 0.2f, textCol);
-	m_fonts[4].RenderText(position_MSG.str(), 10, 80,  0.2f, textCol);
-	m_fonts[5].RenderText(rotation_MSG.str(), 10, 100, 0.2f, textCol);
-	m_fonts[6].RenderText(scale_MSG.str(),    10, 120, 0.2f, textCol);
+	m_fonts[1].RenderText(mousePosition_MSG.str(), 10, 40, 0.2f, textCol);
+	m_fonts[2].RenderText(mouseLeftDown_MSG.str(), 10, 60, 0.2f, textCol);
+	m_fonts[3].RenderText(mouseMiddleDown_MSG.str(), 10, 80, 0.2f, textCol);
+	m_fonts[4].RenderText(position_MSG.str(), 10, 100,  0.2f, textCol);
+	m_fonts[5].RenderText(rotation_MSG.str(), 10, 120, 0.2f, textCol);
+	m_fonts[6].RenderText(scale_MSG.str(),    10, 140, 0.2f, textCol);
 
 }
 
