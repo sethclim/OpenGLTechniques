@@ -49,3 +49,22 @@ glm::vec3 Utilities::ViewToWorldCoordTransform(glm::vec2 _mouse, Camera _camera)
 
 	return glm::vec3(worldPos);
 }
+
+float Utilities::GetRandomWithExclusion(int randAdjust, int max, int minExclusion, int maxExclusion)
+{
+
+	int num = GetRand(randAdjust, max);
+
+	while (num > minExclusion && num < maxExclusion)
+	{
+		num = GetRand(randAdjust, max);
+	}
+
+	return (float)num;
+}
+
+
+int Utilities::GetRand(int randAdjust, int max)
+{
+	return randAdjust + rand() % max;
+}

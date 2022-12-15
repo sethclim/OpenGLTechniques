@@ -72,6 +72,10 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		fish->Create(&m_shaderDiffuse, "../Assets/Models/Fish.obj");
 		m_meshBoxes.push_back(fish);
 
+		Mesh* asteroids = new Mesh();
+		asteroids->Create(&m_shaderDiffuse, "../Assets/Models/asteroid.obj", 100);
+		m_meshBoxes.push_back(asteroids);
+
 		m_postProcessor = PostProcessor();
 		m_postProcessor.Create(&m_shaderPost);
 
@@ -121,6 +125,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		SpaceScene* spaceScene = new SpaceScene(m_camera);
 		spaceScene->AddMesh(m_meshBoxes[0]);
 		spaceScene->AddMesh(m_meshBoxes[1]);
+		spaceScene->AddMesh(m_meshBoxes[3]);
 		spaceScene->AddShader(&m_shaderDiffuse);
 		spaceScene->SetSkybox(m_skybox);
 		m_scenes.push_back(spaceScene);
@@ -158,24 +163,20 @@ void GameController::Render()
 	m_currentScene->Render();
 
 	std::stringstream   mousePosition_MSG;
-	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
-	std::stringstream   fps_MSG;
-	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
-
 	std::stringstream   position_MSG;
 	std::stringstream   rotation_MSG;
 	std::stringstream   scale_MSG;
+	std::stringstream   fps_MSG;
 
-	//WaterScene* s = dynamic_cast<WaterScene*>(m_scenes[2]);
-	position_MSG << "Position " << glm::to_string(m_meshBoxes[2]->GetPosition());
-	rotation_MSG << "Rotation " << glm::to_string(m_meshBoxes[2]->GetRotation());
-	scale_MSG << "Scale "    << glm::to_string(m_meshBoxes[2]->GetScale());
+	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
+	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
+	position_MSG      << "Position " << glm::to_string(m_meshBoxes[2]->GetPosition());
+	rotation_MSG      << "Rotation " << glm::to_string(m_meshBoxes[2]->GetRotation());
+	scale_MSG         << "Scale "    << glm::to_string(m_meshBoxes[2]->GetScale());
 
 	glm::vec3 textCol = glm::vec3(1.0f, 1.0f, 0.0f);
-
 	m_fonts[0].RenderText(fps_MSG.str(), 10, 20, 0.2f, textCol);
 	m_fonts[1].RenderText(mousePosition_MSG.str(), 10, 50, 0.2f, textCol);
-
 	m_fonts[4].RenderText(position_MSG.str(), 10, 80,  0.2f, textCol);
 	m_fonts[5].RenderText(rotation_MSG.str(), 10, 100, 0.2f, textCol);
 	m_fonts[6].RenderText(scale_MSG.str(),    10, 120, 0.2f, textCol);

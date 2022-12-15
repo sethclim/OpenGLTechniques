@@ -20,7 +20,9 @@ namespace Utilities
 	};
 
 	glm::vec3 ViewToWorldCoordTransform(glm::vec2 _mouse, Camera _camera);
-	
+
+	float GetRandomWithExclusion(int randAdjust, int max, int minExclusion, int maxExclusion);
+	int GetRand(int randAdjust, int max);
 };
 
 #endif // !UTILITIES_H

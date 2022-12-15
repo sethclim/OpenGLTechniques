@@ -17,8 +17,12 @@ void SpaceScene::Init()
 	m_meshes[0]->SetScale({ 0.005f, 0.005f, 0.005f });
 
 	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	m_meshes[1]->SetScale({ 0.002f, 0.002f, 0.002f });
+	m_meshes[1]->SetScale({ 0.0008f, 0.0008f, 0.0008f });
 	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+
+	m_meshes[2]->SetCameraPosition(m_camera.GetPosition());
+	m_meshes[2]->SetScale({ 0.003f, 0.003f, 0.003f });
+	m_meshes[2]->SetPosition({ 0.0f, 0.0f, -2.0f });
 
 }
 void SpaceScene::ProcessInput(float dt)
