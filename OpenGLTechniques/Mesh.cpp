@@ -141,16 +141,16 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 		for (unsigned int i = 0; i < m_instanceCount; i++)
 		{
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(Utilities::GetRandomWithExclusion(-1000, 2000, -200, 200), 
-													Utilities::GetRandomWithExclusion(-1000, 2000, -200, 200),
-													Utilities::GetRandomWithExclusion(-1000, 500, -50, 10)));
+			model = glm::translate(model, glm::vec3(Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200), 
+													Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200),
+													Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200)));
 
 
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(1, 0, 0));
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(0, 1, 0));
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(0, 0, 1));
 
-			float size = (float)(rand() % 10 + 1) / 2.0f;
+			float size = (float)(rand() % 10 + 1) ;
 
 			model = glm::scale(model, glm::vec3(size, size, size));
 

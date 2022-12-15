@@ -53,14 +53,13 @@ void TransformScene::ProcessInput(float dt)
 			m_meshes[1]->SetScale(_fighterScale);
 		}
 
-		//m_meshes[0]->SetPosition(_curLightPos);
-		//m_meshes[0]->SetRotation(_curLightPos);
-		//m_meshes[1]->SetLightPosition(_curLightPos);
 	}
 
-	//if (OpenGLTechniques::ToolWindow::)
-	//{
-	//	m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.0f });
-	//	OpenGLTechniques::ToolWindow::ResetLight = false;
-	//}
+	if (OpenGLTechniques::ToolWindow::ResetTransform)
+	{
+		m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+		m_meshes[1]->SetRotation({ 0.0f, 0.0f, 0.0f });
+		m_meshes[1]->SetScale({ 0.0008f, 0.0008f, 0.0008f });
+		OpenGLTechniques::ToolWindow::ResetTransform = false;
+	}
 }

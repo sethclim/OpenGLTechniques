@@ -505,7 +505,7 @@ public:
 	static float color_G = 1;
 	static float color_B = 1;
 	static bool ResetLight = false;
-	static bool ResetTeapot = false;
+	static bool ResetTransform = false;
 
 	static ref struct SceneTwoOptions {
 		static bool Translate = false;
@@ -566,7 +566,7 @@ private:
 
 		System::Void button2_Click(System::Object^ sender, System::EventArgs^ e)
 		{
-			ResetTeapot = true;
+			ResetTransform = true;
 		}
 
 		System::Void moveLight_RB_CheckedChanged(System::Object^ sender, System::EventArgs^ e) 

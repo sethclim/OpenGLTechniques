@@ -170,9 +170,19 @@ void GameController::Render()
 
 	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
-	position_MSG      << "Position " << glm::to_string(m_meshBoxes[2]->GetPosition());
-	rotation_MSG      << "Rotation " << glm::to_string(m_meshBoxes[2]->GetRotation());
-	scale_MSG         << "Scale "    << glm::to_string(m_meshBoxes[2]->GetScale());
+
+	if (m_currentSceneNum == 2)
+	{
+		position_MSG << "Fish Position " << glm::to_string(m_meshBoxes[2]->GetPosition());
+		rotation_MSG << "Fish Rotation " << glm::to_string(m_meshBoxes[2]->GetRotation());
+		scale_MSG << "Fish Scale " << glm::to_string(m_meshBoxes[2]->GetScale());
+	}
+	else
+	{
+		position_MSG << "Fighter Position " << glm::to_string(m_meshBoxes[1]->GetPosition());
+		rotation_MSG << "Fighter Rotation " << glm::to_string(m_meshBoxes[1]->GetRotation());
+		scale_MSG << "Fighter Scale " << glm::to_string(m_meshBoxes[1]->GetScale());
+	}
 
 	glm::vec3 textCol = glm::vec3(1.0f, 1.0f, 0.0f);
 	m_fonts[0].RenderText(fps_MSG.str(), 10, 20, 0.2f, textCol);
