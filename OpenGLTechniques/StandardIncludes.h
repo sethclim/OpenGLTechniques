@@ -1,7 +1,7 @@
 #ifndef STANDARDINCLUDES_H
 #define STANDARDINCLUDES_H
 
-#define GLM_ENABLE_EXPERIMENAL
+#define GLM_ENABLE_EXPERIMENTAL
 
 //Include standard headers
 #include <vector>

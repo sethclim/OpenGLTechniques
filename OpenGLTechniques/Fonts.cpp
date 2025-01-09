@@ -27,14 +27,13 @@ void Fonts::AllocateBuffers()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, NULL, GL_DYNAMIC_DRAW);
 }
 
-void Fonts::Initialize(std::string _name, FT_UInt _size)
+void Fonts::Initialize(std::string _path, FT_UInt _size)
 {
-	std::string fileName = "../Assets/Fonts/" + _name;
 	Resolution r = WindowController::GetInstance().GetResolution();
 	m_orthoProj = glm::ortho(0.0f, (float)r.m_width, 0.0f, (float)r.m_height);
 
 	M_ASSERT(FT_Init_FreeType(&m_library) == false, "Could Not Init Free Type Library");
-	M_ASSERT(FT_New_Face(m_library, fileName.c_str(), 0, &m_face) == false, "Failed to load font");
+	M_ASSERT(FT_New_Face(m_library, _path.c_str(), 0, &m_face) == false, "Failed to load font");
 
 	M_ASSERT(FT_Set_Pixel_Sizes(m_face, 0, _size) == false, "Failed to set character size");
 

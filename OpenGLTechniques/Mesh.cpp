@@ -2,18 +2,18 @@
 #include "Shader.h"
 #include "Utilities.h"
 
-std::vector<Mesh*> Mesh::Lights;
+std::vector<Mesh *> Mesh::Lights;
 
 Mesh::Mesh()
 {
 	m_shader = nullptr;
-	m_textureDiffuse = { };
-	m_textureSpecular = { };
+	m_textureDiffuse = {};
+	m_textureSpecular = {};
 	m_vertexBuffer = 0;
 	m_indexBuffer = 0;
-	m_position = { 0, 0, 0 };
-	m_rotation = { 0, 0, 0 };
-	m_scale = { 1, 1, 1 };
+	m_position = {0, 0, 0};
+	m_rotation = {0, 0, 0};
+	m_scale = {1, 1, 1};
 	m_world = glm::mat4();
 	m_instanceCount = 1;
 	m_enableInstancing = false;
@@ -22,7 +22,6 @@ Mesh::Mesh()
 
 Mesh::~Mesh()
 {
-
 }
 
 std::string Mesh::RemoveFolder(std::string _map)
@@ -36,7 +35,7 @@ std::string Mesh::RemoveFolder(std::string _map)
 	return _map;
 }
 
-void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3& _tangent, objl::Vector3& _bitangent)
+void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 &_tangent, objl::Vector3 &_bitangent)
 {
 	objl::Vector3 edge1 = _vertices[1].Position - _vertices[0].Position;
 	objl::Vector3 edge2 = _vertices[2].Position - _vertices[0].Position;
@@ -54,7 +53,7 @@ void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3&
 	_bitangent.Z = f * (-deltaUV2.X * edge1.Z + deltaUV1.X * edge2.Z);
 }
 
-void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
+void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount)
 {
 	m_shader = _shader;
 	m_instanceCount = _instanceCount;
@@ -70,7 +69,7 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 		objl::Mesh curMesh = Loader.LoadedMeshes[i];
 		std::vector<objl::Vector3> tangents;
 		std::vector<objl::Vector3> bitangents;
-		std::vector<objl::Vertex>  triangle;
+		std::vector<objl::Vertex> triangle;
 
 		objl::Vector3 tangent;
 		objl::Vector3 bitangent;
@@ -112,18 +111,18 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 	}
 
 	m_textureDiffuse = Texture();
-	m_textureDiffuse.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
+	m_textureDiffuse.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
 
 	m_textureSpecular = Texture();
 	if (Loader.LoadedMaterials[0].map_Ks != "")
 	{
-		m_textureSpecular.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
+		m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
 	}
 
 	m_textureNormal = Texture();
 	if (Loader.LoadedMaterials[0].map_bump != "")
 	{
-		m_textureNormal.LoadTexture("../Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
+		m_textureNormal.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
 		m_enableNormalMap = true;
 	}
 
@@ -141,16 +140,15 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 		for (unsigned int i = 0; i < m_instanceCount; i++)
 		{
 			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, glm::vec3(Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200), 
+			model = glm::translate(model, glm::vec3(Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200),
 													Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200),
 													Utilities::GetRandomWithExclusion(-2000, 4000, -200, 200)));
-
 
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(1, 0, 0));
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(0, 1, 0));
 			model = glm::rotate(model, glm::radians((float)(rand() % 360)), glm::vec3(0, 0, 1));
 
-			float size = (float)(rand() % 10 + 1) ;
+			float size = (float)(rand() % 10 + 1);
 
 			model = glm::scale(model, glm::vec3(size, size, size));
 
@@ -167,18 +165,18 @@ void Mesh::Create(Shader* _shader, std::string _file, int _instanceCount)
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 
-	//m_indexData = {
+	// m_indexData = {
 	//	2,0,3,2,1,0
-	//};
+	// };
 
-	//glGenBuffers(1, &m_indexBuffer);
-	//glBindBuffer(GL_ARRAY_BUFFER, m_indexBuffer);
-	//glBufferData(GL_ARRAY_BUFFER, m_indexData.size() * sizeof(float), m_indexData.data(), GL_STATIC_DRAW);
+	// glGenBuffers(1, &m_indexBuffer);
+	// glBindBuffer(GL_ARRAY_BUFFER, m_indexBuffer);
+	// glBufferData(GL_ARRAY_BUFFER, m_indexData.size() * sizeof(float), m_indexData.data(), GL_STATIC_DRAW);
 }
 
 void Mesh::CleanUp()
 {
-	//glDeleteBuffers(1, &m_indexBuffer);
+	// glDeleteBuffers(1, &m_indexBuffer);
 	glDeleteBuffers(1, &m_vertexBuffer);
 	m_textureDiffuse.Cleanup();
 	m_textureSpecular.Cleanup();
@@ -207,12 +205,12 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 		m_shader->SetFloat(Concat("light[", i, "].linear").c_str(), 0.09f);
 		m_shader->SetFloat(Concat("light[", i, "].quadratic").c_str(), 0.032f);
 
-		m_shader->SetVec3(Concat("light[",  i, "].ambientColor").c_str(), { 0.5f, 0.5f, 0.5f });
-		m_shader->SetVec3(Concat("light[",  i, "].diffuseColor").c_str(), Lights[i]->GetColor());
-		m_shader->SetVec3(Concat("light[",  i, "].specularColor").c_str(), Lights[i]->GetLightSpecularColor());
+		m_shader->SetVec3(Concat("light[", i, "].ambientColor").c_str(), {0.5f, 0.5f, 0.5f});
+		m_shader->SetVec3(Concat("light[", i, "].diffuseColor").c_str(), Lights[i]->GetColor());
+		m_shader->SetVec3(Concat("light[", i, "].specularColor").c_str(), Lights[i]->GetLightSpecularColor());
 
-		m_shader->SetVec3(Concat("light[",  i, "].position").c_str(), Lights[i]->GetPosition());
-		m_shader->SetVec3(Concat("light[",  i, "].direction").c_str(), glm::normalize(glm::vec3({ 0.0f + i * 0.1f, 0, 0.0f + i * 0.1f }) - Lights[i]->GetPosition()));
+		m_shader->SetVec3(Concat("light[", i, "].position").c_str(), Lights[i]->GetPosition());
+		m_shader->SetVec3(Concat("light[", i, "].direction").c_str(), glm::normalize(glm::vec3({0.0f + i * 0.1f, 0, 0.0f + i * 0.1f}) - Lights[i]->GetPosition()));
 		m_shader->SetFloat(Concat("light[", i, "].coneAngle").c_str(), glm::radians(5.0f));
 		m_shader->SetFloat(Concat("light[", i, "].falloff").c_str(), 200);
 	}
@@ -238,29 +236,29 @@ void Mesh::BindAttributes()
 	glEnableVertexAttribArray(m_shader->GetAttrVertices());
 	glVertexAttribPointer(
 		m_shader->GetAttrVertices() /* The attribute we want to configure*/,
-		3/*size*/,
-		GL_FLOAT/*type*/,
-		GL_FALSE/*normalized*/,
-		stride * sizeof(float)/*stride*/,
-		(void*)0/*array buffer offset*/);
+		3 /*size*/,
+		GL_FLOAT /*type*/,
+		GL_FALSE /*normalized*/,
+		stride * sizeof(float) /*stride*/,
+		(void *)0 /*array buffer offset*/);
 
 	glEnableVertexAttribArray(m_shader->GetAttrNormals());
 	glVertexAttribPointer(
 		m_shader->GetAttrNormals() /* The attribute we want to configure*/,
-		3/*size*/,
-		GL_FLOAT/*type*/,
-		GL_FALSE/*normalized*/,
-		stride * sizeof(float)/*stride*/,
-		(void*)(3 * sizeof(float))/*array buffer offset*/);
+		3 /*size*/,
+		GL_FLOAT /*type*/,
+		GL_FALSE /*normalized*/,
+		stride * sizeof(float) /*stride*/,
+		(void *)(3 * sizeof(float)) /*array buffer offset*/);
 
 	glEnableVertexAttribArray(m_shader->GetAttrTexCoords());
 	glVertexAttribPointer(
 		m_shader->GetAttrTexCoords() /* The attribute we want to configure*/,
-		2/*size*/,
-		GL_FLOAT/*type*/,
-		GL_FALSE/*normalized*/,
-		stride * sizeof(float)/*stride*/,
-		(void*)(6 * sizeof(float))/*array buffer offset*/);
+		2 /*size*/,
+		GL_FLOAT /*type*/,
+		GL_FALSE /*normalized*/,
+		stride * sizeof(float) /*stride*/,
+		(void *)(6 * sizeof(float)) /*array buffer offset*/);
 
 	m_elementSize = 8;
 #pragma endregion
@@ -270,18 +268,18 @@ void Mesh::BindAttributes()
 	{
 		glEnableVertexAttribArray(m_shader->GetAttrTangents());
 		glVertexAttribPointer(m_shader->GetAttrTangents(),
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			stride * sizeof(float),
-			(void*)(8 * sizeof(float)));
+							  3,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  stride * sizeof(float),
+							  (void *)(8 * sizeof(float)));
 		glEnableVertexAttribArray(m_shader->GetAttrBitangents());
 		glVertexAttribPointer(m_shader->GetAttrBitangents(),
-			3,
-			GL_FLOAT,
-			GL_FALSE,
-			stride * sizeof(float),
-			(void*)(11 * sizeof(float)));
+							  3,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  stride * sizeof(float),
+							  (void *)(11 * sizeof(float)));
 		m_elementSize += 6;
 	}
 #pragma endregion
@@ -293,45 +291,42 @@ void Mesh::BindAttributes()
 
 		glEnableVertexAttribArray(m_shader->GetAttrInstanceMatrix());
 		glVertexAttribPointer(m_shader->GetAttrInstanceMatrix(),
-			4,
-			GL_FLOAT,
-			GL_FALSE,
-			sizeof(glm::mat4),
-			(void*)0);
+							  4,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  sizeof(glm::mat4),
+							  (void *)0);
 
 		glEnableVertexAttribArray(m_shader->GetAttrInstanceMatrix() + 1);
 		glVertexAttribPointer(m_shader->GetAttrInstanceMatrix() + 1,
-			4,
-			GL_FLOAT,
-			GL_FALSE,
-			sizeof(glm::mat4),
-			(void*)(sizeof(glm::vec4)));
+							  4,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  sizeof(glm::mat4),
+							  (void *)(sizeof(glm::vec4)));
 
 		glEnableVertexAttribArray(m_shader->GetAttrInstanceMatrix() + 2);
 		glVertexAttribPointer(m_shader->GetAttrInstanceMatrix() + 2,
-			4,
-			GL_FLOAT,
-			GL_FALSE,
-			sizeof(glm::mat4),
-			(void*)(2 * sizeof(glm::vec4)));
+							  4,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  sizeof(glm::mat4),
+							  (void *)(2 * sizeof(glm::vec4)));
 
 		glEnableVertexAttribArray(m_shader->GetAttrInstanceMatrix() + 3);
 		glVertexAttribPointer(m_shader->GetAttrInstanceMatrix() + 3,
-			4,
-			GL_FLOAT,
-			GL_FALSE,
-			sizeof(glm::mat4),
-			(void*)(3 * sizeof(glm::vec4)));
-
+							  4,
+							  GL_FLOAT,
+							  GL_FALSE,
+							  sizeof(glm::mat4),
+							  (void *)(3 * sizeof(glm::vec4)));
 
 		glVertexAttribDivisor(m_shader->GetAttrInstanceMatrix(), 1);
 		glVertexAttribDivisor(m_shader->GetAttrInstanceMatrix() + 1, 1);
 		glVertexAttribDivisor(m_shader->GetAttrInstanceMatrix() + 2, 1);
 		glVertexAttribDivisor(m_shader->GetAttrInstanceMatrix() + 3, 1);
-
 	}
 #pragma endregion
-
 }
 
 std::string Mesh::Concat(std::string _s1, int _index, std::string _s2)
@@ -344,7 +339,7 @@ void Mesh::Render(glm::mat4 _pv)
 {
 	glUseProgram(m_shader->GetProgramID());
 
-	//m_rotation.x += 0.1f;
+	// m_rotation.x += 0.1f;
 
 	CalculateTransform();
 	SetShaderVariables(_pv);
@@ -377,4 +372,3 @@ void Mesh::Render(glm::mat4 _pv)
 		glDisableVertexAttribArray(m_shader->GetAttrInstanceMatrix() + 3);
 	}
 }
-
