@@ -25,6 +25,7 @@ GameController::~GameController()
 
 void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 {
+
 	glClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
@@ -60,12 +61,12 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 		m_shaderPost.LoadShaders("./Debug/shaders/PostProcessing.vert", "./Debug/shaders/PostProcessing.frag");
 
 		Mesh *light = new Mesh();
-		light->Create(&m_shaderColor, "./Debug/Assets/Models/Sphere.obj");
+		light->Create(&m_shaderColor, "./Debug/Assets/Models/dcube.obj", 1, true);
 		Mesh::Lights.push_back(light);
 		m_meshBoxes.push_back(light);
 
 		Mesh *fighter = new Mesh();
-		fighter->Create(&m_shaderDiffuse, "./Debug/Assets/Models/Fighter.obj");
+		fighter->Create(&m_shaderDiffuse, "./Debug/Assets/Models/fnew.obj", 1, true);
 		m_meshBoxes.push_back(fighter);
 
 		Mesh *fish = new Mesh();
@@ -158,7 +159,7 @@ void GameController::Update(float dt)
 
 void GameController::Render()
 {
-
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	m_currentScene->Render();
 
 	std::stringstream fps_MSG;

@@ -2,6 +2,9 @@
 #include "Shader.h"
 #include "Utilities.h"
 
+#define TINYOBJLOADER_IMPLEMENTATION
+#include <tiny_obj_loader.h>
+
 std::vector<Mesh *> Mesh::Lights;
 
 Mesh::Mesh()
@@ -53,7 +56,85 @@ void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 
 	_bitangent.Z = f * (-deltaUV2.X * edge1.Z + deltaUV1.X * edge2.Z);
 }
 
-void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount)
+void Mesh::loadModel(std::string _file)
+{
+	tinyobj::attrib_t attrib;
+	std::vector<tinyobj::shape_t> shapes;
+	std::vector<tinyobj::material_t> materials;
+	std::string warn, err;
+
+	if (!tinyobj::LoadObj(&attrib, &shapes, &materials, &warn, &err, _file.c_str()))
+	{
+		throw std::runtime_error(warn + err);
+	}
+
+	std::cout << "# of vertices  : " << (attrib.vertices.size() / 3) << std::endl;
+	std::cout << "# of normals   : " << (attrib.normals.size() / 3) << std::endl;
+	std::cout << "# of texcoords : " << (attrib.texcoords.size() / 2) << std::endl;
+
+	m_enableNormalMap = false;
+
+	//for (size_t v = 0; v < attrib.vertices.size() / 3; v++)
+	//{
+	//	//printf("  v[%ld] = (%f, %f, %f)\n", static_cast<long>(v),
+	//	//	   static_cast<const double>(attrib.vertices[3 * v + 0]),
+	//	//	   static_cast<const double>(attrib.vertices[3 * v + 1]),
+	//	//	   static_cast<const double>(attrib.vertices[3 * v + 2]));
+	//}
+
+	//for (size_t v = 0; v < attrib.normals.size() / 3; v++)
+	//{
+	//	//printf("  n[%ld] = (%f, %f, %f)\n", static_cast<long>(v),
+	//	//	   static_cast<const double>(attrib.normals[3 * v + 0]),
+	//	//	   static_cast<const double>(attrib.normals[3 * v + 1]),
+	//	//	   static_cast<const double>(attrib.normals[3 * v + 2]));
+	//}
+
+	//printf("shapes.size() %ld\n", static_cast<long>(shapes.size()));
+
+	for (size_t i = 0; i < shapes.size(); i++)
+	{
+		size_t index_offset = 0;
+		//printf("sshapes[i].mesh.num_face_vertices.size() %ld\n", static_cast<long>(shapes[i].mesh.num_face_vertices.size()));
+		// For each face
+		for (size_t f = 0; f < shapes[i].mesh.num_face_vertices.size(); f++)
+		{
+			size_t fnum = shapes[i].mesh.num_face_vertices[f];
+
+			//printf("  face[%ld].fnum = %ld\n", static_cast<long>(f),
+			//	   static_cast<unsigned long>(fnum));
+
+			// For each vertex in the face
+			for (size_t v = 0; v < fnum; v++)
+			{
+				tinyobj::index_t idx = shapes[i].mesh.indices[index_offset + v];
+	/*			printf("    face[%ld].v[%ld].idx = %d/%d/%d\n", static_cast<long>(f),
+					   static_cast<long>(v), idx.vertex_index, idx.normal_index,
+					   idx.texcoord_index);*/
+
+				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 0]);
+				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 1]);
+				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 2]);
+
+				m_vertexData.push_back(attrib.normals[3 * idx.normal_index + 0]);
+				m_vertexData.push_back(attrib.normals[3 * idx.normal_index + 1]);
+				m_vertexData.push_back(attrib.normals[3 * idx.normal_index + 2]);
+
+				m_vertexData.push_back(attrib.texcoords[2 * idx.texcoord_index + 0]);
+				m_vertexData.push_back(1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]);
+			}
+
+			/*	printf("  face[%ld].material_id = %d\n", static_cast<long>(f),
+					   shape.mesh.material_ids[f]);
+				printf("  face[%ld].smoothing_group_id = %d\n", static_cast<long>(f),
+					   shape.mesh.smoothing_group_ids[f]);*/
+
+			index_offset += fnum;
+		}
+	}
+}
+
+void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount, bool indexed)
 {
 	m_shader = _shader;
 	m_instanceCount = _instanceCount;
@@ -64,67 +145,75 @@ void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount)
 	objl::Loader Loader;
 	M_ASSERT(Loader.LoadFile(_file) == true, "Failed To Load Mesh")
 
-	for (unsigned int i = 0; i < Loader.LoadedMeshes.size(); i++)
+	if (indexed)
 	{
-		objl::Mesh curMesh = Loader.LoadedMeshes[i];
-		std::vector<objl::Vector3> tangents;
-		std::vector<objl::Vector3> bitangents;
-		std::vector<objl::Vertex> triangle;
-
-		objl::Vector3 tangent;
-		objl::Vector3 bitangent;
-
-		for (unsigned int j = 0; j < curMesh.Vertices.size(); j += 3)
+		loadModel(_file);
+	}
+	else
+	{
+		for (unsigned int i = 0; i < Loader.LoadedMeshes.size(); i++)
 		{
-			triangle.clear();
-			triangle.push_back(curMesh.Vertices[j]);
-			triangle.push_back(curMesh.Vertices[j + 1]);
-			triangle.push_back(curMesh.Vertices[j + 2]);
-			CalculateTangents(triangle, tangent, bitangent);
-			tangents.push_back(tangent);
-			bitangents.push_back(bitangent);
-		}
+			objl::Mesh curMesh = Loader.LoadedMeshes[i];
+			std::vector<objl::Vector3> tangents;
+			std::vector<objl::Vector3> bitangents;
+			std::vector<objl::Vertex> triangle;
 
-		for (unsigned int j = 0; j < curMesh.Vertices.size(); j++)
-		{
-			m_vertexData.push_back(curMesh.Vertices[j].Position.X);
-			m_vertexData.push_back(curMesh.Vertices[j].Position.Y);
-			m_vertexData.push_back(curMesh.Vertices[j].Position.Z);
-			m_vertexData.push_back(curMesh.Vertices[j].Normal.X);
-			m_vertexData.push_back(curMesh.Vertices[j].Normal.Y);
-			m_vertexData.push_back(curMesh.Vertices[j].Normal.Z);
-			m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.X);
-			m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.Y);
+			objl::Vector3 tangent;
+			objl::Vector3 bitangent;
 
-			if (Loader.LoadedMaterials[0].map_bump != "")
+			for (unsigned int j = 0; j < curMesh.Vertices.size(); j += 3)
 			{
-				int index = j / 3;
-				m_vertexData.push_back(tangents[index].X);
-				m_vertexData.push_back(tangents[index].Y);
-				m_vertexData.push_back(tangents[index].Z);
+				triangle.clear();
+				triangle.push_back(curMesh.Vertices[j]);
+				triangle.push_back(curMesh.Vertices[j + 1]);
+				triangle.push_back(curMesh.Vertices[j + 2]);
+				CalculateTangents(triangle, tangent, bitangent);
+				tangents.push_back(tangent);
+				bitangents.push_back(bitangent);
+			}
 
-				m_vertexData.push_back(bitangents[index].X);
-				m_vertexData.push_back(bitangents[index].Y);
-				m_vertexData.push_back(bitangents[index].Z);
+			for (unsigned int j = 0; j < curMesh.Vertices.size(); j++)
+			{
+				m_vertexData.push_back(curMesh.Vertices[j].Position.X);
+				m_vertexData.push_back(curMesh.Vertices[j].Position.Y);
+				m_vertexData.push_back(curMesh.Vertices[j].Position.Z);
+				m_vertexData.push_back(curMesh.Vertices[j].Normal.X);
+				m_vertexData.push_back(curMesh.Vertices[j].Normal.Y);
+				m_vertexData.push_back(curMesh.Vertices[j].Normal.Z);
+				m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.X);
+				m_vertexData.push_back(curMesh.Vertices[j].TextureCoordinate.Y);
+
+				if (Loader.LoadedMaterials[0].map_bump != "")
+				{
+					int index = j / 3;
+					m_vertexData.push_back(tangents[index].X);
+					m_vertexData.push_back(tangents[index].Y);
+					m_vertexData.push_back(tangents[index].Z);
+
+					m_vertexData.push_back(bitangents[index].X);
+					m_vertexData.push_back(bitangents[index].Y);
+					m_vertexData.push_back(bitangents[index].Z);
+				}
+				// std::cout << curMesh.Vertices[j].Position.X << " " << curMesh.Vertices[j].Position.Y << " " << curMesh.Vertices[j].Position.Z << std::endl;
 			}
 		}
 	}
 
-	m_textureDiffuse = Texture();
-	m_textureDiffuse.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
+	// m_textureDiffuse = Texture();
+	// m_textureDiffuse.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
 
-	m_textureSpecular = Texture();
-	if (Loader.LoadedMaterials[0].map_Ks != "")
-	{
-		m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
-	}
+	// m_textureSpecular = Texture();
+	// if (Loader.LoadedMaterials[0].map_Ks != "")
+	//{
+	//	m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
+	// }
 
-	m_textureNormal = Texture();
-	if (Loader.LoadedMaterials[0].map_bump != "")
-	{
-		m_textureNormal.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
-		m_enableNormalMap = true;
-	}
+	// m_textureNormal = Texture();
+	// if (Loader.LoadedMaterials[0].map_bump != "")
+	//{
+	//	m_textureNormal.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
+	//	m_enableNormalMap = true;
+	// }
 
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -216,9 +305,9 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 	}
 
 	m_shader->SetFloat("material.specularStrength", GetSpecularStrength());
-	m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
-	m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
-	m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 2, m_textureNormal.GetTexture());
+	// m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
+	// m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
+	// m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 2, m_textureNormal.GetTexture());
 }
 
 void Mesh::BindAttributes()

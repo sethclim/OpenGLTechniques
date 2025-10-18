@@ -4,6 +4,9 @@ target_include_directories(stb_image INTERFACE ${CMAKE_CURRENT_LIST_DIR}/stb/)
 add_library(OBJ_Loader INTERFACE ${CMAKE_CURRENT_LIST_DIR}/obj_loader/)
 target_include_directories(OBJ_Loader INTERFACE ${CMAKE_CURRENT_LIST_DIR}/obj_loader/)
 
+add_library(tiny_obj_loader INTERFACE ${CMAKE_CURRENT_LIST_DIR}/tiny_obj_loader/)
+target_include_directories(tiny_obj_loader INTERFACE ${CMAKE_CURRENT_LIST_DIR}/tiny_obj_loader/)
+
 message(STATUS "WHATTT "${CMAKE_CURRENT_LIST_DIR}/obj_loader/OBJ_Loader.h)
 
 add_subdirectory(glfw)
@@ -30,3 +33,4 @@ target_link_libraries(app PRIVATE ${PROJECT_SOURCE_DIR}/External/glew-2.1.0-win3
 
 target_link_libraries(app PRIVATE stb_image)
 target_link_libraries(app PRIVATE OBJ_Loader)
+target_link_libraries(app PRIVATE tiny_obj_loader)
