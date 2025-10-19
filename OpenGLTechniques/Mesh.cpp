@@ -56,6 +56,31 @@ void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 
 	_bitangent.Z = f * (-deltaUV2.X * edge1.Z + deltaUV1.X * edge2.Z);
 }
 
+void Mesh::CalculateTangentsTinyObj(
+	const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2,
+	const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec2& uv2,
+	glm::vec3& tangent, glm::vec3& bitangent)
+{
+	glm::vec3 edge1 = p1 - p0;
+	glm::vec3 edge2 = p2 - p0;
+	glm::vec2 deltaUV1 = uv1 - uv0;
+	glm::vec2 deltaUV2 = uv2 - uv0;
+
+	float det = (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+	float f = (fabs(det) < 1e-6f) ? 1.0f : 1.0f / det;
+
+	tangent.x = f * (deltaUV2.y * edge1.x - deltaUV1.y * edge2.x);
+	tangent.y = f * (deltaUV2.y * edge1.y - deltaUV1.y * edge2.y);
+	tangent.z = f * (deltaUV2.y * edge1.z - deltaUV1.y * edge2.z);
+
+	bitangent.x = f * (-deltaUV2.x * edge1.x + deltaUV1.x * edge2.x);
+	bitangent.y = f * (-deltaUV2.x * edge1.y + deltaUV1.x * edge2.y);
+	bitangent.z = f * (-deltaUV2.x * edge1.z + deltaUV1.x * edge2.z);
+
+	tangent = glm::normalize(tangent);
+	bitangent = glm::normalize(bitangent);
+}
+
 void Mesh::loadModel(std::string _file)
 {
 	tinyobj::attrib_t attrib;
@@ -72,7 +97,7 @@ void Mesh::loadModel(std::string _file)
 	std::cout << "# of normals   : " << (attrib.normals.size() / 3) << std::endl;
 	std::cout << "# of texcoords : " << (attrib.texcoords.size() / 2) << std::endl;
 
-	m_enableNormalMap = false;
+	//m_enableNormalMap = false;
 
 	//for (size_t v = 0; v < attrib.vertices.size() / 3; v++)
 	//{
@@ -101,6 +126,10 @@ void Mesh::loadModel(std::string _file)
 		{
 			size_t fnum = shapes[i].mesh.num_face_vertices[f];
 
+			glm::vec3 pos[3];
+			glm::vec3 normal[3];
+			glm::vec2 uv[3];
+
 			//printf("  face[%ld].fnum = %ld\n", static_cast<long>(f),
 			//	   static_cast<unsigned long>(fnum));
 
@@ -112,7 +141,26 @@ void Mesh::loadModel(std::string _file)
 					   static_cast<long>(v), idx.vertex_index, idx.normal_index,
 					   idx.texcoord_index);*/
 
-				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 0]);
+				pos[v] = glm::vec3(
+					attrib.vertices[3 * idx.vertex_index + 0],
+					attrib.vertices[3 * idx.vertex_index + 1],
+					attrib.vertices[3 * idx.vertex_index + 2]
+				);
+
+				if (idx.normal_index >= 0)
+					normal[v] = glm::vec3(
+						attrib.normals[3 * idx.normal_index + 0],
+						attrib.normals[3 * idx.normal_index + 1],
+						attrib.normals[3 * idx.normal_index + 2]
+					);
+
+				if (idx.texcoord_index >= 0)
+					uv[v] = glm::vec2(
+						attrib.texcoords[2 * idx.texcoord_index + 0],
+						1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]
+					);
+
+				/*m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 0]);	
 				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 1]);
 				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 2]);
 
@@ -121,8 +169,34 @@ void Mesh::loadModel(std::string _file)
 				m_vertexData.push_back(attrib.normals[3 * idx.normal_index + 2]);
 
 				m_vertexData.push_back(attrib.texcoords[2 * idx.texcoord_index + 0]);
-				m_vertexData.push_back(1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]);
+				m_vertexData.push_back(1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]);*/
 			}
+
+			glm::vec3 tangent, bitangent;
+			CalculateTangentsTinyObj(pos[0], pos[1], pos[2], uv[0], uv[1], uv[2], tangent, bitangent);
+
+			for (int t = 0; t < 3; t++)
+			{
+				m_vertexData.push_back(pos[t].x);
+				m_vertexData.push_back(pos[t].y);
+				m_vertexData.push_back(pos[t].z);
+
+				m_vertexData.push_back(normal[t].x);
+				m_vertexData.push_back(normal[t].y);
+				m_vertexData.push_back(normal[t].z);
+
+				m_vertexData.push_back(uv[t].x);
+				m_vertexData.push_back(uv[t].y);
+
+				m_vertexData.push_back(tangent.x);
+				m_vertexData.push_back(tangent.y);
+				m_vertexData.push_back(tangent.z);
+
+				m_vertexData.push_back(bitangent.x);
+				m_vertexData.push_back(bitangent.y);
+				m_vertexData.push_back(bitangent.z);
+			}
+
 
 			/*	printf("  face[%ld].material_id = %d\n", static_cast<long>(f),
 					   shape.mesh.material_ids[f]);

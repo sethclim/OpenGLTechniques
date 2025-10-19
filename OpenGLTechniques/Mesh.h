@@ -46,6 +46,10 @@ private:
 	std::string Concat(std::string _s1, int _index, std::string _s2);
 	std::string RemoveFolder(std::string _map);
 	void CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 &_tangent, objl::Vector3 &_bitangent);
+	void CalculateTangentsTinyObj(
+		const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2,
+		const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec2& uv2,
+		glm::vec3& tangent, glm::vec3& bitangent);
 
 	Shader *m_shader;
 	Texture m_textureDiffuse;
