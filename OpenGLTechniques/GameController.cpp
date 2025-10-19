@@ -8,17 +8,17 @@
 
 GameController::GameController()
 {
-	m_shaderColor = { };
-	m_shaderDiffuse = { };
-	m_shaderSkybox = { };
-	m_camera = { };
-	m_meshLight = { };
+	m_shaderColor = {};
+	m_shaderDiffuse = {};
+	m_shaderSkybox = {};
+	m_camera = {};
+	m_meshLight = {};
 	m_meshBoxes.clear();
-	m_currentScene = { };
+	m_currentScene = {};
 }
 
 GameController::~GameController()
-{ 
+{
 	delete m_currentScene;
 	m_scenes.clear();
 }
@@ -30,7 +30,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glEnable(GL_CULL_FACE);
-	//glCullFace(GL_FRONT);
+	// glCullFace(GL_FRONT);
 	srand((unsigned int)time(0));
 	glGenVertexArrays(1, &vao);
 	glBindVertexArray(vao);
@@ -42,57 +42,56 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 #pragma region LoadAssets
 	{
 		m_shaderColor = Shader();
-		m_shaderColor.LoadShaders("Color.vert", "Color.frag");
+		m_shaderColor.LoadShaders("./Debug/shaders/Color.vert", "./Debug/shaders/Color.frag");
 
 		m_shaderDiffuse = Shader();
-		m_shaderDiffuse.LoadShaders("Diffuse.vert", "Diffuse.frag");
+		m_shaderDiffuse.LoadShaders("./Debug/shaders/Diffuse.vert", "./Debug/shaders/Diffuse.frag");
 
 		m_shaderWorldDiffuse = Shader();
-		m_shaderWorldDiffuse.LoadShaders("Diffuse.vert", "DiffuseWorld.frag");
+		m_shaderWorldDiffuse.LoadShaders("./Debug/shaders/Diffuse.vert", "./Debug/shaders/DiffuseWorld.frag");
 
 		m_shaderFont = Shader();
-		m_shaderFont.LoadShaders("Font.vert", "Font.frag");
+		m_shaderFont.LoadShaders("./Debug/shaders/Font.vert", "./Debug/shaders/Font.frag");
 
 		m_shaderSkybox = Shader();
-		m_shaderSkybox.LoadShaders("Skybox.vert", "Skybox.frag");
+		m_shaderSkybox.LoadShaders("./Debug/shaders/Skybox.vert", "./Debug/shaders/Skybox.frag");
 
 		m_shaderPost = Shader();
-		m_shaderPost.LoadShaders("PostProcessing.vert", "PostProcessing.frag");
+		m_shaderPost.LoadShaders("./Debug/shaders/PostProcessing.vert", "./Debug/shaders/PostProcessing.frag");
 
-		Mesh* light = new Mesh();
-		light->Create(&m_shaderColor, "../Assets/Models/sphere.obj");
+		Mesh *light = new Mesh();
+		light->Create(&m_shaderColor, "./Debug/Assets/Models/Sphere.obj");
 		Mesh::Lights.push_back(light);
 		m_meshBoxes.push_back(light);
 
-		Mesh* fighter = new Mesh();
-		fighter->Create(&m_shaderDiffuse, "../Assets/Models/Fighter.obj");
+		Mesh *fighter = new Mesh();
+		fighter->Create(&m_shaderDiffuse, "./Debug/Assets/Models/Fighter.obj");
 		m_meshBoxes.push_back(fighter);
 
-		Mesh* fish = new Mesh();
-		fish->Create(&m_shaderDiffuse, "../Assets/Models/Fish.obj");
+		Mesh *fish = new Mesh();
+		fish->Create(&m_shaderDiffuse, "./Debug/Assets/Models/Fish.obj");
 		m_meshBoxes.push_back(fish);
 
-		Mesh* asteroids = new Mesh();
-		asteroids->Create(&m_shaderDiffuse, "../Assets/Models/asteroid.obj", 100);
+		Mesh *asteroids = new Mesh();
+		asteroids->Create(&m_shaderDiffuse, "./Debug/Assets/Models/asteroid.obj", 100);
 		m_meshBoxes.push_back(asteroids);
 
 		m_postProcessor = PostProcessor();
 		m_postProcessor.Create(&m_shaderPost);
 
 		m_skybox = Skybox();
-		m_skybox.Create(&m_shaderSkybox, "../Assets/Models/Skybox.obj",
-			{
-				"../Assets/Textures/Skybox/right.jpg",
-				"../Assets/Textures/Skybox/left.jpg",
-				"../Assets/Textures/Skybox/top.jpg",
-				"../Assets/Textures/Skybox/bottom.jpg",
-				"../Assets/Textures/Skybox/front.jpg",
-				"../Assets/Textures/Skybox/back.jpg",
-			}
-		);
+		m_skybox.Create(&m_shaderSkybox, "./Debug/Assets/Models/Skybox.obj",
+						{
+							"./Debug/Assets/Textures/Skybox/right.jpg",
+							"./Debug/Assets/Textures/Skybox/left.jpg",
+							"./Debug/Assets/Textures/Skybox/top.jpg",
+							"./Debug/Assets/Textures/Skybox/bottom.jpg",
+							"./Debug/Assets/Textures/Skybox/front.jpg",
+							"./Debug/Assets/Textures/Skybox/back.jpg",
+						});
 
 		Fonts f = Fonts();
-		f.Create(&m_shaderFont, "arial.ttf", 100);
+		f.Create(&m_shaderFont, "./Debug/Assets/Fonts/arial.ttf", 100);
 
 		for (int i = 0; i < 7; i++)
 		{
@@ -104,25 +103,25 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 
 #pragma region CreateScenes
 	{
-		MoveLightScene* moveLightScene = new MoveLightScene(m_camera);
+		MoveLightScene *moveLightScene = new MoveLightScene(m_camera);
 		moveLightScene->AddMesh(m_meshBoxes[0]);
 		moveLightScene->AddMesh(m_meshBoxes[1]);
 		moveLightScene->Init();
 		m_scenes.push_back(moveLightScene);
 
-		TransformScene* transformScene = new TransformScene(m_camera);
+		TransformScene *transformScene = new TransformScene(m_camera);
 		transformScene->AddMesh(m_meshBoxes[0]);
 		transformScene->AddMesh(m_meshBoxes[1]);
 		m_scenes.push_back(transformScene);
 
-		WaterScene* waterScene = new WaterScene(m_camera);
+		WaterScene *waterScene = new WaterScene(m_camera);
 		waterScene->AddMesh(m_meshBoxes[0]);
 		waterScene->AddMesh(m_meshBoxes[2]);
 		waterScene->AddShader(&m_shaderDiffuse);
 		waterScene->SetPostProcessor(m_postProcessor);
 		m_scenes.push_back(waterScene);
 
-		SpaceScene* spaceScene = new SpaceScene(m_camera);
+		SpaceScene *spaceScene = new SpaceScene(m_camera);
 		spaceScene->AddMesh(m_meshBoxes[0]);
 		spaceScene->AddMesh(m_meshBoxes[1]);
 		spaceScene->AddMesh(m_meshBoxes[3]);
@@ -135,7 +134,7 @@ void GameController::Initialize(Resolution _resolution, glm::vec2 _windowSize)
 	}
 #pragma endregion
 
-	OpenGLTechniques::ToolWindow^ window = gcnew OpenGLTechniques::ToolWindow();
+	OpenGLTechniques::ToolWindow ^ window = gcnew OpenGLTechniques::ToolWindow();
 	window->Show();
 }
 
@@ -162,13 +161,13 @@ void GameController::Render()
 
 	m_currentScene->Render();
 
-	std::stringstream   fps_MSG;
-	std::stringstream   mousePosition_MSG;
-	std::stringstream   mouseLeftDown_MSG;
-	std::stringstream   mouseMiddleDown_MSG;
-	std::stringstream   position_MSG;
-	std::stringstream   rotation_MSG;
-	std::stringstream   scale_MSG;
+	std::stringstream fps_MSG;
+	std::stringstream mousePosition_MSG;
+	std::stringstream mouseLeftDown_MSG;
+	std::stringstream mouseMiddleDown_MSG;
+	std::stringstream position_MSG;
+	std::stringstream rotation_MSG;
+	std::stringstream scale_MSG;
 
 	fps_MSG << "FPS " << Utilities::FPSCounter::FPS;
 	mousePosition_MSG << "Mouse Position " << Application::Mouse.GetPosition().x << " " << Application::Mouse.GetPosition().y;
@@ -209,10 +208,9 @@ void GameController::Render()
 	m_fonts[1].RenderText(mousePosition_MSG.str(), 10, 40, 0.2f, textCol);
 	m_fonts[2].RenderText(mouseLeftDown_MSG.str(), 10, 60, 0.2f, textCol);
 	m_fonts[3].RenderText(mouseMiddleDown_MSG.str(), 10, 80, 0.2f, textCol);
-	m_fonts[4].RenderText(position_MSG.str(), 10, 100,  0.2f, textCol);
+	m_fonts[4].RenderText(position_MSG.str(), 10, 100, 0.2f, textCol);
 	m_fonts[5].RenderText(rotation_MSG.str(), 10, 120, 0.2f, textCol);
-	m_fonts[6].RenderText(scale_MSG.str(),    10, 140, 0.2f, textCol);
-
+	m_fonts[6].RenderText(scale_MSG.str(), 10, 140, 0.2f, textCol);
 }
 
 void GameController::CleanUp()
