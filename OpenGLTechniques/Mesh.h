@@ -24,7 +24,7 @@ public:
 
 	void SetColor(glm::vec3 _color) { m_color = _color; }
 	glm::vec3 GetColor() { return m_color; }
-	void  SetSpecularStrength(float _specularStrength) { m_specularStrength = _specularStrength; }
+	void SetSpecularStrength(float _specularStrength) { m_specularStrength = _specularStrength; }
 	float GetSpecularStrength() { return m_specularStrength; }
 	void SetLightPosition(glm::vec3 _lightPosition) { m_lightPosition = _lightPosition; }
 	void SetLightColor(glm::vec3 _lightColor) { m_lightColor = _lightColor; }
@@ -32,22 +32,26 @@ public:
 	glm::vec3 GetLightSpecularColor() { return m_lightSpecularColor; }
 	void SetCameraPosition(glm::vec3 _cameraPosition) { m_cameraPosition = _cameraPosition; }
 
-
-	void Create(Shader* _shader, std::string _file, int _iostanceCount = 1);
+	void loadModel(std::string _file);
+	void Create(Shader *_shader, std::string _file, int _iostanceCount = 1, bool indexed = false);
 	void CleanUp();
 	void CalculateTransform();
 	void Render(glm::mat4 _pv);
 
-	static std::vector<Mesh*> Lights;
+	static std::vector<Mesh *> Lights;
 
 private:
 	void SetShaderVariables(glm::mat4 _pv);
 	void BindAttributes();
 	std::string Concat(std::string _s1, int _index, std::string _s2);
 	std::string RemoveFolder(std::string _map);
-	void CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3& _tangent, objl::Vector3& _bitangent);
+	void CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 &_tangent, objl::Vector3 &_bitangent);
+	void CalculateTangentsTinyObj(
+		const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2,
+		const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec2& uv2,
+		glm::vec3& tangent, glm::vec3& bitangent);
 
-	Shader* m_shader;
+	Shader *m_shader;
 	Texture m_textureDiffuse;
 	Texture m_textureSpecular;
 	Texture m_textureNormal;
@@ -68,14 +72,11 @@ private:
 	glm::vec3 m_scale;
 	glm::mat4 m_world;
 	glm::vec3 m_cameraPosition;
-	glm::vec3 m_color;	
-	
+	glm::vec3 m_color;
+
 	glm::vec3 m_lightPosition;
 	glm::vec3 m_lightColor;
 	glm::vec3 m_lightSpecularColor;
-	float	  m_specularStrength;
-
+	float m_specularStrength;
 };
 #endif // !MESH_H
-
-

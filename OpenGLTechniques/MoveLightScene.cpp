@@ -8,18 +8,17 @@ MoveLightScene::MoveLightScene(Camera _camera)
 
 MoveLightScene::~MoveLightScene()
 {
-
 }
 
 void MoveLightScene::Init()
 {
-	m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.8f });
-	m_meshes[0]->SetColor({ 1.0f, 1.0f,1.0f });
-	m_meshes[0]->SetScale({ 0.004f, 0.004f, 0.004f });
+	m_meshes[0]->SetPosition({0.0f, 0.0f, 0.8f});
+	m_meshes[0]->SetColor({1.0f, 1.0f, 1.0f});
+	m_meshes[0]->SetScale({0.1f, 0.1f, 0.1f});
 
 	m_meshes[1]->SetCameraPosition(m_camera.GetPosition());
-	m_meshes[1]->SetScale({ 0.0008f, 0.0008f, 0.0008f });
-	m_meshes[1]->SetPosition({ 0.0f, 0.0f, 0.0f });
+	m_meshes[1]->SetScale({0.0008f, 0.0008f, 0.0008f});
+	m_meshes[1]->SetPosition({0.0f, 0.0f, 0.0f});
 	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
 }
 
@@ -38,7 +37,7 @@ void MoveLightScene::ProcessInput(float dt)
 
 	if (OpenGLTechniques::ToolWindow::ResetLight)
 	{
-		m_meshes[0]->SetPosition({ 0.0f, 0.0f, 0.8f });
+		m_meshes[0]->SetPosition({0.0f, 0.0f, 0.8f});
 
 		OpenGLTechniques::ToolWindow::ResetLight = false;
 	}
@@ -47,15 +46,12 @@ void MoveLightScene::ProcessInput(float dt)
 void MoveLightScene::Update(float dt)
 {
 	m_meshes[1]->SetSpecularStrength(OpenGLTechniques::ToolWindow::specularStrength);
-	Mesh::Lights[0]->SetLightSpecularColor({
-		OpenGLTechniques::ToolWindow::color_R,
-		OpenGLTechniques::ToolWindow::color_G,
-		OpenGLTechniques::ToolWindow::color_B
-	});
+	Mesh::Lights[0]->SetLightSpecularColor({OpenGLTechniques::ToolWindow::color_R,
+											OpenGLTechniques::ToolWindow::color_G,
+											OpenGLTechniques::ToolWindow::color_B});
 
 	glm::vec3 curRot = m_meshes[1]->GetRotation();
 	curRot.x += 5.0f * dt;
 
 	m_meshes[1]->SetRotation(curRot);
-
 }

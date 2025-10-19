@@ -3,7 +3,7 @@
 
 #define GLM_ENABLE_EXPERIMENTAL
 
-//Include standard headers
+// Include standard headers
 #include <vector>
 #include <map>
 #include <string>
@@ -14,13 +14,19 @@
 #include <functional>
 #include <chrono>
 
-//Windows Specific includes and defines
+// Windows Specific includes and defines
 #ifdef _WIN32
 #include <Windows.h>
-#define M_ASSERT(_cond,_msg) if(!(_cond)) {OutputDebugStringA(_msg); std::abort(); glfwTerminate(); }
+#define M_ASSERT(_cond, _msg)     \
+	if (!(_cond))                 \
+	{                             \
+		OutputDebugStringA(_msg); \
+		std::abort();             \
+		glfwTerminate();          \
+	}
 #endif // _WIN32
 
-//OpenGL/Helpers headers
+// OpenGL/Helpers headers
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -29,7 +35,7 @@
 #include <glm/gtx/string_cast.hpp>
 #include <glm/ext/matrix_projection.hpp>
 
-//font
+// font
 #define generic GenericFromFreeTypeLibrary
 #include <ft2build.h>
 #include FT_FREETYPE_H
