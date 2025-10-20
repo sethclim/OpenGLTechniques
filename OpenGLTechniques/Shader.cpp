@@ -98,7 +98,6 @@ void Shader::EvaluateShader(int _infoLength, GLuint _id)
 		glGetShaderInfoLog(_id, _infoLength, NULL, &errorMessage[0]);
 		M_ASSERT(0, ("%s\n", &errorMessage[0]));
 	}
-
 }
 
 GLuint Shader::LoadShaderFile(const char* _filePath, GLenum _type)

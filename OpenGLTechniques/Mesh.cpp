@@ -20,6 +20,7 @@ Mesh::Mesh()
 	m_world = glm::mat4();
 	m_instanceCount = 1;
 	m_enableInstancing = false;
+	m_enableSpecularMap = false;
 	m_elementSize = 0;
 }
 
@@ -289,6 +290,7 @@ void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount, bool i
 	if (Loader.LoadedMaterials[0].map_Ks != "")
 	{
 		m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
+		m_enableSpecularMap = true;
 	}
 
 	m_textureNormal = Texture();
@@ -369,6 +371,7 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 	m_shader->SetMat4("WVP", _pv * m_world);
 	m_shader->SetVec3("CameraPosition", m_cameraPosition);
 	m_shader->SetInt("EnableNormalMap", m_enableNormalMap);
+	m_shader->SetInt("EnableSpecularMap", m_enableSpecularMap);
 	m_shader->SetInt("EnableInstancing", m_enableInstancing);
 
 	for (unsigned int i = 0; i < Lights.size(); i++)

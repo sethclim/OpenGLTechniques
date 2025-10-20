@@ -29,6 +29,7 @@ uniform Material material;
 #define NR_LIGHTS 1
 uniform Light light[NR_LIGHTS];
 uniform bool EnableNormalMap = false;
+uniform bool EnableSpecularMap = false;
 
 void main()
 {
@@ -52,13 +53,18 @@ void main()
 
 		float lambertianStrength = dot(lightDir, normal);
 		vec3  ref1 = reflect(-lightDir, normal);
-		float specularStrength = pow(max(dot(retViewDirection, ref1),0.0f),material.specularStrength);
+		float specularStrength = pow(max(dot(retViewDirection, ref1),0.0f), material.specularStrength);
 
 		vec3 ambient = diffColor.rgb * light[i].ambientColor / NR_LIGHTS;
 		vec3 lambertian = lambertianStrength * diffColor.rgb * light[i].diffuseColor;
-		vec3 specular  = specularStrength * texture(material.specularTexture, retTexCoord).rgb * light[i].specularColor;
 
-		finalColor += ambient + lambertian + specular;
+		vec3 specular = vec3(0);
+		if (EnableSpecularMap) {
+			vec3 specTexColor = texture(material.specularTexture, retTexCoord).rgb;
+			specular  = specularStrength * specTexColor  * light[i].specularColor;
+		}
+
+		finalColor += ambient + lambertian;
 	}
 
 	FragColor = vec4(finalColor, diffColor.a);

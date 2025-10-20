@@ -159,7 +159,7 @@ void GameController::Update(float dt)
 
 void GameController::Render()
 {
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	// glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	m_currentScene->Render();
 
 	std::stringstream fps_MSG;
