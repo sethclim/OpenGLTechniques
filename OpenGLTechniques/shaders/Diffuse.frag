@@ -64,7 +64,7 @@ void main()
 			specular  = specularStrength * specTexColor  * light[i].specularColor;
 		}
 
-		finalColor += ambient + lambertian;
+		finalColor += ambient + lambertian + specular;
 	}
 
 	FragColor = vec4(finalColor, diffColor.a);
