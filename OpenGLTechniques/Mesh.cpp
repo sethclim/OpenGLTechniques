@@ -29,11 +29,15 @@ Mesh::~Mesh()
 
 std::string Mesh::RemoveFolder(std::string _map)
 {
+
+	std::cout << _map << std::endl;
 	const size_t last_slash_idx = _map.find_last_of("\\/");
 	if (std::string::npos != last_slash_idx)
 	{
 		_map.erase(0, last_slash_idx + 1);
 	}
+
+	std::cout << _map << std::endl;
 
 	return _map;
 }
@@ -57,9 +61,9 @@ void Mesh::CalculateTangents(std::vector<objl::Vertex> _vertices, objl::Vector3 
 }
 
 void Mesh::CalculateTangentsTinyObj(
-	const glm::vec3& p0, const glm::vec3& p1, const glm::vec3& p2,
-	const glm::vec2& uv0, const glm::vec2& uv1, const glm::vec2& uv2,
-	glm::vec3& tangent, glm::vec3& bitangent)
+	const glm::vec3 &p0, const glm::vec3 &p1, const glm::vec3 &p2,
+	const glm::vec2 &uv0, const glm::vec2 &uv1, const glm::vec2 &uv2,
+	glm::vec3 &tangent, glm::vec3 &bitangent)
 {
 	glm::vec3 edge1 = p1 - p0;
 	glm::vec3 edge2 = p2 - p0;
@@ -97,31 +101,31 @@ void Mesh::loadModel(std::string _file)
 	std::cout << "# of normals   : " << (attrib.normals.size() / 3) << std::endl;
 	std::cout << "# of texcoords : " << (attrib.texcoords.size() / 2) << std::endl;
 
-	//m_enableNormalMap = false;
+	// m_enableNormalMap = false;
 
-	//for (size_t v = 0; v < attrib.vertices.size() / 3; v++)
+	// for (size_t v = 0; v < attrib.vertices.size() / 3; v++)
 	//{
 	//	//printf("  v[%ld] = (%f, %f, %f)\n", static_cast<long>(v),
 	//	//	   static_cast<const double>(attrib.vertices[3 * v + 0]),
 	//	//	   static_cast<const double>(attrib.vertices[3 * v + 1]),
 	//	//	   static_cast<const double>(attrib.vertices[3 * v + 2]));
-	//}
+	// }
 
-	//for (size_t v = 0; v < attrib.normals.size() / 3; v++)
+	// for (size_t v = 0; v < attrib.normals.size() / 3; v++)
 	//{
 	//	//printf("  n[%ld] = (%f, %f, %f)\n", static_cast<long>(v),
 	//	//	   static_cast<const double>(attrib.normals[3 * v + 0]),
 	//	//	   static_cast<const double>(attrib.normals[3 * v + 1]),
 	//	//	   static_cast<const double>(attrib.normals[3 * v + 2]));
-	//}
+	// }
 
-	//printf("shapes.size() %ld\n", static_cast<long>(shapes.size()));
+	// printf("shapes.size() %ld\n", static_cast<long>(shapes.size()));
 
 	for (size_t i = 0; i < shapes.size(); i++)
 	{
 		size_t index_offset = 0;
-		//printf("sshapes[i].mesh.num_face_vertices.size() %ld\n", static_cast<long>(shapes[i].mesh.num_face_vertices.size()));
-		// For each face
+		// printf("sshapes[i].mesh.num_face_vertices.size() %ld\n", static_cast<long>(shapes[i].mesh.num_face_vertices.size()));
+		//  For each face
 		for (size_t f = 0; f < shapes[i].mesh.num_face_vertices.size(); f++)
 		{
 			size_t fnum = shapes[i].mesh.num_face_vertices[f];
@@ -130,37 +134,36 @@ void Mesh::loadModel(std::string _file)
 			glm::vec3 normal[3];
 			glm::vec2 uv[3];
 
-			//printf("  face[%ld].fnum = %ld\n", static_cast<long>(f),
+			// printf("  face[%ld].fnum = %ld\n", static_cast<long>(f),
 			//	   static_cast<unsigned long>(fnum));
 
 			// For each vertex in the face
 			for (size_t v = 0; v < fnum; v++)
 			{
 				tinyobj::index_t idx = shapes[i].mesh.indices[index_offset + v];
-	/*			printf("    face[%ld].v[%ld].idx = %d/%d/%d\n", static_cast<long>(f),
-					   static_cast<long>(v), idx.vertex_index, idx.normal_index,
-					   idx.texcoord_index);*/
+				/*			printf("    face[%ld].v[%ld].idx = %d/%d/%d\n", static_cast<long>(f),
+								   static_cast<long>(v), idx.vertex_index, idx.normal_index,
+								   idx.texcoord_index);*/
 
 				pos[v] = glm::vec3(
 					attrib.vertices[3 * idx.vertex_index + 0],
 					attrib.vertices[3 * idx.vertex_index + 1],
-					attrib.vertices[3 * idx.vertex_index + 2]
-				);
+					attrib.vertices[3 * idx.vertex_index + 2]);
+
+				M_ASSERT(attrib.normals.size() / 3, "normals are missing")
 
 				if (idx.normal_index >= 0)
 					normal[v] = glm::vec3(
 						attrib.normals[3 * idx.normal_index + 0],
 						attrib.normals[3 * idx.normal_index + 1],
-						attrib.normals[3 * idx.normal_index + 2]
-					);
+						attrib.normals[3 * idx.normal_index + 2]);
 
 				if (idx.texcoord_index >= 0)
 					uv[v] = glm::vec2(
 						attrib.texcoords[2 * idx.texcoord_index + 0],
-						1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]
-					);
+						1.0f - attrib.texcoords[2 * idx.texcoord_index + 1]);
 
-				/*m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 0]);	
+				/*m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 0]);
 				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 1]);
 				m_vertexData.push_back(attrib.vertices[3 * idx.vertex_index + 2]);
 
@@ -196,7 +199,6 @@ void Mesh::loadModel(std::string _file)
 				m_vertexData.push_back(bitangent.y);
 				m_vertexData.push_back(bitangent.z);
 			}
-
 
 			/*	printf("  face[%ld].material_id = %d\n", static_cast<long>(f),
 					   shape.mesh.material_ids[f]);
@@ -273,21 +275,28 @@ void Mesh::Create(Shader *_shader, std::string _file, int _instanceCount, bool i
 		}
 	}
 
-	// m_textureDiffuse = Texture();
-	// m_textureDiffuse.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Kd));
+	m_textureDiffuse = Texture();
+	if (Loader.LoadedMaterials[0].map_Kd != "")
+	{
+		std::cout << Loader.LoadedMaterials[0].map_Kd << std::endl;
+		std::string diffuse = std::string("./Debug/Assets/Textures/") + RemoveFolder(Loader.LoadedMaterials[0].map_Kd);
+		std::cout << "DIFFUSE!!!" << diffuse << std::endl;
 
-	// m_textureSpecular = Texture();
-	// if (Loader.LoadedMaterials[0].map_Ks != "")
-	//{
-	//	m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
-	// }
+		m_textureDiffuse.LoadTexture(diffuse);
+	}
 
-	// m_textureNormal = Texture();
-	// if (Loader.LoadedMaterials[0].map_bump != "")
-	//{
-	//	m_textureNormal.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
-	//	m_enableNormalMap = true;
-	// }
+	m_textureSpecular = Texture();
+	if (Loader.LoadedMaterials[0].map_Ks != "")
+	{
+		m_textureSpecular.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_Ks));
+	}
+
+	m_textureNormal = Texture();
+	if (Loader.LoadedMaterials[0].map_bump != "")
+	{
+		m_textureNormal.LoadTexture("./Debug/Assets/Textures/" + RemoveFolder(Loader.LoadedMaterials[0].map_bump));
+		m_enableNormalMap = true;
+	}
 
 	glGenBuffers(1, &m_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -379,9 +388,9 @@ void Mesh::SetShaderVariables(glm::mat4 _pv)
 	}
 
 	m_shader->SetFloat("material.specularStrength", GetSpecularStrength());
-	// m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
-	// m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
-	// m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 2, m_textureNormal.GetTexture());
+	m_shader->SetTextureSampler("material.diffuseTexture", GL_TEXTURE0, 0, m_textureDiffuse.GetTexture());
+	m_shader->SetTextureSampler("material.specularTexture", GL_TEXTURE1, 1, m_textureSpecular.GetTexture());
+	m_shader->SetTextureSampler("material.normalTexture", GL_TEXTURE2, 2, m_textureNormal.GetTexture());
 }
 
 void Mesh::BindAttributes()
